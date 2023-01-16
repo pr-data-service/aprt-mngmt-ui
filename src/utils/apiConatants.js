@@ -1,0 +1,90 @@
+
+const APIConstants =  {
+    HOST: "http://192.168.29.112:8080",
+
+    APP_LOGIN: "/api/authenticate",
+
+    PROJECT_CREATE_OR_UPDATE: "/api/project/create_or_update",
+    PROJECT_GET: "/api/project/get",
+
+    APARTMENT_DETAILS_GET: "/api/apartment-details/get",
+    APARTMENT_DETAILS_GET_BY_ID: "/api/apartment-details/get/",
+
+    SESSION_DETAILS_CREATE_OR_UPDATE: "/api/session_details/create_or_update",
+    SESSION_DETAILS_LIST_GET: "/api/session_details/list/get/",
+    SESSION_DETAILS_DELETE: "/api/session_details/delete/",
+
+    USER_LIST_GET: "/api/user/list/get/",
+    USER_LIST_VIEW_GET: "/api/user/list_view/get",
+    USER_GET: "/api/user/get/",
+    USER_CREATE_OR_UPDATE: "/api/user/create_or_update",
+    USER_DELETE: '/api/user/delete/',
+    USER_DELETE_BATCH: '/api/user/delete/batch',
+    USER_BY_FLAT_ID_GET: "/api/user/by_flat_id/get/",
+
+    FLAT_DETAILS_LIST_GET: "/api/flat_details/list/get",
+    FLAT_DETAILS_LIST_VIEW_GET: "/api/flat_details/list_view/get",
+    FLAT_DETAILS_GET: "/api/flat_details/get/",
+    FLAT_DETAILS_CREATE_OR_UPDATE: "/api/flat_details/create_or_update",
+    FLAT_DETAILS_DELETE: '/api/flat_details/delete/',
+    FLAT_DETAILS_DELETE_BATCH: '/api/flat_details/delete/batch',
+
+    COMMON_LINK_OBJECT_SAVE: '/api/common/link/save',
+    COMMON_LINK_OBJECT_GET: '/api/common/link/get',
+
+    MAINTANANCE_CREATE_OR_UPDATE: "/api/maintenance/create_or_update",
+    MAINTANANCE_LIST_VIEW_GET: "/api/maintenance/list_view/get",
+    MAINTANANCE_LIST_GET: "/api/maintenance/list/get/",
+    MAINTANANCE_GET: "/api/maintenance/get/",
+    MAINTANANCE_DELETE_BATCH: '/api/maintenance/delete/batch',
+
+    MAINTANANCE_MASTER_LIST_VIEW_GET: "/api/maintenance/master/list_view/get",
+    MAINTANANCE_MASTER_CREATE_OR_UPDATE: "/api/maintenance/master/create_or_update",
+    MAINTANANCE_MASTER_ACTIVE: "/api/maintenance/master/active/",
+    MAINTANANCE_MASTER_DELETE_BATCH: '/api/maintenance/master/delete/batch',
+
+    PAYMENT_ADD_PAGE_GET: "/api/payment/add_page/get/",
+    PAYMENT_LIST_VIEW_GET: "/api/payment/list_view/get",
+    PAYMENT_SAVE: "/api/payment/save",
+    PAYMENT_DELETE: '/api/payment/delete/',
+    PAYMENT_GET: "/api/payment/get/",
+    PAYMENT_DOWNLOAD: "/api/payment/download/",
+    PAYMENT_CANCEL: "/api/payment/cancel",
+    
+    
+    PAYMENT_DETAILS_CREATE_OR_UPDATE: "/api/payment_details/save", 
+    PAYMENT_DETAILS_LIST_VIEW_GET: "/api/payment_details/list_view/get",
+    PAYMENT_DETAILS_DUES_LIST_VIEW_GET: "/api/payment_details/list_view/dues/get",
+
+    EVENTS_LIST_GET: "/api/events/list/get/",
+    EVENTS_LIST_VIEW_GET: "/api/events/list_view/get",
+    EVENTS_CREATE_OR_UPDATE: "/api/events/create_or_update",
+    EVENTS_GET: "/api/events/get/",
+    EVENTS_ACTIVE: "/api/events/active/",
+    EVENTS_INACTIVE: "/api/events/inactive/",
+    EVENTS_DELETE_BATCH: '/api/events/delete/batch',
+    EVENTS_BY_EXPENSE_ID_GET: "/api/events/by_expense_id/get/",
+
+    EXPENSE_HEAD_LIST_GET: "/api/expense-head/list/get/",
+    EXPENSE_HEAD_LIST_VIEW_GET: "/api/expense-head/list_view/get",
+    EXPENSE_HEAD_CREATE_OR_UPDATE: "/api/expense-head/create_or_update",
+    EXPENSE_HEAD_GET: "/api/expense-head/get/",
+    EXPENSE_HEAD_DELETE: '/api/expense-head/delete/',
+
+    EXPENSES_LIST_GET: "/api/expenses/list/get/",
+    EXPENSES_LIST_VIEW_GET: "/api/expenses/list_view/get",
+    EXPENSES_CREATE_OR_UPDATE: "/api/expenses/create_or_update",
+    EXPENSES_GET: "/api/expenses/get/",
+    EXPENSES_DELETE: '/api/expenses/delete/',
+    EXPENSES_DOWNLOAD: "/api/expenses/download/",
+
+    EXPENSES_ITEMS_LIST_VIEW_GET: "/api/expense_items/list_view/get",
+
+    NOTES_VIEW_GET: "/api/notes/view/get",
+    NOTES_CREATE_OR_UPDATE: "/api/notes/create_or_update",
+    NOTES_GET: "/api/notes/get/",
+    NOTES_DELETE: '/api/notes/delete/',
+    // NOTES_DELETE_BATCH: '/api/notes/delete/batch',
+}
+
+export default APIConstants;
