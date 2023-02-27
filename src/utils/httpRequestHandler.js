@@ -108,6 +108,9 @@ class HttpRequestHandler {
             if(code === "ERR_NETWORK") {
                 console.error(response, response.props);
                 callback({ httpStatusCode: 401, message: message });
+            } else if(code === "ERR_BAD_RESPONSE" && response.response && response.response.status == 500) {
+                console.error(response, response.response.data);
+                callback({ httpStatusCode: response.response.status, message: response.response.data.message });
             } else if (code === "ERR_BAD_REQUEST" && response.response && response.response.status == 401) {
                 this.goToLoginPage();
                 callback({ httpStatusCode: response.response.status, message: message });
@@ -135,6 +138,7 @@ class HttpRequestHandler {
     goToLoginPage = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("session-id");
+        localStorage.removeItem("session");
         window.location.assign(window.location.origin+"/login");        
     }
 

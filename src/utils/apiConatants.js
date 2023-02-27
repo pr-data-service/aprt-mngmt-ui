@@ -1,6 +1,8 @@
 
 const APIConstants =  {
-    HOST: "http://192.168.29.112:8080",
+    //HOST: "http://192.168.29.112:8080",
+    HOST: "http://54.150.237.74:8080",
+    //HOST: "http://localhost:8080",
 
     APP_LOGIN: "/api/authenticate",
 
@@ -50,6 +52,7 @@ const APIConstants =  {
     PAYMENT_GET: "/api/payment/get/",
     PAYMENT_DOWNLOAD: "/api/payment/download/",
     PAYMENT_CANCEL: "/api/payment/cancel",
+    PAYMENT_ADVANCE_PAYMENT_DUES_LIST_GET: "/api/payment/advance_payment_dues_list/get/",
     
     
     PAYMENT_DETAILS_CREATE_OR_UPDATE: "/api/payment_details/save", 

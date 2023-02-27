@@ -228,6 +228,7 @@ const Body = React.forwardRef(({ flatId }, ref) => {
     const [paymentTypeList, setPaymentTypeList] = React.useState([{ value: "", text: "" }, { value: "1", text: "Building Paint" }, { value: "2", text: "Durga Puja" }]);
     const { handleBackDrop } = React.useContext(AppContext);
     const [data, setData] = React.useState({});
+    const [duesList, setDuesList] = React.useState([]);
     const [paymentMode, setPaymentMode] = React.useState("");
     const [paymentModeRef, setPaymentModeRef] = React.useState("");
     const [paymentDate, setPaymentDate] = React.useState(getDateForDatePicker());
@@ -249,7 +250,7 @@ const Body = React.forwardRef(({ flatId }, ref) => {
             remarks,
             amount: amountWillPay,
             selectedRows: addMaintenanceRef.current.getSelectedRow(),
-            rows: data.duesList ? data.duesList : [],
+            rows: duesList ? duesList : [],
             miscellaneousFields,
             eventList: data.eventList,
         }
@@ -264,6 +265,7 @@ const Body = React.forwardRef(({ flatId }, ref) => {
             handleBackDrop(true);
             let response = await AxiosApi.getData(APIConstants.PAYMENT_ADD_PAGE_GET + id);
             setData(response.data);
+            setDuesList(response.data.duesList);
             handleBackDrop(false);
         } catch (error) {
             console.log(error.message);
@@ -311,11 +313,38 @@ const Body = React.forwardRef(({ flatId }, ref) => {
         setMiscellaneousFields(obj);
     }
 
+    const addMoreDueMonth = async () => {
+        try {debugger
+            let id = 0;
+            let month = 0;
+            let year = 0;
+            if(duesList && duesList.length > 0) {
+                let lastMonth = duesList[duesList.length -1];
+                if(lastMonth) {
+                    id = parseInt(lastMonth.id);
+                    month = parseInt(lastMonth.paymentMonth);
+                    year = parseInt(lastMonth.paymentYear);
+                }
+            }
+            handleBackDrop(true);
+            let response = await AxiosApi.getData(APIConstants.PAYMENT_ADVANCE_PAYMENT_DUES_LIST_GET+flatId+"/"+month+"/"+year);
+            if(response.httpStatusCode == 200 && response.statusCode == 100) {
+                console.log(response.data);
+                duesList.push({...response.data, id: id+1});
+                setDuesList([...duesList]);
+            }                
+            handleBackDrop(false);
+        } catch(error) {
+            console.error(error.message);
+            enqueueSnackbar(error.message, { variant: "error" });
+        }
+    }
+
 
     const list = [
         {
             name: "maintenance", summary: { heading: "Maintenance Dues", secondaryHeading: <MaintenanceHeader data={data} /> },
-            children: <PaymentDues ref={addMaintenanceRef} flatId={flatId} data={data} />
+            children: <PaymentDues ref={addMaintenanceRef} flatId={flatId} duesList={duesList} addMoreDueMonth={addMoreDueMonth}/>
         },
         {
             name: "miscellaneous", summary: { heading: "Miscellaneous", secondaryHeading: "Miscellaneous payment fields", },
@@ -403,7 +432,7 @@ const isValidPaymentMonthList = (rows, selectedRows) => {
     let isValid = true;
     let ids = rows.map(m => m.id);
     let selectedIds = selectedRows.map(m => m.id);
-    selectedIds = selectedIds.sort();
+    selectedIds = selectedIds.sort((a, b) => {return a-b});
     selectedIds.forEach((f, i) => {
         console.log(f, ids[i]);
         if (f !== ids[i]) {

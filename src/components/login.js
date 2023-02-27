@@ -94,6 +94,9 @@ const Login = () => {
 
         localStorage.setItem("token", data.token);
         localStorage.setItem("session-id", event.target.value);
+
+        let session = data.sessionList ? data.sessionList.find( f => f.id == event.target.value) : null;
+        localStorage.setItem("session", JSON.stringify(session));
         navigate("/");    
     }
 

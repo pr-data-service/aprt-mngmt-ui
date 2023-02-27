@@ -99,6 +99,8 @@ const AppHeader = () => {
   const onClick = (value) => {
     if(value == "logout") {
       localStorage.removeItem("token");
+      localStorage.removeItem("session-id");
+      localStorage.removeItem("session");
       navigate("/login");
     } else if(value == "settings") {
       navigate("/settings");

@@ -65,7 +65,7 @@ const selectRow = {
     headerColumnStyle: { width: "3%" }
 };
 
-const PaymentDues = React.forwardRef(({ flatId, data = {} }, ref) => {
+const PaymentDues = React.forwardRef(({ flatId, duesList = [], addMoreDueMonth= ()=>{} }, ref) => {
     const classes = useStyles();
     const listViewRef = React.useRef(null);
     
@@ -78,10 +78,11 @@ const PaymentDues = React.forwardRef(({ flatId, data = {} }, ref) => {
             key={"add-maint"}
             ref={listViewRef}
             columns={columns}
-            rows={getRowsAfterModifying(data.duesList)}
+            rows={getRowsAfterModifying(duesList)}
             isSearchRequired={false}
             wrapperClasses="table_overflow-add-maitenance"
             isPagingRequired={false} />
+            <a href="javascript:void(0)" title="Add more month" onClick={addMoreDueMonth}>Add more</a>
     </Box>
 })
 
