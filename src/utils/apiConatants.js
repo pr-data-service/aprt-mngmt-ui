@@ -51,13 +51,12 @@ const APIConstants =  {
     PAYMENT_DELETE: '/api/payment/delete/',
     PAYMENT_GET: "/api/payment/get/",
     PAYMENT_DOWNLOAD: "/api/payment/download/",
-    PAYMENT_CANCEL: "/api/payment/cancel",
-    PAYMENT_ADVANCE_PAYMENT_DUES_LIST_GET: "/api/payment/advance_payment_dues_list/get/",
+    PAYMENT_CANCEL: "/api/payment/cancel",    
     
-    
-    PAYMENT_DETAILS_CREATE_OR_UPDATE: "/api/payment_details/save", 
     PAYMENT_DETAILS_LIST_VIEW_GET: "/api/payment_details/list_view/get",
     PAYMENT_DETAILS_DUES_LIST_VIEW_GET: "/api/payment_details/list_view/dues/get",
+    PAYMENT_DETAILS_LAST_PAYMENT_DATE_SAVE: "/api/payment_details/last_payment_date/save", 
+    PAYMENT_DETAILS_ADVANCE_PAYMENT_DUES_GET: "/api/payment_details/advance_payment_dues/get/",
 
     EVENTS_LIST_GET: "/api/events/list/get/",
     EVENTS_LIST_VIEW_GET: "/api/events/list_view/get",

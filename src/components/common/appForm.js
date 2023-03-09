@@ -19,6 +19,7 @@ const AppForm = React.forwardRef(({
     id = 0,
     isValidFormData,
     callbackOnSubmit,
+    paramsToSave = {},
     ...otherProps
 }, ref) => {
 
@@ -56,6 +57,8 @@ const AppForm = React.forwardRef(({
             if (isValidFormData && isValidFormData instanceof Function && !isValidFormData(data)) {
                 return false;
             }
+
+            data = {...data, ...paramsToSave};
 
             handleBackDrop(true);
             let msg = "Successfully saved.";

@@ -63,7 +63,7 @@ const AddLastPaymentDate = ({ flatId = 0, handleClose = () => { } }) => {
                     paymentForSessionId: 0,
                 }
                 handleBackDrop(true);
-                let response = await AxiosApi.postData(APIConstants.PAYMENT_DETAILS_CREATE_OR_UPDATE, data);
+                let response = await AxiosApi.postData(APIConstants.PAYMENT_DETAILS_LAST_PAYMENT_DATE_SAVE, data);
                 handleBackDrop(false);
                 enqueueSnackbar("Successfully saved.", { variant: "success" });
                 handleClose(true);

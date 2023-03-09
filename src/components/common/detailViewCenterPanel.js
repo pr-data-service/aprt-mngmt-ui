@@ -19,6 +19,7 @@ import FlatDetailsListView from '../flat-details/flatDetailsListView';
 import PaymentListView from '../payment/paymentListView';
 import MaintenanceDuesListView from '../payment/maintenanceDuesListView';
 import NotesView from '../notes/notesView';
+import MaintenanceListView from '../maintenance/maintenanceListView';
 
 const { OBJECTS } = CONSTANSTS;
 const columns = VIEW_COLUMNS[CONSTANSTS.OBJECTS.PAYMENT];
@@ -106,6 +107,7 @@ const getTabsData = (object) => {
             {value: "2", label: "Payment", object: OBJECTS.PAYMENT, children: <PaymentListView />},
             {value: "3", label: "Payment Details", object: OBJECTS.PAYMENT_DETAILS, children: <PaymentDetailsListView />},
             {value: "4", label: "Maintenance Dues", object: OBJECTS.PAYMENT_DETAILS, children: <MaintenanceDuesListView />},
+            {value: "5", label: "Maintenance(Monthly)", object: OBJECTS.PAYMENT_DETAILS, children: <MaintenanceListView />},
         ]
     } else if(object.toUpperCase() == OBJECTS.PAYMENT) {
         return  [

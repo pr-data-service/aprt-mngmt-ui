@@ -13,6 +13,7 @@ import Constants from '../../utils/constants';
 import Utils from '../../utils/utils';
 import { getFormattedDateTime } from '../../utils/dateHandler';
 import AppForm from '../common/appForm';
+import { useParams } from 'react-router-dom';
 
 const { MONTHS_FULL_FORM } = Constants;
 const { VALIDATOR_TYPE_REQUIRED, VALIDATOR_TYPE_OPTIONAL } = CONSTANSTS.FORM_CONSTANTS;
@@ -26,6 +27,8 @@ const MaintenanceListView = () => {
     const appDialogRef = React.useRef(null);
     const confrmDialogRef = React.useRef(null);
     const object = Utils.getObjectNameFromUrl();
+    const isDetailView = Utils.isDetailView();
+    const params = useParams();
 
     const [data, setData] = React.useState([]);
 
@@ -39,6 +42,11 @@ const MaintenanceListView = () => {
 
     const getDataFromAPI = async (reqParams) => {
         try {
+            if (isDetailView) {
+                reqParams = reqParams ? { ...reqParams } : {};
+                reqParams.parentFieldName = "flatId";
+                reqParams.parentRecordId = params.id;
+            }
             handleBackDrop(true);
             let response = await AxiosApi.getData(APIConstants.MAINTANANCE_LIST_VIEW_GET, reqParams);
             setData(response.data);
@@ -52,16 +60,25 @@ const MaintenanceListView = () => {
 
     const addEvt = () => {
         //maintenanceFormRef.current.handleOpen();
-        handleDialogOpen({ ...defaultFormProps, handleClose: handleDialogClose, callbackOnSubmit: (data) => getDataFromAPI()});
+        handleDialogOpen({ ...getFormParams(), handleClose: handleDialogClose, callbackOnSubmit: (data) => getDataFromAPI()});
     }
 
     const editEvt = () => {
         let row = maintenanceListViewRef.current.getSelectedRow();
         if (row && row.length == 1) {
-            handleDialogOpen({ ...defaultFormProps, handleClose: handleDialogClose, id:row[0].id, callbackOnSubmit: (data) => getDataFromAPI()});
+            handleDialogOpen({ ...getFormParams(), handleClose: handleDialogClose, id:row[0].id, callbackOnSubmit: (data) => getDataFromAPI()});
         } else {
             handleDialogOpen({ title: "Information Dialog", contentText: "Please select one record!" });
         }
+    }
+
+    const getFormParams = () => {
+        let reqParams = {...defaultFormProps};
+        if (isDetailView) {
+            reqParams.paramsToSave = {flatId : params.id};
+            reqParams.fields = reqParams.fields.filter( f => f.name != "flatId");
+        }
+        return reqParams;
     }
 
     const deleteEvt = () => {
@@ -121,8 +138,8 @@ const MaintenanceListView = () => {
         { name: "CSV", title: "Export to .csv file", onClick: downLoadCSV, }, 
     ];
     return <div style={{ padding: 10 }}>
-        <PageHeader object={CONSTANSTS.OBJECTS.MAINTENANCE} />
-        <ListView ref={maintenanceListViewRef} object={CONSTANSTS.OBJECTS.MAINTENANCE} columns={columns} rows={data} toolBarIcon={toolBarIcon} getListViewData={getDataFromAPI}/>
+        {!isDetailView && <PageHeader object={CONSTANSTS.OBJECTS.MAINTENANCE} />}
+        <ListView ref={maintenanceListViewRef} object={CONSTANSTS.OBJECTS.MAINTENANCE} columns={columns} rows={data} toolBarIcon={toolBarIcon} getListViewData={getDataFromAPI} rowStyle={rowStyle}/>
         <ConfirmDialog ref={confrmDialogRef} clickEvent={deleteData} />
     </div>
 }
@@ -155,7 +172,14 @@ const columns = [{
     sort: true,
     headerStyle: { width: 150, },
     headerAttrs: { title: 'Session' }
-}, {
+}, /*{
+    dataField: 'isActive',
+    text: 'Is Active',
+    type: "Boolean",
+    sort: true,
+    headerStyle: { width: 100, },
+    headerAttrs: { title: 'Is Active' }
+},*/ {
     dataField: 'createdDate',
     text: 'Created Date',
     sort: true,
@@ -185,9 +209,7 @@ const columns = [{
     dataField: 'emptyCol',
     type: "EMPTY",
     text: '',
-    sort: true,
     headerStyle: { width: 120, },
-    headerAttrs: { title: '' }
 },];
 
 
@@ -215,4 +237,14 @@ const defaultFormProps = {
     object: CONSTANSTS.OBJECTS.MAINTENANCE, 
     fields: fields, 
 }
-//
+
+
+const rowStyle = (row, rowIndex) => {
+    const style = {};
+    if (row.isActive) {
+        style.color = '#337ab7';
+        //   style.animation = 'blinker 1s linear infinite';
+    }
+
+    return style;
+};

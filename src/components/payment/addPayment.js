@@ -314,7 +314,7 @@ const Body = React.forwardRef(({ flatId }, ref) => {
     }
 
     const addMoreDueMonth = async () => {
-        try {debugger
+        try {
             let id = 0;
             let month = 0;
             let year = 0;
@@ -327,7 +327,7 @@ const Body = React.forwardRef(({ flatId }, ref) => {
                 }
             }
             handleBackDrop(true);
-            let response = await AxiosApi.getData(APIConstants.PAYMENT_ADVANCE_PAYMENT_DUES_LIST_GET+flatId+"/"+month+"/"+year);
+            let response = await AxiosApi.getData(APIConstants.PAYMENT_DETAILS_ADVANCE_PAYMENT_DUES_GET+flatId+"/"+month+"/"+year);
             if(response.httpStatusCode == 200 && response.statusCode == 100) {
                 console.log(response.data);
                 duesList.push({...response.data, id: id+1});
