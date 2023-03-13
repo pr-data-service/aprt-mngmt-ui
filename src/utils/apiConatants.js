@@ -2,7 +2,7 @@
 const APIConstants =  {
     //HOST: "http://192.168.29.112:8080",
     HOST: "http://54.150.237.74:8080",
-    //HOST: "http://localhost:8080",
+    // HOST: "http://localhost:8080",
 
     APP_LOGIN: "/api/authenticate",
 
