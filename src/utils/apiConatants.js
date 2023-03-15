@@ -87,6 +87,10 @@ const APIConstants =  {
     NOTES_GET: "/api/notes/get/",
     NOTES_DELETE: '/api/notes/delete/',
     // NOTES_DELETE_BATCH: '/api/notes/delete/batch',
+
+    DASHBOARD_MAINTENANCE_MONTHLY_GET: "/api/dashboard/maintenance/monthly/get",
+    DASHBOARD_EVENTS_REPORT_GET: "/api/dashboard/events/report/get",
+    DASHBOARD_MAINTENANCE_TODAYS_GET: "/api/dashboard/maintenance/todays/get",
 }
 
 export default APIConstants;
