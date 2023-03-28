@@ -78,6 +78,7 @@ const MaintenanceDuesListView = React.forwardRef(({ flatId }, ref) => {
     const { enqueueSnackbar } = useSnackbar();
     const { handleBackDrop } = React.useContext(AppContext);
     const isDetailView = Utils.isDetailView();
+    let parentObject = isDetailView ? Utils.getObjectNameFromUrl() : "";
     const [data, setData] = React.useState([]);
     
     React.useImperativeHandle(ref, () => ({
@@ -91,9 +92,17 @@ const MaintenanceDuesListView = React.forwardRef(({ flatId }, ref) => {
     const getDataFromAPI = async (reqParams) => {
         try{
             if(isDetailView) {
-                reqParams = reqParams ? {...reqParams} : {};                
-                reqParams.parentFieldName = Utils.getForienKeyFieldName(params);
-                reqParams.parentRecordId = params.id;
+                reqParams = reqParams ? {...reqParams} : {}; 
+                
+                
+                if (parentObject === CONSTANSTS.OBJECTS.EVENTS) {
+                    reqParams.object = parentObject;
+                    reqParams.id = params.id;
+                } else {
+                    reqParams.parentFieldName = Utils.getForienKeyFieldName(params);
+                    reqParams.parentRecordId = params.id;
+                }
+                
             }            
 
             handleBackDrop(true);
@@ -107,15 +116,28 @@ const MaintenanceDuesListView = React.forwardRef(({ flatId }, ref) => {
         
     }
 
-    const downLoadCSV = () => {        
-        let header = columns.filter(f => !f.hidden).map(m => { return {name: m.dataField, label: m.text} });
+    const downLoadCSV = () => { 
+        let fileName = "payment-list-view-";
+        let header = []; 
+        if(CONSTANSTS.OBJECTS.EVENTS == parentObject) {
+            fileName = "dues-list-view-";
+            header = columnsEventsDues.filter(f => !f.hidden).map(m => { return {name: m.dataField, label: m.text} });
+        } else {
+            header = columns.filter(f => !f.hidden).map(m => { return {name: m.dataField, label: m.text} });
+        }     
         let params = {isSerial: true};
-        Utils.downloadCSVFile("payment-list-view-"+getFormattedDateTime(), header, data, params);
+        let totalAmount = data.map(m => m.amount).reduce((partialSum, a) => partialSum + a, 0);
+        params.additionalRows = ["", "Total Amount", totalAmount];
+        Utils.downloadCSVFile(fileName+getFormattedDateTime(), header, data, params);
     }
 
-    const getColumns = (cols) => {
+    const getColumns = () => {
         if(isDetailView) {
-            let arr = JSON.parse(JSON.stringify(cols));
+            
+            if(CONSTANSTS.OBJECTS.EVENTS == parentObject) {
+                return columnsEventsDues;
+            }
+            let arr = JSON.parse(JSON.stringify(columns));
             arr = arr.filter( f => f.dataField != "flatNo");
             let fld = arr.find( f => f.type == "EMPTY");
             if(fld) {
@@ -123,7 +145,7 @@ const MaintenanceDuesListView = React.forwardRef(({ flatId }, ref) => {
             }
             return arr;
         }
-        return cols;
+        return columns;
     }
 
     const toolBarIcon = [
@@ -134,7 +156,7 @@ const MaintenanceDuesListView = React.forwardRef(({ flatId }, ref) => {
 
     return <Box className={classes.container}>
         {!isDetailView && <PageHeader label="Maintenance Dues" object={CONSTANSTS.OBJECTS.PAYMENT_DETAILS}/>}
-        <ListView ref={listViewRef} columns={getColumns(columns)} rows={data} getListViewData={getDataFromAPI} toolBarIcon={toolBarIcon}/>
+        <ListView ref={listViewRef} columns={getColumns()} rows={data} getListViewData={getDataFromAPI} toolBarIcon={toolBarIcon}/>
     </Box>
 })
 
@@ -152,6 +174,41 @@ const getRowsAfterModifying = (rows) => {
     }
     return [];
 }
+const columnsEventsDues = [{
+    dataField: 'id',
+    text: 'ID',
+    headerStyle: { width: 40, },
+    hidden: true,
+    type: "TEXT"
+}, {
+    dataField: 'flatNo',
+    text: 'Flat No',
+    headerStyle: { width: 70, },
+    headerAttrs: { title: 'Flat No' },
+    type: "TEXT"
+}, {
+    dataField: 'amount',
+    text: 'Dues Amount',
+    headerStyle: { width: 150, },
+    headerAttrs: { title: 'Dues Amount' },
+    type: "NUMBER"
+}, {
+    dataField: 'ownersName',
+    text: 'Owners Name',
+    headerStyle: { width: 300, },
+    headerAttrs: { title: 'Owners Name' },
+    type: "TEXT"
+},  {
+    dataField: 'contactNo',
+    text: 'Contact No',
+    headerStyle: { width: 80, },
+    headerAttrs: { title: 'Contact No' },
+    type: "TEXT"
+},  {
+    dataField: 'empty',
+    headerStyle: { width: 340, },
+    type: "EMPTY",
+},];
 
 const columns = [{
     dataField: 'id',

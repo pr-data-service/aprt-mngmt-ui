@@ -124,6 +124,7 @@ const getTabsData = (object) => {
             {value: "1", label: "Notes", object: OBJECTS.NOTES, children: <NotesView />},
             {value: "2", label: "Expense", object: OBJECTS.EXPENSES, children: <ExpensesListView object={object}/>},
             {value: "3", label: "Payment Details", object: OBJECTS.PAYMENT, children: <PaymentDetailsListView />},
+            {value: "4", label: "Dues ListView", object: OBJECTS.PAYMENT_DETAILS, children: <MaintenanceDuesListView />},
         ]
     }
 
