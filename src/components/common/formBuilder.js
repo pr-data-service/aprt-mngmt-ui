@@ -57,7 +57,7 @@ const FormBuilder = React.forwardRef(({
 
     const { handleBackDrop, enqueueSnackbar } = React.useContext(AppContext);
     //const { enqueueSnackbar } = useSnackbar();
-    const [formFields, setFormFields] = React.useState(fields);
+    const [formFields, setFormFields] = React.useState(JSON.parse(JSON.stringify(fields)));
 
     React.useImperativeHandle(ref, () => ({
         // getSelectedRow: () => selectedRow,
@@ -80,7 +80,7 @@ const FormBuilder = React.forwardRef(({
 
 
     React.useEffect(() => {
-        if (data && formFields && formFields.length > 0) {console.log(11)
+        if (data && formFields && formFields.length > 0) {
             reset({...data});
             // formFields.map((m, i) => {
             //     setValue(m.name, data[m.name]);

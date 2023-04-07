@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import APIConstants from '../utils/apiConatants';
 import AxiosApi from '../utils/httpRequestHandler';
 import { useSnackbar } from 'notistack';
+import { AppContext } from './common/context/appContext';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -62,7 +63,7 @@ const Login = () => {
     const [data, setData] = React.useState(null);
     const [sessionList, setSessionList] = React.useState([]);
     const [sessionId, setSessionId] = React.useState(0);
-    
+    const { handleBackDrop } = React.useContext(AppContext);
 
     React.useEffect(() => {
         let token = localStorage.getItem("token");
@@ -73,20 +74,28 @@ const Login = () => {
 
     const login = async () => {
         try {
+            handleBackDrop(true);
             let data = { username, password };
-            let response = await AxiosApi.postData(APIConstants.APP_LOGIN, data);
-            
+            let response = await AxiosApi.postData(APIConstants.APP_LOGIN, data);            
+            handleBackDrop(false);
 
             const { token, sessionList} = response.data;
             let list = sessionList ? sessionList.map( m => { return {value: m.id, text: m.name}}) : []
             list.unshift({value: ' ', text: "----Select Session----"});
             setSessionList(list);
             setData(response.data);
-                    
         } catch (error) {
+            handleBackDrop(false);
             console.error(error.message);
             enqueueSnackbar(error.message, { variant: "error" });
         }
+    }
+
+    const onKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            console.log('do validate');
+            login();
+          }
     }
 
     const handleChange = (event) => {
@@ -100,7 +109,7 @@ const Login = () => {
         navigate("/");    
     }
 
-    return <Box className={classes.container}>
+    return <Box className={classes.container} onKeyDown={onKeyDown}>
         <Paper elevation={2} className={classes.subContainer}>
             {/* <Grid container spacing={1} className={classes.subContainer1}>
                 <i className={`${'fa fa-sign-in'} ${classes.icon}`} aria-hidden="true"></i>
@@ -137,7 +146,7 @@ const Login = () => {
                     <Box className={classes.register}>Do not have account? <a href="/register">Click here to Register</a></Box>
                 </Grid>
                 <Grid item xs={3}>
-                    <Box className={classes.actionArea}><Button color="primary" variant="outlined" onClick={login}>Login</Button></Box>
+                    <Box className={classes.actionArea}><Button color="primary" variant="outlined" onClick={login} onKeyDown={onKeyDown}>Login</Button></Box>
                 </Grid>
                 </>}
 
