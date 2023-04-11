@@ -39,12 +39,11 @@ const ExpensesForm = React.forwardRef(({ getListViewData }, ref) => {
     const {handleBackDrop} = React.useContext(AppContext);
     const isDetailView = Utils.isDetailView();
     const params = useParams();
+    const [open, setOpen] = React.useState(false);
 
     React.useImperativeHandle(ref, () => ({
         handleOpen: handleOpen,
     }));
-
-    const [open, setOpen] = React.useState(false);
 
     React.useEffect(() => {
         if(!id || id<=0) {
