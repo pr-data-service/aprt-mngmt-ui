@@ -99,6 +99,29 @@ class HttpRequestHandler {
 
     }
 
+    downloadZipFile = (url, data) => {
+        return new Promise((resolve, reject) => {
+            this.axios.get(url, {
+                params: { params: JSON.stringify(data) },
+                responseType: 'arraybuffer'
+            })
+            .then((response) => {
+                //need to fix
+                //const filename =  response.headers.get('Content-Disposition').split('filename=')[1];
+                var blob = new window.Blob([response.data], { type: 'application/zip' });
+                var fileURL = URL.createObjectURL(blob);
+                let a = document.createElement('a');
+                a.href = fileURL;
+                a.download = "filename-test.zip";
+                a.click();
+            })
+            .catch((error, param) => {
+                this.processApiResponse(error, reject);
+            });
+        });
+
+    }
+
     processApiResponse = (response, callback) => {
         let { status, data, message, code } = response;
         if (response instanceof HttpReqHandlerError) {
@@ -152,7 +175,8 @@ export default {
     getData: inst.getData,
     deleteData: inst.deleteData,
     patchData: inst.patchData,
-    downloadFile: inst.downloadFile
+    downloadFile: inst.downloadFile,
+    downloadZipFile: inst.downloadZipFile
 }
 
 

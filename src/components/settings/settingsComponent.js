@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Utils from '../../utils/utils';
 import PageHeader from '../common/pageHeader';
+import MonthWisePaymentSlip from '../payment/monthWisePaymentSlip';
 import SessiononListView from './sessionListView';
 
 
@@ -98,9 +99,11 @@ const LinkElement = ({ data, onClick=()=>{}, selected=false }) => {
 }
 
 const linkArr = [
-    {id: 1, text: "Session"}
+    {id: 1, text: "Session"},
+    {id: 2, text: "Payment Receipt's"}
 ];
 
 const settingItemss = [
-    <SessiononListView />
+    <SessiononListView />,
+    <MonthWisePaymentSlip />
 ]

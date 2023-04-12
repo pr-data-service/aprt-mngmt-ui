@@ -113,7 +113,7 @@ debugger
             <Grid item xs={3}>From Date: {m.fromDate}</Grid>
             <Grid item xs={3}>To Date: {m.toDate}</Grid>
             <Grid item xs={1}>
-                <span className={"show-events"} style={{cursor: "pointer", display: "none"}} onClick={deleteEvt(m.id)}>
+                <span className={"show-events"} style={{cursor: "pointer", display: "none"}} title="Click here to delete." onClick={deleteEvt(m.id)}>
                     <i className="fa fa-trash" aria-hidden="true"></i>
                 </span>
             </Grid>
