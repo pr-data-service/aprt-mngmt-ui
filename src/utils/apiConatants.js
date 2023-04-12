@@ -49,7 +49,9 @@ const APIConstants =  {
     PAYMENT_DELETE: '/api/payment/delete/',
     PAYMENT_GET: "/api/payment/get/",
     PAYMENT_DOWNLOAD: "/api/payment/download/",
-    PAYMENT_CANCEL: "/api/payment/cancel",    
+    PAYMENT_CANCEL: "/api/payment/cancel", 
+    PAYMENT_SLIP_BY_MONTHS_GET: "/api/payment/slip_by_months/get",
+    PAYMENT_DOWNLOAD_ZIP: "/api/payment/download_zip/",   
     
     PAYMENT_DETAILS_LIST_VIEW_GET: "/api/payment_details/list_view/get",
     PAYMENT_DETAILS_DUES_LIST_VIEW_GET: "/api/payment_details/list_view/dues/get",
