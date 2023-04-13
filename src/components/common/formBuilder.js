@@ -187,11 +187,13 @@ const Field = ({ errors, field, setValue, getValues, onLoadEvent, autoFocus }) =
     } else if (field.type == "LONG_TEXT") {
         fieldProps.multiline = true;
         fieldProps.minRows = 5;
+    } else if (field.type == "PASSWORD") {
+        fieldProps.InputProps = {type: "password"};
     }
 
     return <>
         {(field.type == "NUMBER" || field.type == "TEXT" || field.type == "PHONE"
-            || field.type == "EMAIL" || field.type == "LONG_TEXT"
+            || field.type == "EMAIL" || field.type == "LONG_TEXT" || field.type == "PASSWORD"
             || field.type == "LIST"
             || field.type == "DATE") &&
             <TextField

@@ -5,6 +5,7 @@ import Utils from '../../utils/utils';
 import PageHeader from '../common/pageHeader';
 import MonthWisePaymentSlip from '../payment/monthWisePaymentSlip';
 import SessiononListView from './sessionListView';
+import UserProfile from './userProfile';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -100,10 +101,12 @@ const LinkElement = ({ data, onClick=()=>{}, selected=false }) => {
 
 const linkArr = [
     {id: 1, text: "Session"},
-    {id: 2, text: "Payment Receipt's"}
+    {id: 2, text: "Payment Receipt's"},
+    {id: 3, text: "Profile"}
 ];
 
 const settingItemss = [
     <SessiononListView />,
-    <MonthWisePaymentSlip />
+    <MonthWisePaymentSlip />,
+    <UserProfile />
 ]
