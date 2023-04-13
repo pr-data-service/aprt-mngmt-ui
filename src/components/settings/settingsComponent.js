@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Utils from '../../utils/utils';
 import PageHeader from '../common/pageHeader';
 import MonthWisePaymentSlip from '../payment/monthWisePaymentSlip';
+import EmailSetup from './emailSetup';
 import SessiononListView from './sessionListView';
 import UserProfile from './userProfile';
 
@@ -102,11 +103,13 @@ const LinkElement = ({ data, onClick=()=>{}, selected=false }) => {
 const linkArr = [
     {id: 1, text: "Session"},
     {id: 2, text: "Payment Receipt's"},
-    {id: 3, text: "Profile"}
+    {id: 3, text: "Profile"},
+    {id: 4, text: "Email Setup"}
 ];
 
 const settingItemss = [
     <SessiononListView />,
     <MonthWisePaymentSlip />,
-    <UserProfile />
+    <UserProfile />,
+    <EmailSetup/>
 ]

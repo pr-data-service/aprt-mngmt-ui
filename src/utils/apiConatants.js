@@ -60,6 +60,9 @@ const APIConstants =  {
     PAYMENT_DETAILS_LAST_PAYMENT_DATE_SAVE: "/api/payment_details/last_payment_date/save", 
     PAYMENT_DETAILS_ADVANCE_PAYMENT_DUES_GET: "/api/payment_details/advance_payment_dues/get/",
 
+    EMAIL_SETUP_CREATE_OR_UPDATE: "/api/email/setup/create_or_update",
+    EMAIL_SETUP_GET: "/api/email/setup/get",
+
     EVENTS_LIST_GET: "/api/events/list/get/",
     EVENTS_LIST_VIEW_GET: "/api/events/list_view/get",
     EVENTS_CREATE_OR_UPDATE: "/api/events/create_or_update",
