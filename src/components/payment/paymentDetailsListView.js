@@ -87,6 +87,8 @@ const PaymentDetailsListView = () => {
     const downLoadCSV = () => {        
         let header = columns.filter(f => !f.hidden).map(m => { return {name: m.dataField, label: m.text} });
         let params = {isSerial: true};
+        let totalAmount = data.filter(f => !f.isCanceled).map(m => m.amount).reduce((partialSum, a) => partialSum + a, 0);
+        params.additionalRows = ["", "Total Amount", totalAmount];
         Utils.downloadCSVFile("payment-details-list-view-"+getFormattedDateTime(), header, data, params);
     }
 

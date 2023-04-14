@@ -80,6 +80,8 @@ const ExpenseItemsListView = () => {
     const downLoadCSV = () => {
         let header = columns.filter(f => !f.hidden).map(m => { return {name: m.dataField, label: m.text} });
         let params = {isSerial: true};
+        let totalAmount = data.filter(f => !f.isCanceled).map(m => m.amount).reduce((partialSum, a) => partialSum + a, 0);
+        params.additionalRows = ["", "Total Amount", totalAmount];
         Utils.downloadCSVFile("expense-items-list-view-"+getFormattedDateTime(), header, data, params);
     }
 
@@ -116,6 +118,13 @@ const columns = [{
     headerStyle: { width: 100, },
     headerAttrs: { title: 'Amount' }
 }, {
+    dataField: 'isCanceled',
+    text: 'Is Canceled',
+    type:"BOOLEAN",
+    sort: true,
+    headerStyle: { width: 80, },
+    headerAttrs: { title: 'Is Canceled' }
+}, {
     dataField: 'createdDate',
     text: 'Created Date',
     type:"DATE",
@@ -136,3 +145,12 @@ const columns = [{
     headerStyle: { width: 235, },
 }];
 
+const rowStyle = (row, rowIndex) => {
+    const style = {};
+    if (row.isCanceled) {
+        style.color = 'red';
+        //   style.animation = 'blinker 1s linear infinite';
+    }
+
+    return style;
+};

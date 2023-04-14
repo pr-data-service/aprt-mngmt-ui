@@ -95,7 +95,7 @@ const ExpensesListView = () => {
         let header = columns.filter(f => !f.hidden).map(m => { return {name: m.dataField, label: m.text} });
         let params = {isSerial: true};
 
-        let totalAmount = data.map(m => m.amount).reduce((partialSum, a) => partialSum + a, 0);
+        let totalAmount = data.filter(f => !f.isCanceled).map(m => m.amount).reduce((partialSum, a) => partialSum + a, 0);
         params.additionalRows = ["", "Total Amount", totalAmount];
         Utils.downloadCSVFile("expense-list-view-"+getFormattedDateTime(), header, data, params);
     }
