@@ -55,7 +55,7 @@ const MonthWisePaymentSlip = () => {
 
     const getVoucherDataFromAPI = async () => {
         try {
-            let voucherResponse = await AxiosApi.getData(APIConstants.PAYMENT_VOUCHER_BY_MONTH_GET);
+            let voucherResponse = await AxiosApi.getData(APIConstants.EXPENSES_VOUCHER_BY_MONTH_GET);
             setVoucherData(voucherResponse.data);
             console.log(voucherResponse.data);
         }
@@ -72,7 +72,7 @@ const MonthWisePaymentSlip = () => {
                 enqueueSnackbar("File Downloaded", { variant: "success" });
             }
             else if (a === "voucher") {
-                let response = await AxiosApi.downloadZipFile(APIConstants.PAYMENT_VOUCHER_DOWNLOAD_ZIP + folderName);
+                let response = await AxiosApi.downloadZipFile(APIConstants.EXPENSES_VOUCHER_DOWNLOAD_ZIP + folderName);
                 enqueueSnackbar("File Downloaded", { variant: "success" });
             }
         }

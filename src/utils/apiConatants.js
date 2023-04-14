@@ -52,10 +52,9 @@ const APIConstants =  {
     PAYMENT_GET: "/api/payment/get/",
     PAYMENT_DOWNLOAD: "/api/payment/download/",
     PAYMENT_CANCEL: "/api/payment/cancel", 
-    PAYMENT_SLIP_BY_MONTHS_GET: "/api/payment/slip_by_months/get",
-    PAYMENT_VOUCHER_BY_MONTH_GET: "/api/payment/voucher_by_month/get",
+    PAYMENT_SLIP_BY_MONTHS_GET: "/api/payment/slip_by_months/get",  
     PAYMENT_DOWNLOAD_ZIP: "/api/payment/download_zip/",   
-    PAYMENT_VOUCHER_DOWNLOAD_ZIP: "/api/payment/voucher/download_zip/",   
+
 
     
     PAYMENT_DETAILS_LIST_VIEW_GET: "/api/payment_details/list_view/get",
@@ -80,6 +79,7 @@ const APIConstants =  {
     EXPENSE_HEAD_CREATE_OR_UPDATE: "/api/expense-head/create_or_update",
     EXPENSE_HEAD_GET: "/api/expense-head/get/",
     EXPENSE_HEAD_DELETE: '/api/expense-head/delete/',
+ 
 
     EXPENSES_LIST_GET: "/api/expenses/list/get/",
     EXPENSES_LIST_VIEW_GET: "/api/expenses/list_view/get",
@@ -88,6 +88,8 @@ const APIConstants =  {
     EXPENSES_DELETE: '/api/expenses/delete/',
     EXPENSES_DOWNLOAD: "/api/expenses/download/",
     EXPENSES_CANCEL: "/api/expenses/cancel",
+    EXPENSES_VOUCHER_DOWNLOAD_ZIP: "/api/expenses/voucher/download_zip/", 
+    EXPENSES_VOUCHER_BY_MONTH_GET: "/api/expenses/voucher_by_month/get",
 
     EXPENSES_ITEMS_LIST_VIEW_GET: "/api/expense_items/list_view/get",
 
