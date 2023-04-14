@@ -63,7 +63,12 @@ const MonthWisePaymentSlip = () => {
         {data && data.map( (m, index) => <>
             <Grid container className={classes.row} style={  (index%2 == 0) ? {background: '#e5e5e563'} : {}}>
             <Grid item xs={1}>{index + 1 + "."}</Grid>
-            <Grid item xs={5}>{m.folderName}</Grid>
+            <Grid item xs={5}>
+                <span style={{marginRight: 10}}>
+                    <i className="fa fa-file-archive-o" aria-hidden="true"></i>
+                </span>
+                {m.folderName}
+            </Grid>
             <Grid item xs={5}></Grid>
             <Grid item xs={1}>
                 <span className={"show-events"} style={{cursor: "pointer", display: "none"}} title="Click here to download." onClick={downloadZip(m.folderName)}>
