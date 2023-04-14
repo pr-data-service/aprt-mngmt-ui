@@ -93,7 +93,7 @@ const ExpenseItemsListView = () => {
     ];
     return <Box className={classes.container}>
         {!isDetailView && <PageHeader object={CONSTANSTS.OBJECTS.EXPENSE_ITEMS}/>}
-        <ListView ref={expenseItemsListViewRef} object={CONSTANSTS.OBJECTS.EXPENSE_ITEMS} columns={columns} rows={rows} toolBarIcon={toolBarIcon} getListViewData={getDataFromAPI} /*isSearchRequired={false}*//>
+        <ListView ref={expenseItemsListViewRef} object={CONSTANSTS.OBJECTS.EXPENSE_ITEMS} columns={columns} rows={rows} toolBarIcon={toolBarIcon} getListViewData={getDataFromAPI} rowStyle={rowStyle}/*isSearchRequired={false}*//>
     </Box>
 }
 
@@ -142,7 +142,7 @@ const columns = [{
     dataField: 'emptyCol',
     type:'EMPTY',
     text: '',
-    headerStyle: { width: 235, },
+    headerStyle: { width: 190, },
 }];
 
 const rowStyle = (row, rowIndex) => {

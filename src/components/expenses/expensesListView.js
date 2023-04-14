@@ -96,7 +96,7 @@ const ExpensesListView = () => {
         let params = {isSerial: true};
 
         let totalAmount = data.filter(f => !f.isCanceled).map(m => m.amount).reduce((partialSum, a) => partialSum + a, 0);
-        params.additionalRows = ["", "Total Amount", totalAmount];
+        params.additionalRows = ["", "", "Total Amount", totalAmount];
         Utils.downloadCSVFile("expense-list-view-"+getFormattedDateTime(), header, data, params);
     }
 
