@@ -6,7 +6,7 @@ const OBJECTS = {
     PAYMENT: "PAYMENT",
     PAYMENT_DETAILS: "PAYMENT_DETAILS",
     EXPENSE_HEAD: "EXPENSE_HEAD",
-    EXPENSES: "EXPENSES",
+    EXPENSE: "EXPENSE",
     EXPENSE_ITEMS: "EXPENSE_ITEMS",
     EVENTS: "EVENTS",
     NOTES: "NOTES",
@@ -22,7 +22,7 @@ OBJECTS_LABEL[OBJECTS.PAYMENT_DETAILS] = "Payment Details";
 OBJECTS_LABEL[OBJECTS.MAINTENANCE_MASTER] = "Maintenance Master";
 OBJECTS_LABEL[OBJECTS.MAINTENANCE] = "Maintenance";
 OBJECTS_LABEL[OBJECTS.EXPENSE_HEAD] = "Expense Head";
-OBJECTS_LABEL[OBJECTS.EXPENSES] = "Expenses";
+OBJECTS_LABEL[OBJECTS.EXPENSE] = "Expenses";
 OBJECTS_LABEL[OBJECTS.EXPENSE_ITEMS] = "Expense Items";
 OBJECTS_LABEL[OBJECTS.EVENTS] = "Events";
 
@@ -37,7 +37,7 @@ const ICONS = {
     MAINTENANCE: "fa fa-money",
     PAYMENT_DETAILS: "fa fa-money",
     EXPENSE_HEAD: "fa fa-money",
-    EXPENSES: "fa fa-money",
+    EXPENSE: "fa fa-money",
     EXPENSE_ITEMS: "fa fa-money",
     EVENTS: "fa fa-calendar-plus-o",
     SETTINGS: "fa fa-cog"

@@ -51,7 +51,7 @@ const EventsReportBarChart = () => {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="expanse" fill="#8884d8" />
+            <Bar dataKey="expense" fill="#8884d8" />
             <Bar dataKey="collection" fill="#82ca9d" />
             <Bar dataKey="dues" fill="#FF8042" />
         </BarChart>
@@ -62,6 +62,6 @@ const EventsReportBarChart = () => {
 export default EventsReportBarChart;
 
 const data = [
-    { name: 'Event 1', expanse: 5000, collection: 3050, dues: 2000 },
-    { name: 'Event 2', expanse: 4000, collection: 3500, dues: 1200},
+    { name: 'Event 1', expense: 5000, collection: 3050, dues: 2000 },
+    { name: 'Event 2', expense: 4000, collection: 3500, dues: 1200},
 ]

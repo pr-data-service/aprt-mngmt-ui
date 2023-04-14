@@ -18,7 +18,7 @@ import { getFormattedDateTime } from '../../utils/dateHandler';
 import { makeStyles } from '@material-ui/core';
 import { Box } from '@material-ui/core';
 
-const columns = VIEW_COLUMNS[Constants.OBJECTS.EXPENSES];
+const columns = VIEW_COLUMNS[Constants.OBJECTS.EXPENSE];
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -111,8 +111,8 @@ const ExpensesListView = () => {
         <ExpensesForm ref={expensesFormRef} getListViewData={getDataFromAPI} />
         <AppDialog ref={appDialogRef} maxWidth="xs" />
         <ConfirmDialog ref={confrmDialogRef} />
-        {!isDetailView && <PageHeader object={CONSTANSTS.OBJECTS.EXPENSES} />}
-        <ListView ref={expenseListViewRef} object={CONSTANSTS.OBJECTS.EXPENSES}  columns={getColumns(columns)} rows={data} toolBarIcon={toolBarIcon} getListViewData={getDataFromAPI}/>
+        {!isDetailView && <PageHeader object={CONSTANSTS.OBJECTS.EXPENSE} />}
+        <ListView ref={expenseListViewRef} object={CONSTANSTS.OBJECTS.EXPENSE}  columns={getColumns(columns)} rows={data} toolBarIcon={toolBarIcon} getListViewData={getDataFromAPI} rowStyle={rowStyle} />
     </Box>
 }
 
@@ -123,9 +123,9 @@ const getColumns = (cols) => {
     if (cols) {
         let columns = [...cols];
         columns.forEach((col, i) => {
-            if (col.dataField == "title") {
+            if (col.dataField == "voucherNo") {
                 col.formatExtraData = {
-                    detailLinkUrl: "/" + Constants.OBJECTS.EXPENSES.toLowerCase() + "/detail_view/"
+                    detailLinkUrl: "/" + Constants.OBJECTS.EXPENSE.toLowerCase() + "/detail_view/"
                 };
                 col.events = {
                     onClick: (e, column, columnIndex, row, rowIndex) => {                        
@@ -151,3 +151,13 @@ const getColumns = (cols) => {
     }
     return cols;
 }
+
+const rowStyle = (row, rowIndex) => {
+    const style = {};
+    if (row.isCanceled) {
+        style.color = 'red';
+        //   style.animation = 'blinker 1s linear infinite';
+    }
+
+    return style;
+};

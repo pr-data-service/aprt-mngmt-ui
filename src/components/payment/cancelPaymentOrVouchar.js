@@ -5,9 +5,10 @@ import { AppContext } from '../common/context/appContext';
 import { TextField } from '../common/fields';
 import AxiosApi from '../../utils/httpRequestHandler';
 import APIConstants from '../../utils/apiConatants';
+import CONSTANSTS from '../../utils/constants';
 
 
-const CancelPayment = ({id, refreshData}) => {
+const CancelPaymentOrVouchar = ({ object, id, refreshData }) => {
     const { handleBackDrop, handleDialogOpen, handleDialogClose } = React.useContext(AppContext);
     const { enqueueSnackbar } = useSnackbar();
 
@@ -16,13 +17,13 @@ const CancelPayment = ({id, refreshData}) => {
 
     const cancelPayment = async () => {
         try {
-            if(remarks && remarks != "") {
-                if(remarks.length < 10) {
+            if (remarks && remarks != "") {
+                if (remarks.length < 10) {
                     enqueueSnackbar("Remarks should be more than 10 character.", { variant: "error" });
                 } else {
                     handleBackDrop(true);
-                    let data = {id: parseInt(id), cancelRemarks: remarks};
-                    let response = await AxiosApi.patchData(APIConstants.PAYMENT_CANCEL, data);
+                    let data = { id: parseInt(id), cancelRemarks: remarks };
+                    let response = await AxiosApi.patchData(getURL(object), data);
                     console.log(response.data);
                     enqueueSnackbar("Successfully canceled.", { variant: "success" });
                     if (refreshData && refreshData instanceof Function) {
@@ -38,31 +39,47 @@ const CancelPayment = ({id, refreshData}) => {
             console.log(error.message);
             enqueueSnackbar(error.message, { variant: "error" });
             handleBackDrop(false);
-        }        
+        }
     }
 
     return <Grid container spacing={2}>
         <Grid item xs={12}>
-            <TextField 
-            key={"outlined-size-small-cancel"}
-            id={"outlined-size-small-cancel"}
-            name={"cancel"}
-            label={"Cancel Remarks"}
-            variant="outlined"
-            size="small"
-            style={{width: "100%"}}
-            multiline={true}
-            minRows={5}
-            onChange={(event) => setRemarks(event.target.value)}/>
+            <TextField
+                key={"outlined-size-small-cancel"}
+                id={"outlined-size-small-cancel"}
+                name={"cancel"}
+                label={"Cancel Remarks"}
+                variant="outlined"
+                size="small"
+                style={{ width: "100%" }}
+                multiline={true}
+                minRows={5}
+                onChange={(event) => setRemarks(event.target.value)} />
         </Grid>
         <Grid item xs={7}></Grid>
-        <Grid item xs={5} style={{display: "flex", justifyContent: "flex-end"}}>
+        <Grid item xs={5} style={{ display: "flex", justifyContent: "flex-end" }}>
             <Button onClick={handleDialogClose} color="primary" variant="outlined"> Cancel </Button>
-            <Box style={{width: 10}}></Box>
-            <Button onClick={cancelPayment} color="primary" variant="outlined"> Cancel Payment </Button>
+            <Box style={{ width: 10 }}></Box>
+            <Button onClick={cancelPayment} color="primary" variant="outlined"> {getButtonLabel(object)} </Button>
         </Grid>
     </Grid>
 }
 
 
-export default CancelPayment;
+const getButtonLabel = (object) => {
+    if (object === CONSTANSTS.OBJECTS.PAYMENT) {
+        return "Cancel Payment";
+    } else if (object === CONSTANSTS.OBJECTS.EXPENSE) {
+        return "Cancel Vouchar";
+    }
+}
+
+const getURL = (object) => {
+    if (object === CONSTANSTS.OBJECTS.PAYMENT) {
+        return APIConstants.PAYMENT_CANCEL;
+    } else if (object === CONSTANSTS.OBJECTS.EXPENSE) {
+        return APIConstants.EXPENSES_CANCEL;
+    }
+}
+
+export default CancelPaymentOrVouchar;

@@ -11,7 +11,7 @@ import { AppContext } from './context/appContext';
 import { VIEW_COLUMNS } from '../../utils/columnConstants';
 import CustomTab from './customTab';
 import PaymentDetailsListView from '../payment/paymentDetailsListView';
-import ExpanseItemsListView from '../expenses/expanseItemsListView';
+import ExpenseItemsListView from '../expenses/expenseItemsListView';
 import ExpenseHeadForm from '../expenses/expenseHeadForm';
 import ExpensesHeadListView from '../expenses/expenseHeadListView';
 import ExpensesListView from '../expenses/expensesListView';
@@ -114,15 +114,15 @@ const getTabsData = (object) => {
             {value: "1", label: "Notes", object: OBJECTS.NOTES, children: <NotesView />},
             {value: "2", label: "Payment Details", object: OBJECTS.PAYMENT_DETAILS, children: <PaymentDetailsListView />},
         ]
-    } else if(object.toUpperCase() == OBJECTS.EXPENSES) {
+    } else if(object.toUpperCase() == OBJECTS.EXPENSE) {
         return [
             {value: "1", label: "Notes", object: OBJECTS.NOTES, children: <NotesView />},
-            {value: "2", label: "Expense Items", object: OBJECTS.EXPENSE_ITEMS, children: <ExpanseItemsListView />},
+            {value: "2", label: "Expense Items", object: OBJECTS.EXPENSE_ITEMS, children: <ExpenseItemsListView />},
         ]
     } else if(object.toUpperCase() == OBJECTS.EVENTS) {
         return [
             {value: "1", label: "Notes", object: OBJECTS.NOTES, children: <NotesView />},
-            {value: "2", label: "Expense", object: OBJECTS.EXPENSES, children: <ExpensesListView object={object}/>},
+            {value: "2", label: "Expense", object: OBJECTS.EXPENSE, children: <ExpensesListView object={object}/>},
             {value: "3", label: "Payment Details", object: OBJECTS.PAYMENT, children: <PaymentDetailsListView />},
             {value: "4", label: "Dues ListView", object: OBJECTS.PAYMENT_DETAILS, children: <MaintenanceDuesListView />},
         ]

@@ -15,7 +15,7 @@ import DetailView from './components/common/detailView';
 import PaymentListView from './components/payment/paymentListView';
 import EventsListView from './components/events/eventsListView';
 import ExpensesListView from './components/expenses/expensesListView';
-import ExpenseItemsListView from './components/expenses/expanseItemsListView';
+import ExpenseItemsListView from './components/expenses/expenseItemsListView';
 import PrintPage from './components/common/printPage';
 import Login from './components/login';
 import RegisterProject from './components/register-project/registerProject';

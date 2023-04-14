@@ -108,7 +108,7 @@ const getColumns = (cols) => {
         columns.forEach((col, i) => {
             if (col.dataField == "title") {
                 col.formatExtraData = {
-                    detailLinkUrl: "/" + Constants.OBJECTS.EXPENSES.toLowerCase() + "/detail_view/"
+                    detailLinkUrl: "/" + Constants.OBJECTS.EXPENSE.toLowerCase() + "/detail_view/"
                 };
                 col.events = {
                     onClick: (e, column, columnIndex, row, rowIndex) => {                        

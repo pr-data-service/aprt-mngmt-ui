@@ -209,11 +209,18 @@ VIEW_COLUMNS[CONSTANSTS.OBJECTS.PAYMENT] =
 // },
 ];
 
-VIEW_COLUMNS[CONSTANSTS.OBJECTS.EXPENSES] = [{
+VIEW_COLUMNS[CONSTANSTS.OBJECTS.EXPENSE] = [{
     dataField: 'id',
     text: 'ID',
     type: "NUMBER",
     hidden: true,
+}, {
+    dataField: 'voucherNo',
+    text: 'Voucher No',
+    type: "TEXT",
+    sort: true,
+    headerAttrs: { title: 'Voucher No' },
+    headerStyle: { width: 100, },
 }, {
     dataField: 'title',
     text: 'Title',
@@ -245,13 +252,6 @@ VIEW_COLUMNS[CONSTANSTS.OBJECTS.EXPENSES] = [{
     headerAttrs: { title: 'Description' },
     headerStyle: { width: 250, },
 }, {
-    dataField: 'voucherNo',
-    text: 'Voucher No',
-    type: "TEXT",
-    sort: true,
-    headerAttrs: { title: 'Voucher No' },
-    headerStyle: { width: 100, },
-}, {
     dataField: 'expenseDate',
     text: 'Expense Date',
     type: "DATE",
@@ -267,6 +267,20 @@ VIEW_COLUMNS[CONSTANSTS.OBJECTS.EXPENSES] = [{
     headerAttrs: { title: 'Event Name' },
     headerStyle: { width: 150, },
 }, {
+    dataField: 'isCanceled',
+    text: 'Is Canceled',
+    type:"BOOLEAN",
+    sort: true,
+    headerStyle: { width: 80, },
+    headerAttrs: { title: 'Is Canceled' }
+}, {
+    dataField: 'cancelRemarks',
+    text: 'Cancel Remarks',
+    type:"TEXT",
+    sort: true,
+    headerStyle: { width: 150, },
+    headerAttrs: { title: 'Cancel Remarks' }
+},{
     dataField: 'createdDate',
     text: 'Created Date',
     type: "DATE",

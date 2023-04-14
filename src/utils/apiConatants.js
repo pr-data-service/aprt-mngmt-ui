@@ -84,6 +84,7 @@ const APIConstants =  {
     EXPENSES_GET: "/api/expenses/get/",
     EXPENSES_DELETE: '/api/expenses/delete/',
     EXPENSES_DOWNLOAD: "/api/expenses/download/",
+    EXPENSES_CANCEL: "/api/expenses/cancel",
 
     EXPENSES_ITEMS_LIST_VIEW_GET: "/api/expense_items/list_view/get",
 

@@ -109,7 +109,7 @@ const getGETApiUrl = (object) => {
         return APIConstants.PAYMENT_GET;
     } else if(object.toUpperCase() == OBJECTS.PAYMENT_DETAILS) {
         
-    } else if(object.toUpperCase() == OBJECTS.EXPENSES) {
+    } else if(object.toUpperCase() == OBJECTS.EXPENSE) {
         return APIConstants.EXPENSES_GET;
     } else if(object.toUpperCase() == OBJECTS.EXPENSE_ITEMS) {
         
@@ -129,7 +129,7 @@ const getFormPOSTApiUrl = (object) => {
         return APIConstants.PAYMENT_SAVE;
     } else if(object.toUpperCase() == OBJECTS.PAYMENT_DETAILS) {
         
-    } else if(object.toUpperCase() == OBJECTS.EXPENSES) {
+    } else if(object.toUpperCase() == OBJECTS.EXPENSE) {
         return APIConstants.EXPENSES_CREATE_OR_UPDATE;
     } else if(object.toUpperCase() == OBJECTS.EXPENSE_ITEMS) {
         

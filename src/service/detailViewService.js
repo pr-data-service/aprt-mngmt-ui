@@ -10,7 +10,7 @@ const getDataFromAPI = async (object, id) => {
         url = APIConstants.FLAT_DETAILS_GET
     } else if(object == CONSTANSTS.OBJECTS.PAYMENT) {
         url = APIConstants.PAYMENT_GET
-    } else if(object == CONSTANSTS.OBJECTS.EXPENSES) {
+    } else if(object == CONSTANSTS.OBJECTS.EXPENSE) {
         url = APIConstants.EXPENSES_GET
     } else if(object == CONSTANSTS.OBJECTS.EVENTS) {
         url = APIConstants.EVENTS_GET

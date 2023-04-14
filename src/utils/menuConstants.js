@@ -9,7 +9,7 @@ import MaintenanceListView from '../components/maintenance/maintenanceListView';
 import MaintenanceDuesListView from '../components/payment/maintenanceDuesListView';
 import PaymentDetailsListView from '../components/payment/paymentDetailsListView';
 import PaymentListView from '../components/payment/paymentListView';
-import ExpenseItemsListView from '../components/expenses/expanseItemsListView';
+import ExpenseItemsListView from '../components/expenses/expenseItemsListView';
 
 const MENU_LIST = [
     {

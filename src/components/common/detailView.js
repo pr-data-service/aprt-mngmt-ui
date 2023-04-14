@@ -13,7 +13,7 @@ import CustomTab from './customTab';
 import DetailViewCenterPanel from './detailViewCenterPanel';
 import APIConstants from '../../utils/apiConatants';
 import AxiosApi from '../../utils/httpRequestHandler'
-import CancelPayment from '../payment/cancelPayment';
+import CancelPaymentOrVouchar from '../payment/cancelPaymentOrVouchar';
 
 const { MONTHS_FULL_FORM } = CONSTANSTS;
 //const columns = VIEW_COLUMNS[CONSTANSTS.OBJECTS.PAYMENT];
@@ -99,7 +99,7 @@ const DetailView = () => {
             let url = "";
             if (object === CONSTANSTS.OBJECTS.PAYMENT) {
                 url = APIConstants.PAYMENT_DOWNLOAD + params.id;
-            } else if (object === CONSTANSTS.OBJECTS.EXPENSES) {
+            } else if (object === CONSTANSTS.OBJECTS.EXPENSE) {
                 url = APIConstants.EXPENSES_DOWNLOAD + params.id;
             }
             if (url !== "") {
@@ -115,12 +115,18 @@ const DetailView = () => {
 
     const cancel = (object) => async () => {
         try {
-            if (object === CONSTANSTS.OBJECTS.PAYMENT) {
+            if (object === CONSTANSTS.OBJECTS.PAYMENT || object === CONSTANSTS.OBJECTS.EXPENSE) {
+                let title = "";
+                if(object === CONSTANSTS.OBJECTS.PAYMENT) {
+                    title = "Cancel Payment";
+                } else if(object === CONSTANSTS.OBJECTS.EXPENSE) {
+                    title = "Cancel Vouchar";
+                }
                 handleDialogOpen({
-                    title: "Cancel Payment", handleClose: handleDialogClose,
+                    title: title, handleClose: handleDialogClose,
                     requiredOKBtn: false,
                     requiredCancelBtn: false,
-                    component: <CancelPayment id={params.id} refreshData={getDataFromAPI} />
+                    component: <CancelPaymentOrVouchar object={object} id={params.id} refreshData={getDataFromAPI} />
                 });
             }
         } catch (error) {
@@ -131,10 +137,10 @@ const DetailView = () => {
 
     const getRightElements = () => {
         let arr = [];
-        if (object === CONSTANSTS.OBJECTS.PAYMENT && (data && !data.isCanceled)) {
+        if ((object === CONSTANSTS.OBJECTS.PAYMENT || object === CONSTANSTS.OBJECTS.EXPENSE) && (data && !data.isCanceled)) {
             arr.push(<ToolBarIcon name="CANCEL" onClick={cancel(object)} style={{ fontSize: 20, color: "red" }} />);
         }
-        if (object === CONSTANSTS.OBJECTS.PAYMENT || object === CONSTANSTS.OBJECTS.EXPENSES) {
+        if (object === CONSTANSTS.OBJECTS.PAYMENT || object === CONSTANSTS.OBJECTS.EXPENSE) {
             arr.push(<ToolBarIcon name="PRINT" onClick={print(object)} />);
         }
         return arr;
@@ -143,7 +149,7 @@ const DetailView = () => {
     const isShowRightPanel = (object) => {
         return CONSTANSTS.OBJECTS.FLAT_DETAILS == object.toUpperCase()
         || CONSTANSTS.OBJECTS.PAYMENT == object.toUpperCase()
-        || CONSTANSTS.OBJECTS.EXPENSES == object.toUpperCase() ? true : false;
+        || CONSTANSTS.OBJECTS.EXPENSE == object.toUpperCase() ? true : false;
     }
 
     return <Box className={classes.root}>
@@ -230,10 +236,14 @@ const LeftPanel = React.forwardRef(({ object, data }, ref) => {
        
     }, []);
 
-    const CanceledPayment = ({object, data}) => {
+    const CanceledPaymentOrVouchar = ({object, data}) => {
         const classes = useStylesLeftPanel();
-        if(object && object == CONSTANSTS.OBJECTS.PAYMENT && data && data.isCanceled) {
-            return <Box className={classes.cancelPayment}>Payment Canceled</Box>
+        if(object && (object === CONSTANSTS.OBJECTS.PAYMENT || object === CONSTANSTS.OBJECTS.EXPENSE) && data && data.isCanceled) {
+            return <Box className={classes.cancelPayment}>
+                {object === CONSTANSTS.OBJECTS.PAYMENT && "Payment "}
+                {object === CONSTANSTS.OBJECTS.EXPENSE && "Expense "}
+                 Canceled
+                </Box>
         }
         return <></>
     }
@@ -250,7 +260,7 @@ const LeftPanel = React.forwardRef(({ object, data }, ref) => {
     const columns = VIEW_COLUMNS[object];
     let cols = columns.filter(f => !f.hidden);
     return <Box>
-        <CanceledPayment object={object} data={data}/>
+        <CanceledPaymentOrVouchar object={object} data={data}/>
         {data && cols.map(m => <FieldLabeValue {...m} data={data} />)}
     </Box>
 
@@ -356,7 +366,7 @@ const getObject = (object) => {
     let obj = object;
     if (object == CONSTANSTS.OBJECTS.FLAT_DETAILS || object == CONSTANSTS.OBJECTS.PAYMENT) {
         obj = CONSTANSTS.OBJECTS.OWNERS;
-    } else if (object == CONSTANSTS.OBJECTS.EXPENSES) {
+    } else if (object == CONSTANSTS.OBJECTS.EXPENSE) {
         obj = CONSTANSTS.OBJECTS.EVENTS;
     }
     return obj;
@@ -364,7 +374,7 @@ const getObject = (object) => {
 
 const getRightPanelRecordId = ({object, parentObjData}, params) => {
     let id = 0;
-    if(object == CONSTANSTS.OBJECTS.FLAT_DETAILS || object == CONSTANSTS.OBJECTS.EXPENSES) {
+    if(object == CONSTANSTS.OBJECTS.FLAT_DETAILS || object == CONSTANSTS.OBJECTS.EXPENSE) {
         id = params.id;
     } else if(object == CONSTANSTS.OBJECTS.PAYMENT) {
         id = parentObjData ? parentObjData.flatId : 0;

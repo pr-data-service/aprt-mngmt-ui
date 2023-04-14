@@ -101,7 +101,7 @@ export default AppForm;
 const getExternalComponent = (object, props, data) => {
     const list = [];
 
-    if (object == CONSTANSTS.OBJECTS.EXPENSES) {
+    if (object == CONSTANSTS.OBJECTS.EXPENSE) {
         const { expenseItemsRef } = props;
         list.push(
             {

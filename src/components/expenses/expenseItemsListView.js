@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const ExpanseItemsListView = () => {
+const ExpenseItemsListView = () => {
     const classes = useStyles();
     const { enqueueSnackbar } = useSnackbar();
     const expenseItemsListViewRef = React.useRef();
@@ -95,7 +95,7 @@ const ExpanseItemsListView = () => {
     </Box>
 }
 
-export default ExpanseItemsListView;
+export default ExpenseItemsListView;
 
 
 const columns = [{
