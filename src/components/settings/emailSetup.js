@@ -5,6 +5,7 @@ import APIConstants from "../../utils/apiConatants";
 import FormBuilder from "../common/formBuilder";
 import AxiosApi from '../../utils/httpRequestHandler';
 import CONSTANSTS from "../../utils/constants";
+import { useSnackbar } from 'notistack';
 
 const { VALIDATOR_TYPE_REQUIRED, VALIDATOR_TYPE_OPTIONAL } = CONSTANSTS.FORM_CONSTANTS;
 
@@ -28,6 +29,7 @@ const useStyles = makeStyles(()=>({
 
 const EmailSetup = () => {
     let classes= useStyles();
+    let {enqueueSnackbar} = useSnackbar();
     const [data, setData] = React.useState(Object);
 
     React.useEffect(()=>{
@@ -42,6 +44,7 @@ const EmailSetup = () => {
             console.log(response.data);
         } catch (error) {
             console.log(error.message);
+            enqueueSnackbar(error.message, { variant: "error" });
         }
     }
 
@@ -50,8 +53,9 @@ const EmailSetup = () => {
             console.log(obj);
             let response = await AxiosApi.postData(APIConstants.EMAIL_SETUP_CREATE_OR_UPDATE, obj);
             console.log(response.data);
+            enqueueSnackbar("Email setup successfully updated.", { variant: "success" });
         } catch (error) {
-            console.log(error.message);
+            console.log(error.message, {variant: "error"});
         }
     }
 
