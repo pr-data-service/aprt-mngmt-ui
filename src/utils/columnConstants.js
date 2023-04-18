@@ -69,6 +69,22 @@ VIEW_COLUMNS[CONSTANSTS.OBJECTS.FLAT_DETAILS] = [{
     headerStyle: { width: 100, },
     style: { width: 100, }
 }, {
+    dataField: 'ownersFirstName',
+    text: 'Owners First Name',
+    type: "TEXT",
+    sort: true,
+    headerAttrs: { title: 'Owners First Name' },
+    headerStyle: { width: 200, },
+    style: { width: 200, }
+}, {
+    dataField: 'ownersLastName',
+    text: 'Owners Last Name',
+    type: "TEXT",
+    sort: true,
+    headerAttrs: { title: 'Owners Last Name' },
+    headerStyle: { width: 200, },
+    style: { width: 200, }
+}, {
     dataField: 'createdDate',
     text: 'Created Date',
     type: "DATE",

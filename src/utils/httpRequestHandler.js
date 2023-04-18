@@ -106,13 +106,13 @@ class HttpRequestHandler {
                 responseType: 'arraybuffer'
             })
             .then((response) => {
-                //need to fix
-                //const filename =  response.headers.get('Content-Disposition').split('filename=')[1];
+                let filename =  response.headers["content-disposition"].split('filename=')[1].replaceAll('"', '');
+                
                 var blob = new window.Blob([response.data], { type: 'application/zip' });
                 var fileURL = URL.createObjectURL(blob);
                 let a = document.createElement('a');
                 a.href = fileURL;
-                a.download = "filename-test.zip";
+                a.download = filename;
                 a.click();
             })
             .catch((error, param) => {
