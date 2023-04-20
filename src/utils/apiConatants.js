@@ -64,6 +64,9 @@ const APIConstants =  {
 
     EMAIL_SETUP_CREATE_OR_UPDATE: "/api/email/setup/create_or_update",
     EMAIL_SETUP_GET: "/api/email/setup/get",
+    
+    EMAIL_SERVICE_GET: "/api/email/service/get",
+    EMAIL_SERVICE_CREATE_OR_UPDATE : "/api/email/service/create_or_update",
 
     EVENTS_LIST_GET: "/api/events/list/get/",
     EVENTS_LIST_VIEW_GET: "/api/events/list_view/get",
