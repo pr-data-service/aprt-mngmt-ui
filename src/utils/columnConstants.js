@@ -4,38 +4,36 @@ import Constants from '../utils/constants';
 //columnConstants
 
 const VIEW_COLUMNS = {}
-VIEW_COLUMNS[CONSTANSTS.OBJECTS.FLAT_DETAILS] = [{
+VIEW_COLUMNS[CONSTANSTS.OBJECTS.FLAT_DETAILS] = [
+{
     dataField: 'id',
     text: 'ID',
     type: "NUMBER",
     hidden: true,
-    headerAttrs: { title: 'ID' },
-    headerStyle: { width: 150, },
-    style: { width: 150, }
 }, {
     dataField: 'flatNo',
     text: 'Flat Number',
     type: "TEXT",
     sort: true,
     headerAttrs: { title: 'Flat Number' },
-    headerStyle: { width: 150, },
-    style: { width: 150, }
+    headerStyle: { width: 90, },
+    style: { width: 90, }
 }, {
     dataField: 'block',
     text: 'Block',
     type: "TEXT",
     sort: true,
     headerAttrs: { title: 'Block' },
-    headerStyle: { width: 100, },
-    style: { width: 100, }
+    headerStyle: { width: 40, },
+    style: { width: 40, }
 }, {
     dataField: 'flatSizeSqft',
     text: 'Square Foot',
     type: "NUMBER",
     sort: true,
     headerAttrs: { title: 'Square Foot' },
-    headerStyle: { width: 100, },
-    style: { width: 100, }
+    headerStyle: { width: 90, },
+    style: { width: 90, }
 }, {
     dataField: 'floorNo',
     text: 'Floor No',
@@ -66,8 +64,8 @@ VIEW_COLUMNS[CONSTANSTS.OBJECTS.FLAT_DETAILS] = [{
     type: "TEXT",
     sort: true,
     headerAttrs: { title: 'Type' },
-    headerStyle: { width: 100, },
-    style: { width: 100, }
+    headerStyle: { width: 60, },
+    style: { width: 60, }
 }, {
     dataField: 'ownersFirstName',
     text: 'Owners First Name',

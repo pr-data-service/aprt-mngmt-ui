@@ -89,13 +89,15 @@ const CheckBox = (fieldProps) => {
         name={name}
         label={label}
         // {...props}
-        render={({ field }) => <FormControlLabel
+        render={({
+            field: { onChange, onBlur, value, name, ref },
+            fieldState: { invalid, isTouched, isDirty, error },
+            formState,
+          }) => <div><FormControlLabel
             label={label}
-            name={name}
             className={className}
-            {...field}
-            control={<Checkbox inputProps={inputProps}/>}
-        />}/>
+            control={<input type="checkbox" {...inputProps} style={{margin: "0px 10px 0px 13px"}}/>}
+        /></div>}/>
 }
 
 export {
