@@ -122,6 +122,50 @@ class HttpRequestHandler {
 
     }
 
+    uploadFile = (url, file) => {
+        return new Promise((resolve, reject) => {
+            let formData = new FormData();
+            formData.append('file', file);
+            this.axios.post(url, formData, {
+                headers: {
+                    'Content-Type': "multipart/form-data"
+                }
+            })
+                .then((response) => {
+                    this.processApiResponse(response, resolve);
+                })
+                .catch((error) => {
+                    this.processApiResponse(error, reject);
+                })
+        })
+    }
+
+    getImgFileUrl = (url) => {
+        return new Promise((resolve, reject) => {
+            this.axios.get(url, {
+                responseType: 'arraybuffer'
+            })
+                .then((response) => {
+                    try {
+                        response.data = JSON.parse(String.fromCharCode.apply(null, new Uint8Array(response.data)));
+                    } catch (e) {
+                        console.log(e);
+                        console.log("throwing error because arraybuffer not able to parse to JSON so Signature found.")
+                        const blob = new Blob([response.data], { type: 'image/jpeg' });
+                        response.data = {
+                            statusCode: 100,
+                            data: URL.createObjectURL(blob),
+                            message: ""
+                        }
+                    }
+                    this.processApiResponse(response, resolve);
+                })
+                .catch((error) => {
+                    this.processApiResponse(error, reject);
+                })
+        })
+    }
+
     processApiResponse = (response, callback) => {
         let { status, data, message, code } = response;
         if (response instanceof HttpReqHandlerError) {
@@ -176,7 +220,9 @@ export default {
     deleteData: inst.deleteData,
     patchData: inst.patchData,
     downloadFile: inst.downloadFile,
-    downloadZipFile: inst.downloadZipFile
+    downloadZipFile: inst.downloadZipFile,
+    uploadFile: inst.uploadFile,
+    getImgFileUrl: inst.getImgFileUrl
 }
 
 

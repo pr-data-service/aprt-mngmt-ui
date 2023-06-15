@@ -78,9 +78,18 @@ const ExpensesForm = React.forwardRef(({ getListViewData }, ref) => {
         let isValid = true;
         if(itemsValues) {
             itemsValues.map( m => {
-                if(isValid && (!m.itemHead || m.itemHead === "" || !m.amount || m.amount <= 0)) {
-                    isValid = false;
+                if(isValid) {
+                    if(!m.itemHead || m.itemHead === "" || !m.amount) {
+                        isValid = false;
+                    } else {
+                        try {
+                            parseFloat(m.amount)
+                        } catch (error) {
+                            isValid = false;
+                        }
+                    }                    
                 }
+                
             })
         } else {
             isValid = false;
@@ -88,7 +97,7 @@ const ExpensesForm = React.forwardRef(({ getListViewData }, ref) => {
         return isValid;
     }
 
-    const onSubmit = async data => {
+    const onSubmit = async data => {debugger
         console.log(data);               
         try{
             let itemsValues = expenseItemsRef.current.getItemsValues();

@@ -23,6 +23,8 @@ const APIConstants =  {
     USER_BY_FLAT_ID_GET: "/api/user/by_flat_id/get/",
     USER_LOGGEDIN_GET: '/api/user/loggedin/get',
     USER_UPDATE_PASSWORD: '/api/user/update_password',
+    USER_SIGNATURE_UPLOAD : "/api/user/signature/upload",
+    USER_SIGNATURE_GET : "/api/user/signature/get",
 
     FLAT_DETAILS_LIST_GET: "/api/flat_details/list/get",
     FLAT_DETAILS_LIST_VIEW_GET: "/api/flat_details/list_view/get",

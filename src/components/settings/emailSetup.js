@@ -28,7 +28,12 @@ const useStyles = makeStyles(() => ({
     },
     formContainer: {
         // width: '20%',
-    }
+    },
+    serviceLabel: {
+        fontWeight: "bold",
+        fontSize: 12,
+        margin:"10px 0"
+    },
 }));
 
 
@@ -93,8 +98,9 @@ const EmailSetup = () => {
     ];
 
     const defaultCheckboxes = [
-        { id: null, isActive: false, type: 'Payment' },
-        { id: null, isActive: false, type: 'Voucher' },
+        { id: null, isActive: false, type: 'Signature', name: "Payment"},
+        { id: null, isActive: false, type: 'Signature', name: "Voucher"},
+        { id: null, isActive: false, type: 'Notification', name: "Dues" },
     ];
 
     return <Box className={classes.mainContainer}>
@@ -106,20 +112,43 @@ const EmailSetup = () => {
         </Box>
         <Box className={classes.container}>
             <Grid className={classes.header}>Email Service</Grid>
+            <Box className={classes.serviceLabel}>Signature</Box>
             <Grid container spacing={2} item xs={6}>
                 {
                     defaultCheckboxes.map((m, index) => {
-                        checkboxes && checkboxes.map((e) => {
-                            if (m.type === e.type) {
+                        if(m.type === "Signature"){
+                            checkboxes && checkboxes
+                            .forEach((e) => {
+                                if (m.name === e.name && m.type === e.type) {
+                                    m = e;
+                                }
+                            })
+                            return <Grid item xs={6} key={index + "p"}>
+                                <label style={{fontWeight: 'normal', fontSize: 12}}>{m.name}</label><span>{" "}</span>
+                                <input type="checkbox" checked={m.isActive} onChange={(e) => { let obj ={...m, isActive: e.currentTarget.checked}; onSubmitService(obj)}} />
+                            </Grid>
+                        }
+                    })
+                }
+            </Grid>
+            <Box className={classes.serviceLabel}>Notification</Box>
+            <Grid container spacing={2} item xs={6}>
+            {
+                defaultCheckboxes.map((m, index) => {
+                    if(m.type === "Notification"){
+                        checkboxes && checkboxes
+                        .forEach((e) => {
+                            if (m.name === e.name && m.type === e.type) {
                                 m = e;
                             }
                         })
-                        return <Grid item xs={6} key={index + "p"}>
-                            <label style={{fontWeight: 'normal', fontSize: 12}}>{m.type}</label><span>{" "}</span>
+                        return <Grid item xs={6} key={index + "k"}>
+                            <label style={{fontWeight: 'normal', fontSize: 12}}>{m.name}</label><span>{" "}</span>
                             <input type="checkbox" checked={m.isActive} onChange={(e) => { let obj ={...m, isActive: e.currentTarget.checked}; onSubmitService(obj)}} />
                         </Grid>
-                    })
-                }
+                    }
+                })
+            }
             </Grid>
         </Box>
     </Box>
