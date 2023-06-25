@@ -106,6 +106,10 @@ const APIConstants =  {
     DASHBOARD_MAINTENANCE_MONTHLY_GET: "/api/dashboard/maintenance/monthly/get",
     DASHBOARD_EVENTS_REPORT_GET: "/api/dashboard/events/report/get",
     DASHBOARD_MAINTENANCE_TODAYS_GET: "/api/dashboard/maintenance/todays/get",
+
+    ACCOUNT_TRANSACTION_CREATE: "/api/accounts/transaction/create",
+    ACCOUNT_TRANSACTION_LIST_GET: "/api/accounts/transaction/list/get/",
+    ACCOUNT_TRANSACTION_DELETE: '/api/accounts/transaction/delete/',
 }
 
 export default APIConstants;

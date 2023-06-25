@@ -10,6 +10,7 @@ const OBJECTS = {
     EXPENSE_ITEMS: "EXPENSE_ITEMS",
     EVENTS: "EVENTS",
     NOTES: "NOTES",
+    ACCOUNT_TRANSACTION: "ACCOUNT_TRANSACTION",
 
     SETTINGS: "SETTINGS",
 }
@@ -40,7 +41,8 @@ const ICONS = {
     EXPENSE: "fa fa-money",
     EXPENSE_ITEMS: "fa fa-money",
     EVENTS: "fa fa-calendar-plus-o",
-    SETTINGS: "fa fa-cog"
+    SETTINGS: "fa fa-cog",
+    ACCOUNTS: "fa-solid fa-receipt"
 }
 
 const FORM_CONSTANTS = {

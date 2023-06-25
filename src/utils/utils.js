@@ -133,6 +133,8 @@ const getFormPOSTApiUrl = (object) => {
         return APIConstants.EXPENSES_CREATE_OR_UPDATE;
     } else if(object.toUpperCase() == OBJECTS.EXPENSE_ITEMS) {
         
+    } else if(object.toUpperCase() == OBJECTS.ACCOUNT_TRANSACTION) {
+        return APIConstants.ACCOUNT_TRANSACTION_CREATE;
     }
 }
 

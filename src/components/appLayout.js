@@ -104,6 +104,8 @@ const AppHeader = () => {
       navigate("/login");
     } else if(value == "settings") {
       navigate("/settings");
+    } else if(value == "accounts") {
+      navigate("/accounts");
     }
   }
 
@@ -118,6 +120,7 @@ const AppHeader = () => {
         <Box className={classes.appTitle} title={"Current Session: "+sessNm}>{sessNm}</Box>
         <ProfileMenu onClick={onClick} options={[
           {value: "settings", text: "Settings"},
+          {value: "accounts", text: "Accounts"},
           {value: "logout", text: "Logout"},]}/>
       </Box>
     </Box>}
