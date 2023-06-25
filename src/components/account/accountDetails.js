@@ -3,7 +3,7 @@ import React from 'react'
 
 const useStyles = makeStyles((theme) => ({
     container: {
-        padding: 10
+        padding: 10,
     },
     listContainer: {
         width: "50%"
@@ -65,21 +65,35 @@ const AccountDetails = () => {
                     <Grid item xs={8} className={classes.openingBalanceContainerElement}> Balance in Bank Account</Grid> 
                     <Grid item xs={4} className={classes.transactionValue}> 
                         {inputIds["biba"] && <input id="biba" key="biba" type="text" className={classes.inputStyle} onBlur={onBlurElement("biba")}/>}
-                        {!inputIds["biba"] && <span onDoubleClick={shouInputElement("biba")}>129333</span>}
+                        {!inputIds["biba"] && <span onDoubleClick={shouInputElement("biba")}>120000</span>}
                     </Grid> 
                     <Grid item xs={8} className={classes.openingBalanceContainerElement}> Cash in Hand</Grid>
                     <Grid item xs={4} className={classes.transactionValue}> 
                         {inputIds["cih"] && <input id="cih" key="cih" type="text" className={classes.inputStyle} value={129333} onBlur={onBlurElement("cih")}/>}
-                        {!inputIds["cih"] && <span onDoubleClick={shouInputElement("cih")}>129333</span>}
+                        {!inputIds["cih"] && <span onDoubleClick={shouInputElement("cih")}>60000</span>}
                     </Grid>
                 </Grid>
                 <Grid container className={`${classes.row} ${classes.transaction}`}>
                     <Grid item xs={7} className={classes.openingBalancetitle}> Deposit In Bank Account</Grid>
-                    <Grid item xs={5} className={classes.transactionValue}> $ 51313</Grid>
+                    <Grid item xs={5} className={classes.transactionValue}> $ 70000</Grid>
                     <Grid item xs={7} className={classes.openingBalancetitle}> Withdraw from Bank Account</Grid>
-                    <Grid item xs={5} className={classes.transactionValue}> $ 51343</Grid>
+                    <Grid item xs={5} className={classes.transactionValue}> $ 30000</Grid>
+                </Grid>
+                <Grid container className={classes.row}>
+                    <Grid item xs={12} className={classes.openingBalancetitle}> Closing Balance</Grid>                   
+                </Grid>
+                <Grid container className={`${classes.row} ${classes.openingBalanceContainer}`}>
+                    <Grid item xs={8} className={classes.openingBalanceContainerElement}> Balance in Bank Account</Grid> 
+                    <Grid item xs={4} className={classes.transactionValue}> 
+                        <span >120000</span>
+                    </Grid> 
+                    <Grid item xs={8} className={classes.openingBalanceContainerElement}> Cash in Hand</Grid>
+                    <Grid item xs={4} className={classes.transactionValue}> 
+                        <span>60000</span>
+                    </Grid>
                 </Grid>
             </Box>
+            
         </Box>
     )
 }
