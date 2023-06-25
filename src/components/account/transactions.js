@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Button, Grid, makeStyles } from '@material-ui/core';
-import { AppContext } from '../../components/common/context/appContext';
+import { AppContext } from '../common/context/appContext';
 import CONSTANSTS from '../../utils/constants';
 import AxiosApi from '../../utils/httpRequestHandler';
 import APIConstants from '../../utils/apiConatants';
@@ -29,6 +29,10 @@ const useStyles = makeStyles((theme) => ({
     },
     listContainer: {
         width: "80%"
+    },
+    addIcon: {
+        cursor: "pointer",
+        marginLeft: 10
     }
 }));
 
@@ -78,7 +82,10 @@ const AccountTransaction = () => {
 
     return <Box className={classes.container}>
         <Grid container>
-            <Grid item xs={8} className={classes.header} onClick={addEvt}>Account Transactions</Grid>
+            <Grid item xs={8}>
+                <span className={classes.header} >Transactions</span>
+                <i className={`fa fa-plus ${classes.addIcon}`}  aria-hidden="true" onClick={addEvt} title="Add Transaction"></i>
+            </Grid>
             <Grid item xs={4}></Grid>
         </Grid>
         <Box className={classes.listContainer}>
@@ -91,7 +98,7 @@ const AccountTransaction = () => {
                 <Grid item xs={1}></Grid>
             </Grid>
         {data && data.map( (m, index) => <>
-            <Grid container className={classes.row} style={  (index%2 == 0) ? {background: '#e5e5e563'} : {}}>
+            <Grid container className={classes.row} style={  (index%2 != 0) ? {background: '#e5e5e563'} : {}}>
             <Grid item xs={1}>{index+1}</Grid>
             <Grid item xs={1}>{m.type}</Grid>
             <Grid item xs={4}>{m.refNo}</Grid>

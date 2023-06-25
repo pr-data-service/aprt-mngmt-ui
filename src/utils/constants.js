@@ -10,7 +10,7 @@ const OBJECTS = {
     EXPENSE_ITEMS: "EXPENSE_ITEMS",
     EVENTS: "EVENTS",
     NOTES: "NOTES",
-    ACCOUNTS: "ACCOUNTS",
+    ACCOUNT: "ACCOUNT",
     ACCOUNT_TRANSACTION: "ACCOUNT_TRANSACTION",
 
     SETTINGS: "SETTINGS",
@@ -28,26 +28,26 @@ OBJECTS_LABEL[OBJECTS.EXPENSE] = "Expenses";
 OBJECTS_LABEL[OBJECTS.EXPENSE_ITEMS] = "Expense Items";
 OBJECTS_LABEL[OBJECTS.EVENTS] = "Events";
 OBJECTS_LABEL[OBJECTS.SETTINGS] = "Settings";
-OBJECTS_LABEL[OBJECTS.ACCOUNTS] = "Accounts";
+OBJECTS_LABEL[OBJECTS.ACCOUNT] = "Account";
 OBJECTS_LABEL[OBJECTS.ACCOUNT_TRANSACTION] = "Account Transaction";
 
 const CHILD_OBJECTS = {};
 CHILD_OBJECTS[OBJECTS.PAYMENT] = [ OBJECTS.PAYMENT_DETAILS, OBJECTS.FLAT_DETAILS, ];
 
 const ICONS = {
-    USER_DETAILS: "fa fa-user",
-    FLAT_DETAILS: "fa fa-building",
-    PAYMENT: "fa fa-money",
-    MAINTENANCE_MASTER: "fa fa-money",
-    MAINTENANCE: "fa fa-money",
-    PAYMENT_DETAILS: "fa fa-money",
-    EXPENSE_HEAD: "fa fa-money",
-    EXPENSE: "fa fa-money",
-    EXPENSE_ITEMS: "fa fa-money",
-    EVENTS: "fa fa-calendar-plus-o",
-    SETTINGS: "fa fa-cog",
-    ACCOUNTS: "fa fa-book"
 }
+ICONS[OBJECTS.OWNERS] = "fa fa-user";
+ICONS[OBJECTS.FLAT_DETAILS] = "fa fa-building";
+ICONS[OBJECTS.PAYMENT] = "fa fa-money";
+ICONS[OBJECTS.MAINTENANCE_MASTER] = "fa fa-money";
+ICONS[OBJECTS.MAINTENANCE] = "fa fa-money";
+ICONS[OBJECTS.PAYMENT_DETAILS] = "fa fa-money";
+ICONS[OBJECTS.EXPENSE_HEAD] = "fa fa-money";
+ICONS[OBJECTS.EXPENSE] = "fa fa-money";
+ICONS[OBJECTS.EXPENSE_ITEMS] = "fa fa-money";
+ICONS[OBJECTS.EVENTS] = "fa fa-calendar-plus-o";
+ICONS[OBJECTS.SETTINGS] = "fa fa-cog";
+ICONS[OBJECTS.ACCOUNT] = "fa fa-book";
 
 const FORM_CONSTANTS = {
     VALIDATOR_TYPE_OPTIONAL: "OPTIONAL",

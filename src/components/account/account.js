@@ -3,7 +3,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import Utils from '../../utils/utils';
 import PageHeader from '../common/pageHeader';
-import AccountTransaction from './AccountTransaction';
+import AccountTransaction from './transactions';
 
 const useStyles = makeStyles((theme) => ({
     root: {

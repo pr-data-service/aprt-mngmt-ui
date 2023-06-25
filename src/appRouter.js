@@ -24,8 +24,8 @@ import ExpensesHeadListView from './components/expenses/expenseHeadListView';
 import MaintenanceDuesListView from './components/payment/maintenanceDuesListView';
 import MENU_LIST from './utils/menuConstants';
 import SettingsComponent from './components/settings/settingsComponent';
-import Accounts from './components/Accounts/accounts';
-
+import Account from './components/account/account';
+import CONSTANSTS from './utils/constants';
 
 const AppRouter = () => {
   let arr = [...MENU_LIST];
@@ -70,7 +70,7 @@ const AppRouter = () => {
           <Route path=":object/print/:id" element={<PrintPage />} />
           <Route path="/settings" element={<SettingsComponent />} />
           <Route path="tab" element={<CustomTab />} />
-          <Route path='accounts' element={<Accounts/>}/>
+          <Route path={CONSTANSTS.OBJECTS.ACCOUNT} element={<Account/>}/>
           <Route path="*" element={<NoPages />} />
 
           <Route path="register" element={<RegisterProject />} />

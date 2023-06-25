@@ -10,6 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import APIConstants from '../utils/apiConatants';
 import { AppContext } from './common/context/appContext';
 import AxiosApi from '../utils/httpRequestHandler';
+import CONSTANSTS from '../utils/constants';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -102,10 +103,10 @@ const AppHeader = () => {
       localStorage.removeItem("session-id");
       localStorage.removeItem("session");
       navigate("/login");
-    } else if(value == "settings") {
+    } else if(value == CONSTANSTS.OBJECTS.SETTINGS) {
       navigate("/settings");
-    } else if(value == "accounts") {
-      navigate("/accounts");
+    } else if(value == CONSTANSTS.OBJECTS.ACCOUNT) {
+      navigate("/account");
     }
   }
 
@@ -119,8 +120,8 @@ const AppHeader = () => {
       <Box className={classes.userProfileContainer}>
         <Box className={classes.appTitle} title={"Current Session: "+sessNm}>{sessNm}</Box>
         <ProfileMenu onClick={onClick} options={[
-          {value: "settings", text: "Settings"},
-          {value: "accounts", text: "Accounts"},
+          {value: CONSTANSTS.OBJECTS.SETTINGS, text: CONSTANSTS.OBJECTS_LABEL[CONSTANSTS.OBJECTS.SETTINGS]},
+          {value: CONSTANSTS.OBJECTS.ACCOUNT, text: CONSTANSTS.OBJECTS_LABEL[CONSTANSTS.OBJECTS.ACCOUNT]},
           {value: "logout", text: "Logout"},]}/>
       </Box>
     </Box>}
