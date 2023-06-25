@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const AccountTransaction = () => {
+const Transaction = () => {
     const classes = useStyles();
     const { enqueueSnackbar } = useSnackbar();
     const { handleBackDrop, handleDialogOpen, handleDialogClose } = React.useContext(AppContext);
@@ -116,7 +116,7 @@ const AccountTransaction = () => {
     </Box>
 }
 
-export default AccountTransaction
+export default Transaction
 
 const fields = [
     // { "name": "loginId", label: "Login ID", defaultValue: "", "type": "TEXT", "isHeaden": false, validationType: VALIDATOR_TYPE_REQUIRED },

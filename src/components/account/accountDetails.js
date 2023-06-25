@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
         padding: 10
     },
     listContainer: {
-        width: "80%"
+        width: "50%"
     },
     row: {
         padding: '5px 10px',
@@ -14,26 +14,72 @@ const useStyles = makeStyles((theme) => ({
             display: 'block !important',
         }
     },
-
+    openingBalancetitle: {
+        fontWeight: 500
+    },
+    openingBalanceContainer: {
+        //paddingLeft: 40
+    },
+    inputStyle: {
+        width: "100%",
+        height: 20
+    },
+    openingBalanceContainerElement: {
+        paddingLeft: 20
+    },
+    transaction: {
+        marginTop: 20
+    },
+    transactionValue: {
+        textAlign: "end"
+    }
 }))
 
 const AccountDetails = () => {
     const [data, setData] = React.useState({cashInAccount: '1000', cashInHand: '500'});
     const classes = useStyles();
+    const [inputIds, setInputIds] = React.useState({"biba": false, "cih": false });
 
+    const shouInputElement = (id) => () => {
+        inputIds[id] = true;
+        setInputIds({...inputIds});
+    }
+
+    const onBlurElement = (elementId) => (ev) => {
+        inputIds[elementId] = false;
+        setInputIds({...inputIds});
+        saveOrUpdate(elementId, ev.currentTarget.value);
+    }
+
+    const saveOrUpdate = (elementId, value) => {
+        //alert(value)
+    }
 
     return (
         <Box className={classes.container}>
-            <Grid className={classes.listContainer}>
+            <Box className={classes.listContainer}>
                 <Grid container className={classes.row}>
-                    <Grid item xs={5} style={{backgroundColor: 'blueviolet'}}> djijdidijqjd</Grid>
-                    <Grid item xs={3}>djijwidjwjd</Grid>
-                    <Grid item xs={3} style={{backgroundColor: 'blueviolet'}}>ndjdijdjjwd</Grid>
-                    <Grid item xs={1}>
-                        dndijwiwjiji
+                    <Grid item xs={12} className={classes.openingBalancetitle}> Opening Balance</Grid>                   
+                </Grid>
+                <Grid container className={`${classes.row} ${classes.openingBalanceContainer}`}>
+                    <Grid item xs={8} className={classes.openingBalanceContainerElement}> Balance in Bank Account</Grid> 
+                    <Grid item xs={4} className={classes.transactionValue}> 
+                        {inputIds["biba"] && <input id="biba" key="biba" type="text" className={classes.inputStyle} onBlur={onBlurElement("biba")}/>}
+                        {!inputIds["biba"] && <span onDoubleClick={shouInputElement("biba")}>129333</span>}
+                    </Grid> 
+                    <Grid item xs={8} className={classes.openingBalanceContainerElement}> Cash in Hand</Grid>
+                    <Grid item xs={4} className={classes.transactionValue}> 
+                        {inputIds["cih"] && <input id="cih" key="cih" type="text" className={classes.inputStyle} value={129333} onBlur={onBlurElement("cih")}/>}
+                        {!inputIds["cih"] && <span onDoubleClick={shouInputElement("cih")}>129333</span>}
                     </Grid>
                 </Grid>
-            </Grid>
+                <Grid container className={`${classes.row} ${classes.transaction}`}>
+                    <Grid item xs={7} className={classes.openingBalancetitle}> Deposit In Bank Account</Grid>
+                    <Grid item xs={5} className={classes.transactionValue}> $ 51313</Grid>
+                    <Grid item xs={7} className={classes.openingBalancetitle}> Withdraw from Bank Account</Grid>
+                    <Grid item xs={5} className={classes.transactionValue}> $ 51343</Grid>
+                </Grid>
+            </Box>
         </Box>
     )
 }

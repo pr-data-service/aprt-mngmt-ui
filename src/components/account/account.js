@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Utils from '../../utils/utils';
 import PageHeader from '../common/pageHeader';
 import AccountDetails from './accountDetails';
-import AccountTransaction from './transactions';
+import Transaction from './transactions';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -98,12 +98,12 @@ const LinkElement = ({ data, onClick = () => { }, selected = false }) => {
 }
 
 const linkArr = [
-    { id: 1, text: "Account Transaction" },
     { id: 2, text: "Account Details" },
+    { id: 1, text: "Account Transaction" },
 ];
 
 const settingItemss = [
-    <AccountTransaction />,
+    <Transaction />,
     <AccountDetails/>
 ]
 
