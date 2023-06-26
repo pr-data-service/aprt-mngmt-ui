@@ -7,6 +7,8 @@ import MonthWisePaymentSlip from '../payment/monthWisePaymentSlip';
 import EmailSetup from './emailSetup';
 import SessiononListView from './sessionListView';
 import UserProfile from './userProfile';
+import Users from '../settings/users';
+import UserRolePermission from '../settings/userRolePermission'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -104,12 +106,16 @@ const linkArr = [
     {id: 1, text: "Session"},
     {id: 2, text: "Payment Receipt's"},
     {id: 3, text: "Profile"},
-    {id: 4, text: "Email Setup"}
+    {id: 4, text: "Email Setup"},
+    {id: 5, text: "Users"},
+    {id: 6, text: "User Role Permission"},
 ];
 
 const settingItemss = [
     <SessiononListView />,
     <MonthWisePaymentSlip />,
     <UserProfile />,
-    <EmailSetup/>
+    <EmailSetup/>,
+    <Users/>,
+    <UserRolePermission/>
 ]
