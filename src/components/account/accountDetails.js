@@ -64,7 +64,7 @@ const AccountDetails = () => {
                 <Grid container className={`${classes.row} ${classes.openingBalanceContainer}`}>
                     <Grid item xs={8} className={classes.openingBalanceContainerElement}> Balance in Bank Account</Grid> 
                     <Grid item xs={4} className={classes.transactionValue}> 
-                        {inputIds["biba"] && <input id="biba" key="biba" type="text" className={classes.inputStyle} onBlur={onBlurElement("biba")}/>}
+                        {inputIds["biba"] && <input id="biba" key="biba" type="text" className={classes.inputStyle} autoFocus={true} onBlur={onBlurElement("biba")}/>}
                         {!inputIds["biba"] && <span onDoubleClick={shouInputElement("biba")}>120000</span>}
                     </Grid> 
                     <Grid item xs={8} className={classes.openingBalanceContainerElement}> Cash in Hand</Grid>
