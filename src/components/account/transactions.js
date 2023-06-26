@@ -92,8 +92,9 @@ const Transaction = () => {
             <Grid container className={classes.row} style={  {background: '#e5e5e563'}}>
                 <Grid item xs={1}>Srl. No.</Grid>
                 <Grid item xs={1}>Type</Grid>
-                <Grid item xs={4}>Ref. No</Grid>
+                <Grid item xs={2}>Ref. No</Grid>
                 <Grid item xs={2}>Amount</Grid>
+                <Grid item xs={2}>Remarks</Grid>
                 <Grid item xs={3}>Trans. Date</Grid>
                 <Grid item xs={1}></Grid>
             </Grid>
@@ -101,8 +102,9 @@ const Transaction = () => {
             <Grid container className={classes.row} style={  (index%2 != 0) ? {background: '#e5e5e563'} : {}}>
             <Grid item xs={1}>{index+1}</Grid>
             <Grid item xs={1}>{m.type}</Grid>
-            <Grid item xs={4}>{m.refNo}</Grid>
+            <Grid item xs={2}>{m.refNo}</Grid>
             <Grid item xs={2}>{m.amount}</Grid>
+            <Grid item xs={2}>{m.remarks}</Grid>
             <Grid item xs={3}>{m.transDate}</Grid>
             <Grid item xs={1}>
                 <span className={"show-events"} style={{cursor: "pointer", display: "none"}} title="Click here to delete." onClick={deleteEvt(m.id)}>
@@ -125,7 +127,8 @@ const fields = [
     },
     { "name": "refNo", label: "Referance No.", defaultValue: "", "type": "TEXT", "isHeaden": false, validationType: VALIDATOR_TYPE_REQUIRED },
     { "name": "amount", label: "Amount", defaultValue: "", "type": "NUMBER", "isHeaden": false, validationType: VALIDATOR_TYPE_REQUIRED },
-    { "name": "transDate", label: "Transaction Date", defaultValue: "", "type": "DATE", "isHeaden": false, validationType: VALIDATOR_TYPE_OPTIONAL },
+    { "name": "transDate", label: "Transaction Date", defaultValue: "", "type": "DATE", "isHeaden": false, validationType: VALIDATOR_TYPE_REQUIRED },
+    { "name": "remarks", label: "Remarks", defaultValue: "", "type": "LONG_TEXT", "isHeaden": false, validationType: VALIDATOR_TYPE_OPTIONAL },
 ];
 
 const defaultFormProps = {

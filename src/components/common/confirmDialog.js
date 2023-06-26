@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ConfirmDialog = React.forwardRef(({ clickEvent }, ref) => {
+const ConfirmDialog = React.forwardRef(({ clickEvent, cancelEvent = () => {} }, ref) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [dialogProps, setDialogProps] = React.useState({title:"", contentText:"", event: ()=> {}});
@@ -31,6 +31,7 @@ const ConfirmDialog = React.forwardRef(({ clickEvent }, ref) => {
 
   const handleClose = () => {
     setOpen(false);
+    cancelEvent();
   };
 
   const onClickEvt = () => {

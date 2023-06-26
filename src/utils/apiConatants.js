@@ -110,6 +110,10 @@ const APIConstants =  {
     ACCOUNT_TRANSACTION_CREATE: "/api/accounts/transaction/create",
     ACCOUNT_TRANSACTION_LIST_GET: "/api/accounts/transaction/list/get/",
     ACCOUNT_TRANSACTION_DELETE: '/api/accounts/transaction/delete/',
+    ACCOUNT_OPENING_BALANCE_GET: '/api/accounts/opening-balance/get',
+    ACCOUNT_OPENING_BALANCE_CREATE_OR_UPDATE: '/api/accounts/opening-balance/create-or-update',
+    ACCOUNT_PAYMENT_INFO_GET: 'api/accounts/payment-info/get',
+    ACCOUNT_EXPENSE_INFO_GET: 'api/accounts/expense-info/get',
 }
 
 export default APIConstants;
