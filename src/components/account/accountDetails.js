@@ -69,7 +69,7 @@ const AccountDetails = () => {
                     </Grid> 
                     <Grid item xs={8} className={classes.openingBalanceContainerElement}> Cash in Hand</Grid>
                     <Grid item xs={4} className={classes.transactionValue}> 
-                        {inputIds["cih"] && <input id="cih" key="cih" type="text" className={classes.inputStyle} value={129333} onBlur={onBlurElement("cih")}/>}
+                        {inputIds["cih"] && <input id="cih" key="cih" type="text" className={classes.inputStyle} value={129333} autoFocus={true} onBlur={onBlurElement("cih")}/>}
                         {!inputIds["cih"] && <span onDoubleClick={shouInputElement("cih")}>60000</span>}
                     </Grid>
                 </Grid>
