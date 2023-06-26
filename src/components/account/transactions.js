@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 20
     },
     listContainer: {
-        width: "80%"
+        //width: "80%"
     },
     addIcon: {
         cursor: "pointer",
@@ -89,25 +89,25 @@ const Transaction = () => {
             <Grid item xs={4}></Grid>
         </Grid>
         <Box className={classes.listContainer}>
-            <Grid container className={classes.row} style={  {background: '#e5e5e563'}}>
+            <Grid container className={classes.row} style={  {background: '#e5e5e563', color: "#0a0b0b85", fontWeight: "bold"}}>
                 <Grid item xs={1}>Srl. No.</Grid>
-                <Grid item xs={1}>Type</Grid>
+                <Grid item xs={2}>Type</Grid>
                 <Grid item xs={2}>Ref. No</Grid>
-                <Grid item xs={2}>Amount</Grid>
-                <Grid item xs={2}>Remarks</Grid>
-                <Grid item xs={3}>Trans. Date</Grid>
+                <Grid item xs={1}>Amount</Grid>
+                <Grid item xs={4}>Remarks</Grid>
+                <Grid item xs={1}>Trans. Date</Grid>
                 <Grid item xs={1}></Grid>
             </Grid>
         {data && data.map( (m, index) => <>
             <Grid container className={classes.row} style={  (index%2 != 0) ? {background: '#e5e5e563'} : {}}>
             <Grid item xs={1}>{index+1}</Grid>
-            <Grid item xs={1}>{m.type}</Grid>
+            <Grid item xs={2}>{m.type}</Grid>
             <Grid item xs={2}>{m.refNo}</Grid>
-            <Grid item xs={2}>{m.amount}</Grid>
-            <Grid item xs={2}>{m.remarks}</Grid>
-            <Grid item xs={3}>{m.transDate}</Grid>
+            <Grid item xs={1}>{m.amount}</Grid>
+            <Grid item xs={4}>{m.remarks}</Grid>
+            <Grid item xs={1}>{m.transDate}</Grid>
             <Grid item xs={1}>
-                <span className={"show-events"} style={{cursor: "pointer", display: "none"}} title="Click here to delete." onClick={deleteEvt(m.id)}>
+                <span className={"show-events"} style={{cursor: "pointer", display: "none", textAlign: "center"}} title="Click here to delete." onClick={deleteEvt(m.id)}>
                     <i className="fa fa-trash" aria-hidden="true"></i>
                 </span>
             </Grid>

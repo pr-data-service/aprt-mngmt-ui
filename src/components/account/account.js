@@ -98,13 +98,13 @@ const LinkElement = ({ data, onClick = () => { }, selected = false }) => {
 }
 
 const linkArr = [
-    { id: 2, text: "Account Details" },
-    { id: 1, text: "Account Transaction" },
+    { id: 1, text: "Account Details" },
+    { id: 2, text: "Account Transaction" },
 ];
 
 const settingItemss = [
+    <AccountDetails/>,
     <Transaction />,
-    <AccountDetails/>
 ]
 
 export default Accounts
