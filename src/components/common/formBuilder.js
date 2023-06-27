@@ -119,8 +119,14 @@ const FormBuilder = React.forwardRef(({
                 tempField.options = [];
                 tempField.options.unshift({ value: "-99999", text: "-----SELECT-----" });
             }
-            data.map(m => {
-                tempField.options.push({ value: m[fieldNames[0]], text: m[fieldNames[1]] }); 
+            data.map(m => {                
+                let text = fieldNames.slice(1, fieldNames.length).map( f => {
+                    if(f.indexOf(",") > 0){
+                        return m[f.split(",")[0]] + " " + m[f.split(",")[1]]
+                    }
+                    return m[f];
+                }).join(', ');
+                tempField.options.push({ value: m[fieldNames[0]], text: text }); 
             });
             
             //tempField.defaultValue = "";
