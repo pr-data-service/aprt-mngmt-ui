@@ -26,6 +26,11 @@ const APIConstants =  {
     USER_SIGNATURE_UPLOAD : "/api/user/signature/upload",
     USER_SIGNATURE_GET : "/api/user/signature/get",
 
+    USER_ROLE_PERMISSION_GET: "/api/user/user-role-permission/get",
+    USER_ROLE_PERMISSION_GET_BY_OBJECT_ROLE: "/api/user//user-role-permission/get/",
+    USER_ROLE_PERMISSION_CREATE_OR_UPDATE: "/api/user/user-role-permission/create_or_update",
+    
+
     FLAT_DETAILS_LIST_GET: "/api/flat_details/list/get",
     FLAT_DETAILS_LIST_VIEW_GET: "/api/flat_details/list_view/get",
     FLAT_DETAILS_GET: "/api/flat_details/get/",
