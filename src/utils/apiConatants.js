@@ -14,7 +14,7 @@ const APIConstants =  {
     SESSION_DETAILS_LIST_GET: "/api/session_details/list/get/",
     SESSION_DETAILS_DELETE: "/api/session_details/delete/",
 
-    USER_LIST_GET: "/api/user/list/get/",
+    USER_LIST_GET: "/api/user/list/get",
     USER_LIST_VIEW_GET: "/api/user/list_view/get",
     USER_GET: "/api/user/get/",
     USER_CREATE_OR_UPDATE: "/api/user/create_or_update",
@@ -25,6 +25,9 @@ const APIConstants =  {
     USER_UPDATE_PASSWORD: '/api/user/update_password',
     USER_SIGNATURE_UPLOAD : "/api/user/signature/upload",
     USER_SIGNATURE_GET : "/api/user/signature/get",
+    USER_LIST_ONLY_USER : "/api/user/list/only-user",
+    USER_UPDATE_ONLY_USER_ROLE : "/api/user/update/only-user-role",
+    USER_REMOVE_ROLE: "/api/user/remove/user-role/",
 
     USER_ROLE_PERMISSION_GET: "/api/user/user-role-permission/get",
     USER_ROLE_PERMISSION_GET_BY_OBJECT_ROLE: "/api/user//user-role-permission/get/",

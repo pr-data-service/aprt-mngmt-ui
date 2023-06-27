@@ -20,16 +20,10 @@ const useStyles = makeStyles((theme) => ({
     leftPanelContent: {
         minHeight: 460,
     },
-
-
     panelSpliter: {
         width: "1%"
     },
-    centerPanel: {
-
-    },
     centerPanelContent: {
-        //minHeight: 460,
         height: "100%"
     },
     button: {
@@ -78,7 +72,7 @@ const Accounts = () => {
                     </Paper>
                 </Box>
                 <Box className={classes.panelSpliter}></Box>
-                <Box className={classes.centerPanel} style={{ width: "84%" }}>
+                <Box style={{ width: "84%" }}>
                     <Paper elevation={3} className={classes.centerPanelContent}>
                         {itemIndex >= 0 && settingItemss[itemIndex]}
                     </Paper>

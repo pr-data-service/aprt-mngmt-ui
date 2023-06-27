@@ -27,9 +27,6 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: "bold",
         fontSize: 20
     },
-    listContainer: {
-        //width: "80%"
-    },
     addIcon: {
         cursor: "pointer",
         marginLeft: 10
@@ -60,7 +57,6 @@ const Transaction = () => {
     }
     
     const addEvt = () => {
-        //ownersRegFormRef.current.handleOpen();
         handleDialogOpen({ ...defaultFormProps, handleClose: handleDialogClose, callbackOnSubmit: (data) => getDataFromAPI() });
     }
 
@@ -88,7 +84,7 @@ const Transaction = () => {
             </Grid>
             <Grid item xs={4}></Grid>
         </Grid>
-        <Box className={classes.listContainer}>
+        <Box>
             <Grid container className={classes.row} style={  {background: '#e5e5e563', color: "#0a0b0b85", fontWeight: "bold"}}>
                 <Grid item xs={1}>Srl. No.</Grid>
                 <Grid item xs={2}>Type</Grid>
@@ -121,7 +117,6 @@ const Transaction = () => {
 export default Transaction
 
 const fields = [
-    // { "name": "loginId", label: "Login ID", defaultValue: "", "type": "TEXT", "isHeaden": false, validationType: VALIDATOR_TYPE_REQUIRED },
     { "name": "type", label: "Type", defaultValue: "", type: "LIST", "isHeaden": false, validationType: VALIDATOR_TYPE_REQUIRED,
         options: [{ value: "DEPOSIT", text: "DEPOSIT" }, { value: "WITHDRAW", text: "WITHDRAW" }],
     },

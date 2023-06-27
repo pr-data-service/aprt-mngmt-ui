@@ -23,19 +23,12 @@ const useStyles = makeStyles((theme) => ({
     openingBalancetitle: {
         fontWeight: 500
     },
-    openingBalanceContainer: {
-        //paddingLeft: 40
-    },
     inputStyle: {
         width: "100%",
         height: 20
     },
     openingBalanceContainerElement: {
         paddingLeft: 20
-    },
-    transaction: {
-        // marginTop: 20
-        // djij
     },
     transactionValue: {
         textAlign: "end",
@@ -193,7 +186,7 @@ const AccountDetails = () => {
                     <Grid item xs={2} className={`${classes.transactionValue} ${classes.value}`}>₹ {parseFloat(openingBalance.cashInHand) + parseFloat(openingBalance.inBankAccount)}</Grid>
                     <Grid item xs={4}></Grid>
                 </Grid>
-                <Grid container className={`${classes.row} ${classes.openingBalanceContainer}`}>
+                <Grid container className={`${classes.row}`}>
                     <Grid item xs={6} className={classes.openingBalanceContainerElement}> Balance in Bank Account</Grid>
                     <Grid item xs={2} className={classes.transactionValue}>
                         {inputIds[constants.openingBal.inBank] && <input id={constants.openingBal.inBank} key={constants.openingBal.inBank} type="text" className={classes.inputStyle} autoFocus={true} value={openingBalance.inBankAccount} onChange={onInputChange} onBlur={onBlurElement(constants.openingBal.inBank)} />}
@@ -208,7 +201,7 @@ const AccountDetails = () => {
                     <Grid item xs={4}>{!inputIds[constants.openingBal.inCash] && <Box className={classes.editIconContainer} title="Click here to edit."><i onClick={shouInputElement(constants.openingBal.inCash)} className="fa fa-pencil" aria-hidden="true"/></Box>}</Grid>
                 </Grid>
                 <Divider className={classes.divider}/>
-                <Grid container className={`${classes.row} ${classes.transaction}`}>
+                <Grid container className={`${classes.row}`}>
                     <Grid item xs={6} className={classes.openingBalancetitle}> Deposit In Bank Account</Grid>
                     <Grid item xs={2} className={classes.transactionValue}>₹ {transactionAmount.depositeAmount}</Grid>
                     <Grid item xs={4}></Grid>
@@ -224,7 +217,7 @@ const AccountDetails = () => {
                     </Grid>
                     <Grid item xs={4}></Grid>
                 </Grid>
-                <Grid container className={`${classes.row} ${classes.openingBalanceContainer}`}>
+                <Grid container className={`${classes.row}`}>
                     <Grid item xs={6} className={classes.openingBalanceContainerElement}> Income in Bank Account</Grid>
                     <Grid item xs={2} className={classes.transactionValue}>
                         <span >₹ {income.online + income.cheque}</span>

@@ -135,6 +135,8 @@ const getFormPOSTApiUrl = (object) => {
         
     } else if(object.toUpperCase() == OBJECTS.ACCOUNT_TRANSACTION) {
         return APIConstants.ACCOUNT_TRANSACTION_CREATE;
+    } else if(object.toUpperCase() == OBJECTS.USER) {
+        return APIConstants.USER_UPDATE_ONLY_USER_ROLE;
     }
 }
 

@@ -21,9 +21,6 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
     fontSize: 20
   },
-  listContainer: {
-    //width: "80%"
-  },
   addIcon: {
     cursor: "pointer",
     marginLeft: 10
@@ -102,7 +99,7 @@ const UserRolePermission = () => {
       </Grid>
       <Grid item xs={4}></Grid>
     </Grid>
-    <Box className={classes.listContainer}>
+    <Box>
       <Grid container className={classes.row} style={{ background: '#e5e5e563', color: "#0a0b0b85", fontWeight: "bold" }}>
         <Grid item xs={3} className={classes.headerElement}>Object</Grid>
         <Grid item xs={2} className={classes.headerElement}>Role</Grid>
