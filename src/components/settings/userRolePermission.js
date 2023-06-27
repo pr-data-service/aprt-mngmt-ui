@@ -192,5 +192,5 @@ const getData = (data, object, role) => {
   let view= obj ? obj.view : false;
   let edit= obj ? obj.edit : false;
   let del= obj ? obj.delete : false;
-  return {create: create, view: view, edit: edit, del: del}
+  return {create: create, view: view, edit: edit, delete: del}
 }
