@@ -9,9 +9,11 @@ import ConfirmDialog from '../common/confirmDialog';
 import { AppContext } from '../../components/common/context/appContext';
 import CONSTANSTS from '../../utils/constants';
 import { VIEW_COLUMNS } from '../../utils/columnConstants';
+import Utils from '../../utils/utils';
 
 const { VALIDATOR_TYPE_REQUIRED, VALIDATOR_TYPE_OPTIONAL } = CONSTANSTS.FORM_CONSTANTS;
 const columns = VIEW_COLUMNS[CONSTANSTS.OBJECTS.OWNERS];
+const object = CONSTANSTS.OBJECTS.OWNERS;
 
 const OwnersListView = () => {
     const { enqueueSnackbar } = useSnackbar();
@@ -81,12 +83,31 @@ const OwnersListView = () => {
     }
 
     const toolBarIcon = [{ name: "ADD", title: "Add Owners", onClick: addEvt, }, { name: "EDIT", title: "Edit Owners", onClick: editEvt, }, { name: "DELETE", title: "Delete Owners", onClick: deleteEvt, }, { name: "PDF", title: "Export to .pdf file", onClick: () => { }, }, { name: "EXCEL", title: "Export to .excl file", onClick: () => { }, }];
+
+    const getToolBarIcon = () => {
+        let list = [...toolBarIcon];
+
+        if(!Utils.isPermission(object, CONSTANSTS.USER_PERMISSION.CREATE)) {
+            list = list.filter( f => f.name !== "ADD");
+        }
+
+        if(!Utils.isPermission(object, CONSTANSTS.USER_PERMISSION.EDIT)) {
+            list = list.filter( f => f.name !== "EDIT");
+        }
+
+        if(!Utils.isPermission(object, CONSTANSTS.USER_PERMISSION.DELETE)) {
+            list = list.filter( f => f.name !== "DELETE");
+        }
+        
+        return list;
+    }
+
     return <div style={{ padding: 10 }}>
         {/* <OwnersRegistrationForm ref={ownersRegFormRef} getListViewData={getDataFromAPI} /> */}
         <AppDialog ref={appDialogRef} maxWidth="xs" />
         <ConfirmDialog ref={confrmDialogRef} clickEvent={deleteData} />
         <PageHeader object="USER_DETAILS" iconName={"fa fa-user"} />
-        <ListView ref={ownersListViewRef} object={CONSTANSTS.OBJECTS.OWNERS} columns={columns} rows={data} toolBarIcon={toolBarIcon} getListViewData={getDataFromAPI}/>
+        <ListView ref={ownersListViewRef} object={CONSTANSTS.OBJECTS.OWNERS} columns={columns} rows={data} toolBarIcon={getToolBarIcon()} getListViewData={getDataFromAPI}/>
     </div>
 }
 

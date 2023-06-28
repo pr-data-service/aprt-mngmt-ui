@@ -3,12 +3,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Utils from '../../utils/utils';
 import PageHeader from '../common/pageHeader';
-import MonthWisePaymentSlip from '../payment/monthWisePaymentSlip';
 import EmailSetup from './emailSetup';
 import SessiononListView from './sessionListView';
 import UserProfile from './userProfile';
 import Users from '../settings/users';
 import UserRolePermission from '../settings/userRolePermission'
+import CONSTANSTS from '../../utils/constants';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -68,6 +68,29 @@ const SettingsComponent = () => {
         setLink(data)
     }
 
+
+    const getObjectsForLink = () => {
+        let newLinkArr = [...linkArr];
+        if (!Utils.isPermission(CONSTANSTS.OBJECTS.SESSION, CONSTANSTS.USER_PERMISSION.VIEW)) {
+            newLinkArr = newLinkArr.filter(f => f.object !== CONSTANSTS.OBJECTS.SESSION);
+        }
+        if (!Utils.isPermission(CONSTANSTS.OBJECTS.PROFILE, CONSTANSTS.USER_PERMISSION.VIEW)) {
+            newLinkArr = newLinkArr.filter(f => f.object !== CONSTANSTS.OBJECTS.PROFILE);
+        }
+        if (!Utils.isPermission(CONSTANSTS.OBJECTS.EMAIL_SETUP, CONSTANSTS.USER_PERMISSION.VIEW)) {
+            newLinkArr = newLinkArr.filter(f => f.object !== CONSTANSTS.OBJECTS.EMAIL_SETUP);
+        }
+        if (!Utils.isPermission(CONSTANSTS.OBJECTS.USER, CONSTANSTS.USER_PERMISSION.VIEW)) {
+            newLinkArr = newLinkArr.filter(f => f.object !== CONSTANSTS.OBJECTS.USER);
+        }
+        if (!Utils.isPermission(CONSTANSTS.OBJECTS.USER_ROLE_PERMISSION, CONSTANSTS.USER_PERMISSION.VIEW)) {
+            newLinkArr = newLinkArr.filter(f => f.object !== CONSTANSTS.OBJECTS.USER_ROLE_PERMISSION);
+        }    
+        return newLinkArr;
+    }
+
+
+
     let itemIndex = link ? link.id - 1 : -1;
 
     return <Box className={classes.root}>
@@ -77,7 +100,7 @@ const SettingsComponent = () => {
                 <Paper elevation={3} className={classes.leftPanelContent}>
                     <Box></Box>
                     <Box>
-                    {linkArr.map( m => <LinkElement data={m} onClick={handleLinkClick} selected={itemIndex+1 === m.id}/>)}
+                    {getObjectsForLink().map( m => <LinkElement data={m} onClick={handleLinkClick} selected={itemIndex+1 === m.id}/>)}
                     </Box>
                 </Paper>
             </Box>
@@ -103,17 +126,15 @@ const LinkElement = ({ data, onClick=()=>{}, selected=false }) => {
 }
 
 const linkArr = [
-    {id: 1, text: "Session"},
-    {id: 2, text: "Payment Receipt's"},
-    {id: 3, text: "Profile"},
-    {id: 4, text: "Email Setup"},
-    {id: 5, text: "Users"},
-    {id: 6, text: "User Role Permission"},
+    {id: 1, object: CONSTANSTS.OBJECTS.SESSION, text: CONSTANSTS.OBJECTS_LABEL[CONSTANSTS.OBJECTS.SESSION]},
+    {id: 2, object: CONSTANSTS.OBJECTS.PROFILE, text: CONSTANSTS.OBJECTS_LABEL[CONSTANSTS.OBJECTS.PROFILE]},
+    {id: 3, object: CONSTANSTS.OBJECTS.EMAIL_SETUP, text: CONSTANSTS.OBJECTS_LABEL[CONSTANSTS.OBJECTS.EMAIL_SETUP]},
+    {id: 4, object: CONSTANSTS.OBJECTS.USER, text: CONSTANSTS.OBJECTS_LABEL[CONSTANSTS.OBJECTS.USER]},
+    {id: 5, object: CONSTANSTS.OBJECTS.USER_ROLE_PERMISSION, text: CONSTANSTS.OBJECTS_LABEL[CONSTANSTS.OBJECTS.USER_ROLE_PERMISSION]},
 ];
 
 const settingItemss = [
     <SessiononListView />,
-    <MonthWisePaymentSlip />,
     <UserProfile />,
     <EmailSetup/>,
     <Users/>,

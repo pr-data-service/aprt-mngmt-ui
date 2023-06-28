@@ -6,6 +6,7 @@ const APIConstants =  {
 
     PROJECT_CREATE_OR_UPDATE: "/api/project/create_or_update",
     PROJECT_GET: "/api/project/get",
+    PROJECT_SESSION_LIST_GET: "/api/project/session/list/get",
 
     APARTMENT_DETAILS_GET: "/api/apartment-details/get",
     APARTMENT_DETAILS_GET_BY_ID: "/api/apartment-details/get/",

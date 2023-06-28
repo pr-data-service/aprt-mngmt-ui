@@ -107,7 +107,7 @@ const getTabsData = (object) => {
             {value: "2", label: "Payment", object: OBJECTS.PAYMENT, children: <PaymentListView />},
             {value: "3", label: "Payment Details", object: OBJECTS.PAYMENT_DETAILS, children: <PaymentDetailsListView />},
             {value: "4", label: "Maintenance Dues", object: OBJECTS.PAYMENT_DETAILS, children: <MaintenanceDuesListView />},
-            {value: "5", label: "Maintenance(Monthly)", object: OBJECTS.PAYMENT_DETAILS, children: <MaintenanceListView />},
+            {value: "5", label: "Maintenance(Monthly)", object: OBJECTS.MAINTENANCE, children: <MaintenanceListView />},
         ]
     } else if(object.toUpperCase() == OBJECTS.PAYMENT) {
         return  [

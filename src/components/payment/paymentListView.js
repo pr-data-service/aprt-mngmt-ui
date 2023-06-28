@@ -20,6 +20,7 @@ import { Box } from '@material-ui/core';
 
 const { MONTHS_FULL_FORM } = Constants;
 const columns = VIEW_COLUMNS[Constants.OBJECTS.PAYMENT];
+const object = CONSTANSTS.OBJECTS.PAYMENT;
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -134,9 +135,28 @@ const PaymentListView = () => {
         { name: "PDF", title: "Export to .pdf file", onClick: () => { }, },
         { name: "CSV", title: "Export to .csv file", onClick: downLoadCSV, },
     ];
+
+    const getToolBarIcon = () => {
+        let list = [...toolBarIcon];
+
+        if(!Utils.isPermission(object, CONSTANSTS.USER_PERMISSION.CREATE)) {
+            list = list.filter( f => f.name !== "ADD");
+        }
+
+        if(!Utils.isPermission(object, CONSTANSTS.USER_PERMISSION.EDIT)) {
+            list = list.filter( f => f.name !== "EDIT");
+        }
+
+        if(!Utils.isPermission(object, CONSTANSTS.USER_PERMISSION.DELETE)) {
+            list = list.filter( f => f.name !== "DELETE");
+        }
+        
+        return list;
+    }  
+
     return <Box className={classes.container}>
         {!isDetailView && <PageHeader object={CONSTANSTS.OBJECTS.PAYMENT} />}
-        <ListView ref={maintenanceListViewRef} object={CONSTANSTS.OBJECTS.PAYMENT} columns={getColumns(columns)} rows={rows} toolBarIcon={toolBarIcon} getListViewData={getDataFromAPI} rowStyle={rowStyle} />
+        <ListView ref={maintenanceListViewRef} object={CONSTANSTS.OBJECTS.PAYMENT} columns={getColumns(columns)} rows={rows} toolBarIcon={getToolBarIcon()} getListViewData={getDataFromAPI} rowStyle={rowStyle} />
         {openDialog && <AddPayment openDialog={openDialog} handleCloseDialog={handleCloseDialog} payMaintenance={payMaintenance} recordFlatId={getFlatId()}/>}
         <AppDialog ref={appDialogRef} maxWidth="xs" />
         <ConfirmDialog ref={confrmDialogRef} />

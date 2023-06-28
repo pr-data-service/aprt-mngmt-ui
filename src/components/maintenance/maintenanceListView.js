@@ -18,19 +18,21 @@ import { useParams } from 'react-router-dom';
 const { MONTHS_FULL_FORM } = Constants;
 const { VALIDATOR_TYPE_REQUIRED, VALIDATOR_TYPE_OPTIONAL } = CONSTANSTS.FORM_CONSTANTS;
 
-const MaintenanceListView = () => {
+const MaintenanceListView = ({}) => {
     const { enqueueSnackbar } = useSnackbar();
     const maintenanceListViewRef = React.useRef(null);
     const maintenanceFormRef = React.useRef(null);
     const [openDialog, setOpenDialog] = React.useState(false);
     const { handleBackDrop, handleDialogOpen, handleDialogClose } = React.useContext(AppContext);
     const appDialogRef = React.useRef(null);
-    const confrmDialogRef = React.useRef(null);
-    const object = Utils.getObjectNameFromUrl();
+    const confrmDialogRef = React.useRef(null);   
+    const object = CONSTANSTS.OBJECTS.MAINTENANCE;     
     const isDetailView = Utils.isDetailView();
     const params = useParams();
+    
 
     const [data, setData] = React.useState([]);
+    
 
     const handleCloseDialog = () => {
         setOpenDialog(false);
@@ -137,9 +139,28 @@ const MaintenanceListView = () => {
         { name: "PDF", title: "Export to .pdf file", onClick: () => { }, },
         { name: "CSV", title: "Export to .csv file", onClick: downLoadCSV, }, 
     ];
+
+    const getToolBarIcon = () => {
+        let list = [...toolBarIcon];
+
+        if(!Utils.isPermission(object, CONSTANSTS.USER_PERMISSION.CREATE)) {
+            list = list.filter( f => f.name !== "ADD");
+        }
+
+        if(!Utils.isPermission(object, CONSTANSTS.USER_PERMISSION.EDIT)) {
+            list = list.filter( f => f.name !== "EDIT");
+        }
+
+        if(!Utils.isPermission(object, CONSTANSTS.USER_PERMISSION.DELETE)) {
+            list = list.filter( f => f.name !== "DELETE");
+        }
+        
+        return list;
+    }    
+
     return <div style={{ padding: 10 }}>
         {!isDetailView && <PageHeader object={CONSTANSTS.OBJECTS.MAINTENANCE} />}
-        <ListView ref={maintenanceListViewRef} object={CONSTANSTS.OBJECTS.MAINTENANCE} columns={columns} rows={data} toolBarIcon={toolBarIcon} getListViewData={getDataFromAPI} rowStyle={rowStyle}/>
+        <ListView ref={maintenanceListViewRef} object={CONSTANSTS.OBJECTS.MAINTENANCE} columns={columns} rows={data} toolBarIcon={getToolBarIcon()} getListViewData={getDataFromAPI} rowStyle={rowStyle}/>
         <ConfirmDialog ref={confrmDialogRef} clickEvent={deleteData} />
     </div>
 }

@@ -13,6 +13,8 @@ import Utils from '../../utils/utils';
 import { getFormattedDateTime } from '../../utils/dateHandler';
 
 const { VALIDATOR_TYPE_REQUIRED, VALIDATOR_TYPE_OPTIONAL } = CONSTANSTS.FORM_CONSTANTS;
+const object = CONSTANSTS.OBJECTS.EVENTS;     
+
 
 const EventsListView = () => {
     const { enqueueSnackbar } = useSnackbar();
@@ -111,11 +113,30 @@ const EventsListView = () => {
                 { value: "ACTIVE", text: "ACTIVE" },
                 { value: "IN-ACTIVE", text: "IN-ACTIVE" }]
         }];
+
+        const getToolBarIcon = () => {
+            let list = [...toolBarIcon];
+    
+            if(!Utils.isPermission(object, CONSTANSTS.USER_PERMISSION.CREATE)) {
+                list = list.filter( f => f.name !== "ADD");
+            }
+    
+            if(!Utils.isPermission(object, CONSTANSTS.USER_PERMISSION.EDIT)) {
+                list = list.filter( f => f.name !== "EDIT");
+            }
+    
+            if(!Utils.isPermission(object, CONSTANSTS.USER_PERMISSION.DELETE)) {
+                list = list.filter( f => f.name !== "DELETE");
+            }
+            
+            return list;
+        }    
+
     return <div style={{ padding: 10 }}>
         <AppDialog ref={appDialogRef} maxWidth="xs" />
         <ConfirmDialog ref={confrmDialogRef} clickEvent={deleteData} />
         <PageHeader object={CONSTANSTS.OBJECTS.EVENTS} />
-        <ListView ref={eventListViewRef} object={CONSTANSTS.OBJECTS.EVENTS} columns={getColumns(columns)} rows={data} toolBarIcon={toolBarIcon} getListViewData={getDataFromAPI}/>
+        <ListView ref={eventListViewRef} object={CONSTANSTS.OBJECTS.EVENTS} columns={getColumns(columns)} rows={data} toolBarIcon={getToolBarIcon()} getListViewData={getDataFromAPI}/>
     </div>
 }
 

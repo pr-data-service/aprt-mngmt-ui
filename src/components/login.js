@@ -61,6 +61,8 @@ const Login = () => {
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [data, setData] = React.useState(null);
+    const [apartmentList, setApartmentList] = React.useState([]);
+    const [apartmentId, setApartmentId] = React.useState(0);
     const [sessionList, setSessionList] = React.useState([]);
     const [sessionId, setSessionId] = React.useState(0);
     const { handleBackDrop } = React.useContext(AppContext);
@@ -78,11 +80,18 @@ const Login = () => {
             let data = { username, password };
             let response = await AxiosApi.postData(APIConstants.APP_LOGIN, data);            
             handleBackDrop(false);
-
-            const { token, sessionList} = response.data;
-            let list = sessionList ? sessionList.map( m => { return {value: m.id, text: m.name}}) : []
-            list.unshift({value: ' ', text: "----Select Session----"});
-            setSessionList(list);
+ 
+            const { token, role, apartmentList, sessionList} = response.data;
+            if(apartmentList && apartmentList.length > 0) {
+                let list = apartmentList ? apartmentList.map( m => { return {value: m.id, text: m.name}}) : []
+                list.unshift({value: ' ', text: "----Select Apartment----"});
+                setApartmentList(list);
+            } else {
+                let list = sessionList ? sessionList.map( m => { return {value: m.id, text: m.name}}) : []
+                list.unshift({value: ' ', text: "----Select Session----"});
+                setSessionList(list);
+            }
+            
             setData(response.data);
         } catch (error) {
             handleBackDrop(false);
@@ -98,14 +107,37 @@ const Login = () => {
           }
     }
 
+    const handleChangApartmentList = (event) => {
+        setApartmentId(event.target.value);    
+        localStorage.setItem("token", data.token);    
+        localStorage.setItem("apartment-id", event.target.value);
+        setApartmentList([]);
+        getSessionList();
+    }
+
+    const getSessionList = async () => {
+        handleBackDrop(true);
+        let response = await AxiosApi.getData(APIConstants.PROJECT_SESSION_LIST_GET);
+        localStorage.removeItem("token");            
+        handleBackDrop(false);
+    
+        let list = response.data ? response.data.map( m => { return {value: m.id, text: m.name}}) : []
+        list.unshift({value: ' ', text: "----Select Session----"});
+        setSessionList(list);
+        setData({...data, sessionList: response.data});
+    }
+
     const handleChange = (event) => {
         setSessionId(event.target.value);
 
         localStorage.setItem("token", data.token);
         localStorage.setItem("session-id", event.target.value);
+        localStorage.setItem("user-role", data.role);
 
         let session = data.sessionList ? data.sessionList.find( f => f.id == event.target.value) : null;
         localStorage.setItem("session", JSON.stringify(session));
+
+        localStorage.setItem("permission", JSON.stringify(data.permission));
         navigate("/");    
     }
 
@@ -118,7 +150,7 @@ const Login = () => {
                 <Grid item xs={12}>
                     <Box className={classes.title}>Welcome back!</Box>
                 </Grid>
-                {sessionList.length <= 0 && <>
+                {(apartmentList.length <= 0 && sessionList.length <= 0) && <>
                 <Grid item xs={12}>
                     <TextField
                         label="User ID"
@@ -148,6 +180,11 @@ const Login = () => {
                 <Grid item xs={3}>
                     <Box className={classes.actionArea}><Button color="primary" variant="outlined" onClick={login} onKeyDown={onKeyDown}>Login</Button></Box>
                 </Grid>
+                </>}
+                { apartmentList.length > 0 && <>
+                    <Grid item xs={12}>
+                        <SelectField name="apartmentList" label="Apartment List" value={apartmentId} options={apartmentList} style={{ width: "100%" }} className={classes.sessionList} onChange={handleChangApartmentList} /> 
+                    </Grid>
                 </>}
 
                 { sessionList.length > 0 && <>

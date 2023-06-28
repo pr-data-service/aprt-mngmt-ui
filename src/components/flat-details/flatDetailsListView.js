@@ -26,7 +26,7 @@ const FlatDetailsListView = () => {
     const appDialogRef = React.useRef(null);
     const confrmDialogRef = React.useRef(null);
     const linkObjectRef = React.useRef(null);
-    
+    const object = CONSTANSTS.OBJECTS.FLAT_DETAILS;
 
     const { handleBackDrop, handleDialogOpen, handleDialogClose } = React.useContext(AppContext);
 
@@ -133,12 +133,31 @@ const FlatDetailsListView = () => {
             ]
         }
     ];
+
+    const getToolBarIcon = () => {
+        let list = [...toolBarIcon];
+
+        if(!Utils.isPermission(object, CONSTANSTS.USER_PERMISSION.CREATE)) {
+            list = list.filter( f => f.name !== "ADD");
+        }
+
+        if(!Utils.isPermission(object, CONSTANSTS.USER_PERMISSION.EDIT)) {
+            list = list.filter( f => f.name !== "EDIT");
+        }
+
+        if(!Utils.isPermission(object, CONSTANSTS.USER_PERMISSION.DELETE)) {
+            list = list.filter( f => f.name !== "DELETE");
+        }
+        
+        return list;
+    }
+
     
     return <div style={{ padding: 10 }}>
         <AppDialog ref={appDialogRef} maxWidth="xs" />
         <ConfirmDialog ref={confrmDialogRef} clickEvent={deleteData} />
         <PageHeader object={CONSTANSTS.OBJECTS.FLAT_DETAILS} iconName={"fa fa-building"} />
-        <ListView ref={flatDetailsListViewRef} object={CONSTANSTS.OBJECTS.FLAT_DETAILS} columns={getColumns(columns)} rows={data} toolBarIcon={toolBarIcon} getListViewData={getDataFromAPI} />
+        <ListView ref={flatDetailsListViewRef} object={CONSTANSTS.OBJECTS.FLAT_DETAILS} columns={getColumns(columns)} rows={data} toolBarIcon={getToolBarIcon()} getListViewData={getDataFromAPI} />
         <LinkObject ref={linkObjectRef} object={CONSTANSTS.OBJECTS.FLAT_DETAILS}/>
     </div>
 }

@@ -2,7 +2,9 @@ import { Box, Divider, Grid, makeStyles } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 import React from 'react'
 import APIConstants from '../../utils/apiConatants';
+import CONSTANSTS from '../../utils/constants';
 import AxiosApi from '../../utils/httpRequestHandler';
+import Utils from '../../utils/utils';
 import ConfirmDialog from '../common/confirmDialog';
 import { AppContext } from '../common/context/appContext';
 
@@ -190,15 +192,23 @@ const AccountDetails = () => {
                     <Grid item xs={6} className={classes.openingBalanceContainerElement}> Balance in Bank Account</Grid>
                     <Grid item xs={2} className={classes.transactionValue}>
                         {inputIds[constants.openingBal.inBank] && <input id={constants.openingBal.inBank} key={constants.openingBal.inBank} type="text" className={classes.inputStyle} autoFocus={true} value={openingBalance.inBankAccount} onChange={onInputChange} onBlur={onBlurElement(constants.openingBal.inBank)} />}
-                        {!inputIds[constants.openingBal.inBank] && <span onDoubleClick={shouInputElement(constants.openingBal.inBank)} title={creatorAndModifierName()}>₹ {openingBalance.inBankAccount}</span>}
+                        {!inputIds[constants.openingBal.inBank] && <span title={creatorAndModifierName()}>₹ {openingBalance.inBankAccount}</span>}
                     </Grid>
-                    <Grid item xs={4}>{!inputIds[constants.openingBal.inBank] && <Box className={classes.editIconContainer} title="Click here to edit."><i onClick={shouInputElement(constants.openingBal.inBank)} className="fa fa-pencil" aria-hidden="true"/></Box>}</Grid>
+                    <Grid item xs={4}>{!inputIds[constants.openingBal.inBank] && 
+                        <Box className={classes.editIconContainer} >
+                            {Utils.isPermission(CONSTANSTS.OBJECTS.ACCOUNT, CONSTANSTS.USER_PERMISSION.EDIT) && <i onClick={shouInputElement(constants.openingBal.inBank)} title="Click here to edit." className="fa fa-pencil" aria-hidden="true"/>}
+                        </Box>}
+                    </Grid>
                     <Grid item xs={6} className={classes.openingBalanceContainerElement}> Cash in Hand</Grid>
                     <Grid item xs={2} className={classes.transactionValue}>
                         {inputIds[constants.openingBal.inCash] && <input id={constants.openingBal.inCash} key={constants.openingBal.inCash} type="text" className={classes.inputStyle} autoFocus={true} value={openingBalance.cashInHand} onChange={onInputChange} onBlur={onBlurElement(constants.openingBal.inCash)} />}
-                        {!inputIds[constants.openingBal.inCash] && <span onDoubleClick={shouInputElement(constants.openingBal.inCash)} title={creatorAndModifierName()}>₹ {openingBalance.cashInHand}</span>}
+                        {!inputIds[constants.openingBal.inCash] && <span title={creatorAndModifierName()}>₹ {openingBalance.cashInHand}</span>}
                     </Grid>
-                    <Grid item xs={4}>{!inputIds[constants.openingBal.inCash] && <Box className={classes.editIconContainer} title="Click here to edit."><i onClick={shouInputElement(constants.openingBal.inCash)} className="fa fa-pencil" aria-hidden="true"/></Box>}</Grid>
+                    <Grid item xs={4}>{!inputIds[constants.openingBal.inCash] && 
+                        <Box className={classes.editIconContainer}>
+                            {Utils.isPermission(CONSTANSTS.OBJECTS.ACCOUNT, CONSTANSTS.USER_PERMISSION.EDIT) && <i onClick={shouInputElement(constants.openingBal.inCash)} title="Click here to edit." className="fa fa-pencil" aria-hidden="true"/>}
+                        </Box>}
+                    </Grid>
                 </Grid>
                 <Divider className={classes.divider}/>
                 <Grid container className={`${classes.row}`}>

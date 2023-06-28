@@ -15,6 +15,9 @@ class HttpRequestHandler {
             config.headers.Authorization =  token ? `Bearer ${token}` : '';
             config.headers['is-session-list-required'] = token ? false : true;
             
+            const apartmentId = localStorage.getItem('apartment-id');
+            config.headers['apartment-id'] = apartmentId ? apartmentId : '';
+
             const sessionId = localStorage.getItem('session-id');
             config.headers['session-id'] = sessionId ? sessionId : '';
             return config;

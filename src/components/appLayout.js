@@ -11,6 +11,7 @@ import APIConstants from '../utils/apiConatants';
 import { AppContext } from './common/context/appContext';
 import AxiosApi from '../utils/httpRequestHandler';
 import CONSTANSTS from '../utils/constants';
+import Utils from '../utils/utils';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -100,14 +101,30 @@ const AppHeader = () => {
   const onClick = (value) => {
     if(value == "logout") {
       localStorage.removeItem("token");
+      localStorage.removeItem("apartment-id");
       localStorage.removeItem("session-id");
       localStorage.removeItem("session");
+      localStorage.removeItem("user-role");
       navigate("/login");
     } else if(value == CONSTANSTS.OBJECTS.SETTINGS) {
       navigate("/settings");
     } else if(value == CONSTANSTS.OBJECTS.ACCOUNT) {
       navigate("/account");
     }
+  }
+
+  const getProfileMenus = () => {
+    const profileMenus = [
+      {value: CONSTANSTS.OBJECTS.SETTINGS, text: CONSTANSTS.OBJECTS_LABEL[CONSTANSTS.OBJECTS.SETTINGS]}
+    ];
+    if(Utils.isPermission(CONSTANSTS.OBJECTS.ACCOUNT, CONSTANSTS.USER_PERMISSION.VIEW) ||
+      Utils.isPermission(CONSTANSTS.OBJECTS.ACCOUNT_TRANSACTION, CONSTANSTS.USER_PERMISSION.VIEW) ||
+        Utils.isPermission(CONSTANSTS.OBJECTS.PAYMENT_RECEIPT, CONSTANSTS.USER_PERMISSION.VIEW)
+      ) {
+      profileMenus.push({value: CONSTANSTS.OBJECTS.ACCOUNT, text: CONSTANSTS.OBJECTS_LABEL[CONSTANSTS.OBJECTS.ACCOUNT]});
+    }
+    profileMenus.push({value: "logout", text: "Logout"});
+    return profileMenus;
   }
 
   let aprtNm = apartmentDetails ? apartmentDetails.name: "Empty";
@@ -119,10 +136,7 @@ const AppHeader = () => {
       <Box className={classes.menuContainer}><AppMenu /></Box>
       <Box className={classes.userProfileContainer}>
         <Box className={classes.appTitle} title={"Current Session: "+sessNm}>{sessNm}</Box>
-        <ProfileMenu onClick={onClick} options={[
-          {value: CONSTANSTS.OBJECTS.SETTINGS, text: CONSTANSTS.OBJECTS_LABEL[CONSTANSTS.OBJECTS.SETTINGS]},
-          {value: CONSTANSTS.OBJECTS.ACCOUNT, text: CONSTANSTS.OBJECTS_LABEL[CONSTANSTS.OBJECTS.ACCOUNT]},
-          {value: "logout", text: "Logout"},]}/>
+        <ProfileMenu onClick={onClick} options={getProfileMenus()}/>
       </Box>
     </Box>}
     {!token && <Box className={classes.headerRow}>

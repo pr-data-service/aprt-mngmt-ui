@@ -95,14 +95,14 @@ debugger
     }
 
     return <Box className={classes.container}>
-        <Grid container>
+        {Utils.isPermission(CONSTANSTS.OBJECTS.SESSION, CONSTANSTS.USER_PERMISSION.CREATE) && <Grid container>
             <Grid item xs={8} className={classes.header}>Add Session</Grid>
             <Grid item xs={4}></Grid>
             <Grid item xs={8}>
                 <FormBuilder fields={fields} gridItemXS={4}  onSubmit={onSubmit} submitButton={<Button type="submit" color="primary" variant='outlined'> Save </Button>} />
             </Grid>
             <Grid item xs={4}></Grid>
-        </Grid>
+        </Grid>}
         <Grid container>
             <Grid item xs={12} className={classes.header}>Session List</Grid>
         </Grid>
@@ -113,9 +113,9 @@ debugger
             <Grid item xs={3}>From Date: {m.fromDate}</Grid>
             <Grid item xs={3}>To Date: {m.toDate}</Grid>
             <Grid item xs={1}>
-                <span className={"show-events"} style={{cursor: "pointer", display: "none"}} title="Click here to delete." onClick={deleteEvt(m.id)}>
+                {Utils.isPermission(CONSTANSTS.OBJECTS.SESSION, CONSTANSTS.USER_PERMISSION.DELETE) && <span className={"show-events"} style={{cursor: "pointer", display: "none"}} title="Click here to delete." onClick={deleteEvt(m.id)}>
                     <i className="fa fa-trash" aria-hidden="true"></i>
-                </span>
+                </span>}
             </Grid>
             </Grid>
         </>)}

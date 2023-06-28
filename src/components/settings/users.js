@@ -4,6 +4,7 @@ import React from 'react'
 import APIConstants from '../../utils/apiConatants';
 import CONSTANSTS from '../../utils/constants';
 import AxiosApi from '../../utils/httpRequestHandler';
+import Utils from '../../utils/utils';
 import { AppContext } from '../common/context/appContext';
 const { VALIDATOR_TYPE_REQUIRED, VALIDATOR_TYPE_OPTIONAL } = CONSTANSTS.FORM_CONSTANTS;
 
@@ -57,7 +58,7 @@ const Users = () => {
         }
     }
 
-    const updateUserRole = async (event, id) => {
+    const updateUserRole = (id) => async (event) => {
         try {
             let newObject = {};
             newObject.id = id;
@@ -86,12 +87,23 @@ const Users = () => {
         handleDialogOpen({ ...defaultFormProps, handleClose: handleDialogClose, callbackOnSubmit: (data) => getDataFromAPI() });
     }
 
+    const getEvents = (id) => {debugger
+        let selectProps = {};
+        if(!Utils.isPermission(CONSTANSTS.OBJECTS.USER, CONSTANSTS.USER_PERMISSION.EDIT)) {
+            selectProps.onChange = () => false;
+        } else {
+            selectProps.onChange = updateUserRole(id);
+        }
+        return selectProps;
+    }
+    
+
     return (
         <Box className={classes.container}>
             <Grid container>
                 <Grid item xs={8}>
                     <span className={classes.header} >Transactions</span>
-                    <i className={`fa fa-plus ${classes.addIcon}`} aria-hidden="true" onClick={() => addEvt()}></i>
+                    {Utils.isPermission(CONSTANSTS.OBJECTS.USER, CONSTANSTS.USER_PERMISSION.CREATE) && <i className={`fa fa-plus ${classes.addIcon}`} aria-hidden="true" onClick={() => addEvt()}></i>}
                 </Grid>
                 <Grid item xs={4}></Grid>
             </Grid>
@@ -111,15 +123,25 @@ const Users = () => {
                         <Grid item xs={3}>{m.lastName}</Grid>
                         <Grid item xs={2}>{m.contactNo1}</Grid>
                         <Grid item xs={2}>
-                            <select name="roles" id="roles" className={classes.select} value={m.role} onChange={(e) => updateUserRole(e, m.id)}>
-                                <option value="ADMIN">ADMIN</option>
-                                <option value="USER">USER</option>
+                            <select 
+                                name="roles"
+                                id="roles" 
+                                className={classes.select} 
+                                value={m.role} 
+                                {...getEvents(m.id)}
+                            >
+                                <option value="USER">User</option>
+                                <option value="ADMIN">Admin</option>
+                                <option value="SECRETARY">Secretary</option>
+                                <option value="ASST-SECRETARY">Asst. Secretary</option>
+                                <option value="TREASURER">Treasurer</option>
+                                <option value="ASST-TREASURER">Asst. Treasurer</option>
                             </select>
                         </Grid>
                         <Grid item xs={1}>
-                            <span className={"show-events"} style={{ cursor: "pointer", display: "none", textAlign: "center" }} title="Click here to delete." onClick={() => removeRoleEvt(m.id)}>
+                            {Utils.isPermission(CONSTANSTS.OBJECTS.SESSION, CONSTANSTS.USER_PERMISSION.DELETE) && <span className={"show-events"} style={{ cursor: "pointer", display: "none", textAlign: "center" }} title="Click here to delete." onClick={() => removeRoleEvt(m.id)}>
                                 <i className="fa fa-trash" aria-hidden="true"></i>
-                            </span>
+                            </span>}
                         </Grid>
                     </Grid>
                 </>)}
@@ -137,7 +159,14 @@ const fields = [
     },
     {
         "name": "role", label: "Role", defaultValue: "", type: "LIST", "isHeaden": false, validationType: VALIDATOR_TYPE_REQUIRED,
-        options: [{ value: "ADMIN", text: "ADMIN" }, { value: "USER", text: "USER" }],
+        options: [
+            { value: "USER", text: "USER" },
+            { value: "ADMIN", text: "ADMIN" },
+            { value: "SECRETARY", text: "Secretary" },
+            { value: "ASST-SECRETARY", text: "Asst. Secretary" },
+            { value: "TREASURER", text: "Treasurer" },
+            { value: "ASST-TREASURER", text: "Asst. Treasurer" },
+        ],
     },
 
 ];

@@ -140,6 +140,26 @@ const getFormPOSTApiUrl = (object) => {
     }
 }
 
+const isPermission = (object, permissionType) => {
+    let role = localStorage.getItem("user-role");
+    if(role && role === CONSTANSTS.USER_ROLE.SADMIN) {
+        return [
+            CONSTANSTS.USER_PERMISSION.CREATE, 
+            CONSTANSTS.USER_PERMISSION.VIEW, 
+            CONSTANSTS.USER_PERMISSION.EDIT,
+            CONSTANSTS.USER_PERMISSION.DELETE
+        ]
+    }
+    let permission = JSON.parse(localStorage.getItem("permission"));
+    permission = object && permission &&  permission[object]? permission[object] : [];
+    return permissionType ? permission.includes(permissionType) : false;
+}
+
+const getUserRole = () => {
+    return localStorage.getItem('user-role')
+}
+
+
 const Utils = {
     getObjectNameFromUrl,
     getChildObjectsByObject,
@@ -148,6 +168,8 @@ const Utils = {
     getForienKeyFieldName,
     getGETApiUrl,
     getFormPOSTApiUrl,
+    isPermission,
+    getUserRole
 }
 
 export default Utils;
