@@ -68,28 +68,37 @@ const UserRolePermission = () => {
   }
 
   const updateData = (object, role) => (type, isChecked) => {
-    let obj = data.find(f => f.object === object && f.role === role);
-    if (obj) {
-      obj = { ...perm, ...obj };
-      obj[type] = isChecked;
-      saveOrUpdate(obj);
-    } else {
-      let newPerm = { object: object, role: role, ...perm };
-      newPerm[type] = isChecked;
+    try {
+      let obj = data.find(f => f.object === object && f.role === role);
+      if (obj) {
+        obj = { ...perm, ...obj };
+        obj[type] = isChecked;
+        saveOrUpdate(obj);
+      } else {
+        let newPerm = { object: object, role: role, ...perm };
+        newPerm[type] = isChecked;
 
-      saveOrUpdate(newPerm);
+        saveOrUpdate(newPerm);
+      }
+    } catch (error) {
+      console.error("userRolePermission.js => ", "updateData() => ", error.message);
     }
-
   }
 
   const saveOrUpdate = async (data) => {
     try {
-      handleBackDrop(true);
-      let response = await AxiosApi.postData(APIConstants.USER_ROLE_PERMISSION_CREATE_OR_UPDATE, data);
-      getDataFromAPI();
-      enqueueSnackbar("Updated successfully", { variant: 'success' });
+      if(data.role && data.role !== "") {
+        handleBackDrop(true);
+        let response = await AxiosApi.postData(APIConstants.USER_ROLE_PERMISSION_CREATE_OR_UPDATE, data);
+        getDataFromAPI();
+        enqueueSnackbar("Updated successfully", { variant: 'success' });
+      } else {
+        console.error("userRolePermission.js => ", "saveOrUpdate() => ", "Role not found.");
+      }
+      
     } catch (error) {
-      enqueueSnackbar(error.message, { variant: 'error' })
+      console.error("userRolePermission.js => ", "saveOrUpdate() => ", error.message);
+      enqueueSnackbar(error.message, { variant: 'error' });
     }
   }
 
@@ -164,8 +173,8 @@ const SelectTag = ({ value, setData }) => {
 }
 
 const roleArr = [
-  {name: CONSTANSTS.USER_ROLE.USER, text: 'User'},
   {name: CONSTANSTS.USER_ROLE.ADMIN, text: 'Admin'},
+  {name: CONSTANSTS.USER_ROLE.USER, text: 'User'},
   {name: CONSTANSTS.USER_ROLE.SECRETARY, text: 'Secretary'},
   {name: CONSTANSTS.USER_ROLE.ASST_SECRETARY, text: 'Asst-Secretary'},
   {name: CONSTANSTS.USER_ROLE.TREASURER, text: 'Treasurer'},
@@ -218,7 +227,8 @@ const PermissionElements = ({ object, permission, setData }) => {
 }
 
 const PermissionRow = ({ object, data, setData }) => {
-  const [role, setRole] = React.useState("ADMIN");
+  let initRole = roleArr && roleArr.length > 0 ? roleArr[0].name : ""
+  const [role, setRole] = React.useState(initRole);
 
   const permission = getData(data, object.name, role);
 

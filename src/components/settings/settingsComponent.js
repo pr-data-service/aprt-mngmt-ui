@@ -74,9 +74,7 @@ const SettingsComponent = () => {
         if (!Utils.isPermission(CONSTANSTS.OBJECTS.SESSION, CONSTANSTS.USER_PERMISSION.VIEW)) {
             newLinkArr = newLinkArr.filter(f => f.object !== CONSTANSTS.OBJECTS.SESSION);
         }
-        if (!Utils.isPermission(CONSTANSTS.OBJECTS.PROFILE, CONSTANSTS.USER_PERMISSION.VIEW)) {
-            newLinkArr = newLinkArr.filter(f => f.object !== CONSTANSTS.OBJECTS.PROFILE);
-        }
+        
         if (!Utils.isPermission(CONSTANSTS.OBJECTS.EMAIL_SETUP, CONSTANSTS.USER_PERMISSION.VIEW)) {
             newLinkArr = newLinkArr.filter(f => f.object !== CONSTANSTS.OBJECTS.EMAIL_SETUP);
         }
