@@ -67,7 +67,12 @@ const EventsListView = () => {
             let response = await AxiosApi.deleteData(APIConstants.EVENTS_DELETE_BATCH, ids);
             console.log(response.data);
             getDataFromAPI();
-            enqueueSnackbar('This is a success message!', { variant: "success" });
+            if(response.data.length === ids.length){
+                enqueueSnackbar('This is a success message!', { variant: "success" });
+            } else {
+                let isSingular = (ids.length - response.data.length) < 2 ? true : false;
+                enqueueSnackbar(`${ids.length - response.data.length} record${isSingular? '' : 's'} are not deleted`, { variant: "warning" });
+            }
 
         } catch (error) {
             console.log(error.message);

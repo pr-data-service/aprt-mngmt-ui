@@ -80,6 +80,7 @@ const Users = () => {
             enqueueSnackbar("Role changed successfully.", { variant: 'success' })
             getDataFromAPI();
         } catch (error) {
+            handleBackDrop(false);
             enqueueSnackbar(error.message, { variant: 'error' })
         }
     }
