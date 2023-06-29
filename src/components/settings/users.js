@@ -109,7 +109,7 @@ const Users = () => {
         let idField = fields.find( f => f.name === "id");
         let existingUser = data.map(m=>m.id);
         idField.options = allUserList.filter( f => !existingUser.includes(f.id)).map( m => { return {value: m.id, text: (m.firstName + ' ' + m.lastName) }});
-    
+        //idField.options.unshift({ value: "-99999", text: "-----SELECT-----" });
         return fields;
       }
 
@@ -179,12 +179,12 @@ const Users = () => {
 
 const fields = [
     {
-        "name": "id", label: "User/Owners", defaultValue: "", type: "LIST", "isHeaden": false, validationType: VALIDATOR_TYPE_REQUIRED,
+        "name": "id", label: "User/Owners", defaultValue: "$$INDEX-0$$", type: "LIST", "isHeaden": false, validationType: VALIDATOR_TYPE_REQUIRED,
         options: [],
         //onLoadEventProps: { apiUrl: APIConstants.USER_LIST_GET, reqParams: {}, fieldNames: ["id", "firstName,lastName"] }
     },
     {
-        "name": "role", label: "Role", defaultValue: "", type: "LIST", "isHeaden": false, validationType: VALIDATOR_TYPE_REQUIRED,
+        "name": "role", label: "Role", defaultValue: "$$INDEX-0$$", type: "LIST", "isHeaden": false, validationType: VALIDATOR_TYPE_REQUIRED,
         options: [
             { value: CONSTANSTS.USER_ROLE.USER, text: "User" },
             { value: CONSTANSTS.USER_ROLE.ADMIN, text: "Admin" },

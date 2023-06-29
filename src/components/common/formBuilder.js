@@ -169,8 +169,18 @@ const Field = ({ errors, field, setValue, getValues, onLoadEvent, autoFocus }) =
     const classes = useStyles();
     const { register } = useFormContext(); // retrieve all hook methods
     const { control } = useForm();
+
+
+    React.useEffect(() => {
+
+        //default value setting here for LIST
+        if (field.type == "LIST") {
+            setValue(field.name, field.defaultValue);
+        }
+    }, [])
+
     
-    let fieldProps = { autoFocus };
+    let fieldProps = { autoFocus, defaultValue: field.defaultValue};
     if (field.type == "DATE") {
         fieldProps.type = "date";
         fieldProps.defaultValue = getDateForDatePicker();
@@ -188,6 +198,7 @@ const Field = ({ errors, field, setValue, getValues, onLoadEvent, autoFocus }) =
             let index = defaultVal.replaceAll('$$', '');
             index = parseInt(index);
             fieldProps.defaultValue = field.options[index].value;
+            setValue(field.name, fieldProps.defaultValue);
         }
 
     } else if (field.type == "LONG_TEXT") {
@@ -207,7 +218,6 @@ const Field = ({ errors, field, setValue, getValues, onLoadEvent, autoFocus }) =
                 id={"outlined-size-small-" + field.name}
                 name={field.name}
                 label={field.label}
-                defaultValue={field.defaultValue}
                 variant="outlined"
                 size="small"
                 className={classes.field}

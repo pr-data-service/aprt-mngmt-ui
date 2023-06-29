@@ -97,7 +97,7 @@ const ExpensesForm = React.forwardRef(({ getListViewData }, ref) => {
         return isValid;
     }
 
-    const onSubmit = async data => {debugger
+    const onSubmit = async data => {
         console.log(data);               
         try{
             let itemsValues = expenseItemsRef.current.getItemsValues();
@@ -185,7 +185,7 @@ const fields = [
         options: [{ value: "CASH", text: "CASH" }, { value: "CHEQUE", text: "CHEQUE" }, { value: "ONLINE", text: "ONLINE" }],
     },
     { "name": "expenseDate", label: "Expense Date", defaultValue: "", "type": "DATE", "isHeaden": false, validationType: VALIDATOR_TYPE_REQUIRED },
-    { "name": "eventId", label: "Event", defaultValue: "", "type": "LIST", "isHeaden": false, validationType: VALIDATOR_TYPE_REQUIRED, 
+    { "name": "eventId", label: "Event", defaultValue: "-99999", "type": "LIST", "isHeaden": false, validationType: VALIDATOR_TYPE_REQUIRED, 
             options:[],
             onLoadEventProps: { apiUrl: APIConstants.EVENTS_LIST_GET, reqParams: {}, fieldNames: ["id", "name"]}
     },
