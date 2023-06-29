@@ -38,6 +38,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Users = () => {
+    const [allUserList, setAllUserList] = React.useState([]);
     const [data, setData] = React.useState([{ firstName: '', lastName: '', type: 'user', role: '' }]);
     const classes = useStyles();
     const { enqueueSnackbar } = useSnackbar();
@@ -45,6 +46,7 @@ const Users = () => {
 
     React.useEffect(() => {
         getDataFromAPI();
+        getUserList();
     }, [])
 
     const getDataFromAPI = async () => {
@@ -54,7 +56,16 @@ const Users = () => {
             setData(response.data);
             handleBackDrop(false)
         } catch (error) {
-            enqueueSnackbar(error.message, { variant: 'error' })
+            console.error("user.js => ", "getDataFromAPI() => ", error.message);
+        }
+    }
+
+    const getUserList = async () => {
+        try {
+            let response = await AxiosApi.getData(APIConstants.USER_LIST_GET);
+            setAllUserList(response.data);
+        } catch (error) {
+            console.error("user.js => ", "getUserList() => ", error.message);
         }
     }
 
@@ -84,10 +95,25 @@ const Users = () => {
     }
 
     const addEvt = () => {
+        let dialogProps = {...defaultFormProps};
+        dialogProps.fields = getFields([...dialogProps.fields]);
+        
         handleDialogOpen({ ...defaultFormProps, handleClose: handleDialogClose, callbackOnSubmit: (data) => getDataFromAPI() });
     }
 
-    const getEvents = (id) => {debugger
+    const getFields = (fields) => {
+        let role = Utils.getUserRole();
+        let roleField = fields.find( f => f.name === "role");
+        roleField.options = roleField.options.filter( f => f.value !== role );
+
+        let idField = fields.find( f => f.name === "id");
+        let existingUser = data.map(m=>m.id);
+        idField.options = allUserList.filter( f => !existingUser.includes(f.id)).map( m => { return {value: m.id, text: (m.firstName + ' ' + m.lastName) }});
+    
+        return fields;
+      }
+
+    const getEvents = (id) => {
         let selectProps = {};
         if(!Utils.isPermission(CONSTANSTS.OBJECTS.USER, CONSTANSTS.USER_PERMISSION.EDIT)) {
             selectProps.onChange = () => false;
@@ -102,7 +128,7 @@ const Users = () => {
         <Box className={classes.container}>
             <Grid container>
                 <Grid item xs={8}>
-                    <span className={classes.header} >Transactions</span>
+                    <span className={classes.header} >User List</span>
                     {Utils.isPermission(CONSTANSTS.OBJECTS.USER, CONSTANSTS.USER_PERMISSION.CREATE) && <i className={`fa fa-plus ${classes.addIcon}`} aria-hidden="true" onClick={() => addEvt()}></i>}
                 </Grid>
                 <Grid item xs={4}></Grid>
@@ -155,17 +181,17 @@ const fields = [
     {
         "name": "id", label: "User/Owners", defaultValue: "", type: "LIST", "isHeaden": false, validationType: VALIDATOR_TYPE_REQUIRED,
         options: [],
-        onLoadEventProps: { apiUrl: APIConstants.USER_LIST_GET, reqParams: {}, fieldNames: ["id", "firstName,lastName"] }
+        //onLoadEventProps: { apiUrl: APIConstants.USER_LIST_GET, reqParams: {}, fieldNames: ["id", "firstName,lastName"] }
     },
     {
         "name": "role", label: "Role", defaultValue: "", type: "LIST", "isHeaden": false, validationType: VALIDATOR_TYPE_REQUIRED,
         options: [
-            { value: "USER", text: "USER" },
-            { value: "ADMIN", text: "ADMIN" },
-            { value: "SECRETARY", text: "Secretary" },
-            { value: "ASST-SECRETARY", text: "Asst. Secretary" },
-            { value: "TREASURER", text: "Treasurer" },
-            { value: "ASST-TREASURER", text: "Asst. Treasurer" },
+            { value: CONSTANSTS.USER_ROLE.USER, text: "User" },
+            { value: CONSTANSTS.USER_ROLE.ADMIN, text: "Admin" },
+            { value: CONSTANSTS.USER_ROLE.SECRETARY, text: "Secretary" },
+            { value: CONSTANSTS.USER_ROLE.ASST_SECRETARY, text: "Asst. Secretary" },
+            { value: CONSTANSTS.USER_ROLE.TREASURER, text: "Treasurer" },
+            { value: CONSTANSTS.USER_ROLE.ASST_TREASURER, text: "Asst. Treasurer" },
         ],
     },
 
