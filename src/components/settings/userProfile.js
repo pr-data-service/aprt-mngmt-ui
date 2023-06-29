@@ -206,5 +206,6 @@ const fieldLabels = {
     lastName: "Last Name",
     contactNo1: "Phone Number 1",
     contactNo2: "Phone Number 2",
-    userAddress: "User Address:"
+    userAddress: "User Address:",
+    role: "Role",
 };
