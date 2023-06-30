@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, Paper } from '@material-ui/core';
+import { Box, IconButton, Paper } from '@material-ui/core';
 import React from 'react';
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
@@ -9,7 +9,6 @@ import { useSnackbar } from 'notistack';
 import DetailViewService from '../../service/detailViewService';
 import { AppContext } from '../../components/common/context/appContext';
 import { VIEW_COLUMNS } from '../../utils/columnConstants';
-import CustomTab from './customTab';
 import DetailViewCenterPanel from './detailViewCenterPanel';
 import APIConstants from '../../utils/apiConatants';
 import AxiosApi from '../../utils/httpRequestHandler'
@@ -77,9 +76,13 @@ const DetailView = () => {
     let leftPanelRef = React.useRef(null);
     let rightPanelRef = React.useRef(null);
     const [data, setData] = React.useState(null);
+    const [isSecApprove, setSecApprove] = React.useState(false);
+    const [isTrsApprove, setTrsApprove] = React.useState(false);
+    const userRole = Utils.getUserRole();
 
     React.useEffect(() => {
         getDataFromAPI();
+        getExpenseApproveList();
     }, [object]);
 
     const getDataFromAPI = async () => {
@@ -135,13 +138,62 @@ const DetailView = () => {
         }
     }
 
+    const getExpenseApproveList = async() => {
+        try {
+            handleBackDrop(true);
+            let response = await AxiosApi.getData(APIConstants.EXPENSES_APPROVE_LIST_GET + params.id);
+            response.data.forEach(approvedRole => {
+                if (approvedRole === CONSTANSTS.USER_ROLE.SECRETARY) {
+                    setSecApprove(true);
+                } else if (approvedRole === CONSTANSTS.USER_ROLE.TREASURER) {
+                    setTrsApprove(true);
+                }
+            });
+            handleBackDrop(false);
+        } catch (error) {
+            handleBackDrop(false);
+            enqueueSnackbar(console.message, {variant: 'error'});
+        }
+    }
+
+    const expenseApprove = (role, isApprove) => async() => {
+        try {
+            if(role === userRole && !isApprove) {
+                let obj = {};
+                obj.role = role;
+                obj.expenseId = params.id;
+                handleBackDrop(true);
+                let response = await AxiosApi.postData(APIConstants.EXPENSES_APPROVED, obj);
+                getExpenseApproveList();
+                handleBackDrop(false);
+                if(role === CONSTANSTS.USER_ROLE.SECRETARY) {
+                    enqueueSnackbar('Secretary approved', {variant: 'success'});
+                } else if(role === CONSTANSTS.USER_ROLE.TREASURER)  {
+                    enqueueSnackbar('Tresurer approved', {variant: 'success'});
+                }
+            } else if(isApprove) {
+                enqueueSnackbar('Already approved', {variant: 'warning'});
+            } else {
+                enqueueSnackbar('You are not valid user to approve', {variant: 'warning'});
+            }
+        } catch (error) {
+            handleBackDrop(false);
+            console.log(error.message);
+            enqueueSnackbar(error.message, {variant: 'error'})
+        }
+    }
+
     const getRightElements = () => {
         let arr = [];
+        if (object === CONSTANSTS.OBJECTS.EXPENSE) {
+            arr.push(<ToolBarIcon name={!isSecApprove? "APPROVE" : "APPROVED"} title={!isSecApprove? "Click here to approve(Secretary)" : "Secretary Approved"} onClick={expenseApprove(CONSTANSTS.USER_ROLE.SECRETARY, isSecApprove)} style={{ fontSize: 20, color: "green" }} />);
+            arr.push(<ToolBarIcon name={!isTrsApprove? "APPROVE" : "APPROVED"} title={!isTrsApprove? "Click here to approve(Treasurer)" : "Treasurer Approved"} onClick={expenseApprove(CONSTANSTS.USER_ROLE.TREASURER, isTrsApprove)} style={{ fontSize: 20, color: "blue" }} />);
+        }
         if ((object === CONSTANSTS.OBJECTS.PAYMENT || object === CONSTANSTS.OBJECTS.EXPENSE) && (data && !data.isCanceled)) {
-            arr.push(<ToolBarIcon name="CANCEL" onClick={cancel(object)} style={{ fontSize: 20, color: "red" }} />);
+            arr.push(<ToolBarIcon name="CANCEL" title="Cancel" onClick={cancel(object)} style={{ fontSize: 20, color: "red" }} />);
         }
         if (object === CONSTANSTS.OBJECTS.PAYMENT || object === CONSTANSTS.OBJECTS.EXPENSE) {
-            arr.push(<ToolBarIcon name="PRINT" onClick={print(object)} />);
+            arr.push(<ToolBarIcon name="PRINT" title="Print" onClick={print(object)} />);
         }
         return arr;
     }
@@ -345,12 +397,12 @@ const RightPanel = React.forwardRef((props, ref) => {
 
 })
 
-const ToolBarIcon = ({ name, onClick = () => { }, ...others }) => {
+const ToolBarIcon = ({ name, title, onClick = () => { }, ...others }) => {
     const classes = useStyles();
 
     let props = { style: { fontSize: 20 }, ...others }
 
-    return <div className={classes.toolBtnContainer} onClick={onClick} title={name}>
+    return <div className={classes.toolBtnContainer} onClick={onClick} title={title}>
         <IconButton aria-label={name} className={classes.buttonStyle}>
             <i className={iconClass[name]} aria-hidden="true" {...props}></i>
         </IconButton>
@@ -360,6 +412,8 @@ const ToolBarIcon = ({ name, onClick = () => { }, ...others }) => {
 const iconClass = {
     "PRINT": "fa fa-print",
     "CANCEL": "fa fa-ban",
+    "APPROVE": "fa fa-thumbs-o-up",
+     "APPROVED": "fa fa-thumbs-up",
 }
 
 const getObject = (object) => {
