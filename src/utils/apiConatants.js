@@ -95,7 +95,6 @@ const APIConstants =  {
     EXPENSE_HEAD_DELETE: '/api/expense-head/delete/',
 
     EXPENSES_LIST_GET: "/api/expenses/list/get/",
-    EXPENSES_APPROVE_LIST_GET: "/api/expenses/approve-list/get/",
     EXPENSES_APPROVED: "/api/expenses/approved",
     EXPENSES_LIST_VIEW_GET: "/api/expenses/list_view/get",
     EXPENSES_CREATE_OR_UPDATE: "/api/expenses/create_or_update",

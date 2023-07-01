@@ -33,7 +33,7 @@ const ExpensesListView = () => {
     const expenseListViewRef = React.useRef(null);
     const appDialogRef = React.useRef(null);
     const confrmDialogRef = React.useRef(null);
-    const {handleBackDrop} = React.useContext(AppContext);    
+    const { handleBackDrop } = React.useContext(AppContext);
     const isDetailView = Utils.isDetailView();
     const object = CONSTANSTS.OBJECTS.EXPENSE;
     const params = useParams();
@@ -45,14 +45,14 @@ const ExpensesListView = () => {
     }, []);
 
     const getDataFromAPI = async (reqParams) => {
-        if(isDetailView) {
-            reqParams = reqParams ? {...reqParams} : {};
+        if (isDetailView) {
+            reqParams = reqParams ? { ...reqParams } : {};
             reqParams.parentFieldName = "eventId";
             reqParams.parentRecordId = params.id;
         }
         handleBackDrop(true);
         let response = await AxiosApi.getData(APIConstants.EXPENSES_LIST_VIEW_GET, reqParams);
-        setData(response.data);        
+        setData(response.data);
         handleBackDrop(false);
     }
 
@@ -60,10 +60,11 @@ const ExpensesListView = () => {
         expensesFormRef.current.handleOpen();
     }
 
-    const editEvt = () => {
+    const editEvt = async () => {
         let row = expenseListViewRef.current.getSelectedRow();
         if (row && row.length == 1) {
-            expensesFormRef.current.handleOpen(row[0].id);
+            let response = await AxiosApi.getData(APIConstants.EXPENSES_GET + row[0].id); 
+            isExpenseApprovedOrCanceled(response.data, ()=>(expensesFormRef.current.handleOpen(row[0].id)));
         } else {
             appDialogRef.current.handleOpen({ title: "Information Dialog", contentText: "Please select one record!" });
         }
@@ -92,38 +93,50 @@ const ExpensesListView = () => {
         }
     }
 
-    const downLoadCSV = () => {        
-        let header = columns.filter(f => !f.hidden).map(m => { return {name: m.dataField, label: m.text} });
-        let params = {isSerial: true};
+    const downLoadCSV = () => {
+        let header = columns.filter(f => !f.hidden).map(m => { return { name: m.dataField, label: m.text } });
+        let params = { isSerial: true };
 
         let totalAmount = data.filter(f => !f.isCanceled).map(m => m.amount).reduce((partialSum, a) => partialSum + a, 0);
         params.additionalRows = ["", "", "Total Amount", totalAmount];
-        Utils.downloadCSVFile("expense-list-view-"+getFormattedDateTime(), header, data, params);
+        Utils.downloadCSVFile("expense-list-view-" + getFormattedDateTime(), header, data, params);
+    }
+
+    const isExpenseApprovedOrCanceled = (object, action) => {
+        if (object && (object.isCanceled === null || !object.isCanceled )) {
+            if (object && object.approvedbySecId && object.approvedbySecId > 0 && object.approvedByTrsId && object.approvedByTrsId > 0) {
+                enqueueSnackbar('Voucher was approved', { variant: 'error' });
+            } else {
+                action();
+            }
+        } else {
+            enqueueSnackbar('Expense Canceled', { variant: 'error' });
+        } 
     }
 
     const toolBarIcon = [
-        { name: "ADD", title: "Add Owners", onClick: addEvt, }, 
-        { name: "EDIT", title: "Edit Owners", onClick: editEvt, }, 
-        { name: "DELETE", title: "Delete Owners", onClick: deleteEvt, }, 
+        { name: "ADD", title: "Add Owners", onClick: addEvt, },
+        { name: "EDIT", title: "Edit Owners", onClick: editEvt, },
+        { name: "DELETE", title: "Delete Owners", onClick: deleteEvt, },
         // { name: "PDF", title: "Export to .pdf file", onClick: () => { }, }, 
-        { name: "CSV", title: "Export to .csv file", onClick: downLoadCSV, }, 
+        { name: "CSV", title: "Export to .csv file", onClick: downLoadCSV, },
     ];
 
     const getToolBarIcon = () => {
         let list = [...toolBarIcon];
 
-        if(!Utils.isPermission(object, CONSTANSTS.USER_PERMISSION.CREATE)) {
-            list = list.filter( f => f.name !== "ADD");
+        if (!Utils.isPermission(object, CONSTANSTS.USER_PERMISSION.CREATE)) {
+            list = list.filter(f => f.name !== "ADD");
         }
 
-        if(!Utils.isPermission(object, CONSTANSTS.USER_PERMISSION.EDIT)) {
-            list = list.filter( f => f.name !== "EDIT");
+        if (!Utils.isPermission(object, CONSTANSTS.USER_PERMISSION.EDIT)) {
+            list = list.filter(f => f.name !== "EDIT");
         }
 
-        if(!Utils.isPermission(object, CONSTANSTS.USER_PERMISSION.DELETE)) {
-            list = list.filter( f => f.name !== "DELETE");
+        if (!Utils.isPermission(object, CONSTANSTS.USER_PERMISSION.DELETE)) {
+            list = list.filter(f => f.name !== "DELETE");
         }
-        
+
         return list;
     }
 
@@ -132,7 +145,7 @@ const ExpensesListView = () => {
         <AppDialog ref={appDialogRef} maxWidth="xs" />
         <ConfirmDialog ref={confrmDialogRef} />
         {!isDetailView && <PageHeader object={CONSTANSTS.OBJECTS.EXPENSE} />}
-        <ListView ref={expenseListViewRef} object={CONSTANSTS.OBJECTS.EXPENSE}  columns={getColumns(columns)} rows={data} toolBarIcon={getToolBarIcon()} getListViewData={getDataFromAPI} rowStyle={rowStyle} />
+        <ListView ref={expenseListViewRef} object={CONSTANSTS.OBJECTS.EXPENSE} columns={getColumns(columns)} rows={data} toolBarIcon={getToolBarIcon()} getListViewData={getDataFromAPI} rowStyle={rowStyle} />
     </Box>
 }
 
@@ -148,7 +161,7 @@ const getColumns = (cols) => {
                     detailLinkUrl: "/" + Constants.OBJECTS.EXPENSE.toLowerCase() + "/detail_view/"
                 };
                 col.events = {
-                    onClick: (e, column, columnIndex, row, rowIndex) => {                        
+                    onClick: (e, column, columnIndex, row, rowIndex) => {
                         console.log(e);
                         console.log(column);
                         console.log(columnIndex);
