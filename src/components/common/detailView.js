@@ -137,11 +137,7 @@ const DetailView = () => {
                 let response = await AxiosApi.postData(APIConstants.EXPENSES_APPROVED, obj);
                 getDataFromAPI();
                 handleBackDrop(false);
-                if(role === CONSTANSTS.USER_ROLE.SECRETARY) {
-                    enqueueSnackbar('Approved by Secretary', {variant: 'success'});
-                } else if(role === CONSTANSTS.USER_ROLE.TREASURER)  {
-                    enqueueSnackbar('Approved by Tresurer', {variant: 'success'});
-                }
+                approvedBySecretaryOrTreasurerAlert(role);
             } else if(isApprove) {
                 enqueueSnackbar('Already approved', {variant: 'warning'});
             } else {
@@ -160,6 +156,14 @@ const DetailView = () => {
 
     const isApprovedByTrs = () => {
         return (data && data.approvedByTrsId && data.approvedByTrsId > 0)
+    }
+
+    const approvedBySecretaryOrTreasurerAlert = (role)=> {
+        if(role === CONSTANSTS.USER_ROLE.SECRETARY) {
+            enqueueSnackbar('Approved by Secretary', {variant: 'success'});
+        } else if(role === CONSTANSTS.USER_ROLE.TREASURER)  {
+            enqueueSnackbar('Approved by Tresurer', {variant: 'success'});
+        }
     }
 
     const getRightElements = () => {
