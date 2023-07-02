@@ -61,8 +61,11 @@ const useStyles = makeStyles((theme) => ({
 const SettingsComponent = () => {
     const classes = useStyles();
     let object = Utils.getObjectNameFromUrl();
+    const [link, setLink] = React.useState({});
 
-    const [link, setLink] = React.useState(linkArr[0]);
+    React.useEffect(()=>{
+        setLink(getObjectsForLink()[0]);
+    },[]);
 
     const handleLinkClick = (data) => () => {
         setLink(data)
@@ -83,7 +86,7 @@ const SettingsComponent = () => {
         }
         if (!Utils.isPermission(CONSTANSTS.OBJECTS.USER_ROLE_PERMISSION, CONSTANSTS.USER_PERMISSION.VIEW)) {
             newLinkArr = newLinkArr.filter(f => f.object !== CONSTANSTS.OBJECTS.USER_ROLE_PERMISSION);
-        }    
+        }  
         return newLinkArr;
     }
 
