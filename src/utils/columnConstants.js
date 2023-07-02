@@ -510,6 +510,7 @@ VIEW_COLUMNS[CONSTANSTS.OBJECTS.OWNERS] = [{
     sort: true,
     headerAttrs: { title: 'First Name' },
     headerStyle: { width: 142, },
+    style: { width: 150, }
 }, {
     dataField: 'lastName',
     text: 'Last Name',
@@ -517,6 +518,7 @@ VIEW_COLUMNS[CONSTANSTS.OBJECTS.OWNERS] = [{
     sort: true,
     headerAttrs: { title: 'Last Name' },
     headerStyle: { width: 150, },
+    style: { width: 150, }
 },
 //  {
 //     dataField: 'adharCardNo',
@@ -549,14 +551,14 @@ VIEW_COLUMNS[CONSTANSTS.OBJECTS.OWNERS] = [{
     type: "TEXT",
     sort: true,
     headerAttrs: { title: 'Email' },
-    headerStyle: { width: 100, },
+    style: { width: 145, }
 }, {
     dataField: 'userAddress',
     text: 'User Address',
     type: "TEXT",
     sort: true,
     headerAttrs: { title: 'User Address' },
-    headerStyle: { width: 100, },
+    style: { width: 250, }
 },{
     dataField: 'createdDate',
     text: 'Created Date',
@@ -571,12 +573,12 @@ VIEW_COLUMNS[CONSTANSTS.OBJECTS.OWNERS] = [{
     sort: true,
     headerAttrs: { title: 'Updated Date' },
     headerStyle: { width: 120, },
-}, {
+}, /*{
     dataField: 'emptyCol',
     type:'EMPTY',
     text: '',
     headerStyle: { width: 105, },
-}];
+}*/];
 export {
     VIEW_COLUMNS
 }
