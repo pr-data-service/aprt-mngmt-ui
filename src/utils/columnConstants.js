@@ -294,7 +294,21 @@ VIEW_COLUMNS[CONSTANSTS.OBJECTS.EXPENSE] = [{
     sort: true,
     headerStyle: { width: 150, },
     headerAttrs: { title: 'Cancel Remarks' }
+},/*{
+    dataField: 'approvedBySecName',
+    text: 'approvedBySecName',
+    type:"TEXT",
+    sort: true,
+    headerStyle: { width: 150, },
+    headerAttrs: { title: 'approvedBySecName' }
 },{
+    dataField: 'approvedByTrsName',
+    text: 'approvedByTrsName',
+    type:"TEXT",
+    sort: true,
+    headerStyle: { width: 150, },
+    headerAttrs: { title: 'approvedByTrsName' }
+},*/{
     dataField: 'createdDate',
     text: 'Created Date',
     type: "DATE",

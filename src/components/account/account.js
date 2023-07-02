@@ -54,7 +54,11 @@ const Accounts = () => {
     const classes = useStyles();
     let object = Utils.getObjectNameFromUrl();
 
-    const [link, setLink] = React.useState(linkArr[0]);
+    const [link, setLink] = React.useState({});
+
+    React.useEffect(()=>{
+        setLink(getObjectsForLink()[0]);
+    },[]);
 
     const handleLinkClick = (data) => () => {
         setLink(data)
@@ -62,7 +66,7 @@ const Accounts = () => {
 
     let itemIndex = link ? link.id - 1 : -1;
 
-    const modifiedLinkArr = () => {
+    const getObjectsForLink = () => {
         let newLinkArr = [...linkArr];
         if (!Utils.isPermission(CONSTANSTS.OBJECTS.ACCOUNT, CONSTANSTS.USER_PERMISSION.VIEW)) {
             newLinkArr = newLinkArr.filter(f => f.object !== CONSTANSTS.OBJECTS.ACCOUNT);
@@ -84,7 +88,7 @@ const Accounts = () => {
                     <Paper elevation={3} className={classes.leftPanelContent}>
                         <Box></Box>
                         <Box>
-                            {modifiedLinkArr().map(m => <LinkElement data={m} onClick={handleLinkClick} selected={itemIndex + 1 === m.id} />)}
+                            {getObjectsForLink().map(m => <LinkElement data={m} onClick={handleLinkClick} selected={itemIndex + 1 === m.id} />)}
                         </Box>
                     </Paper>
                 </Box>
