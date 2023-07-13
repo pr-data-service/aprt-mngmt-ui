@@ -7,6 +7,7 @@ import APIConstants from '../utils/apiConatants';
 import AxiosApi from '../utils/httpRequestHandler';
 import { useSnackbar } from 'notistack';
 import { AppContext } from './common/context/appContext';
+import LocalStorageHandler from '../utils/localStorageHandler';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -68,7 +69,7 @@ const Login = () => {
     const { handleBackDrop } = React.useContext(AppContext);
 
     React.useEffect(() => {
-        let token = localStorage.getItem("token");
+        let token = LocalStorageHandler.getToken();
         if (token) {
             navigate("/");
         }
@@ -108,9 +109,9 @@ const Login = () => {
     }
 
     const handleChangApartmentList = (event) => {
-        setApartmentId(event.target.value);    
-        localStorage.setItem("token", data.token);    
-        localStorage.setItem("apartment-id", event.target.value);
+        setApartmentId(event.target.value);
+        LocalStorageHandler.setToken(data.token);
+        LocalStorageHandler.setApartmentId(event.target.value);
         setApartmentList([]);
         getSessionList();
     }
@@ -118,7 +119,7 @@ const Login = () => {
     const getSessionList = async () => {
         handleBackDrop(true);
         let response = await AxiosApi.getData(APIConstants.PROJECT_SESSION_LIST_GET);
-        localStorage.removeItem("token");            
+        LocalStorageHandler.setToken("");          
         handleBackDrop(false);
     
         let list = response.data ? response.data.map( m => { return {value: m.id, text: m.name}}) : []
@@ -130,14 +131,14 @@ const Login = () => {
     const handleChange = (event) => {
         setSessionId(event.target.value);
 
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("session-id", event.target.value);
-        localStorage.setItem("user-role", data.role);
+        LocalStorageHandler.setToken(data.token);
+        LocalStorageHandler.setSessionId(event.target.value);
+        LocalStorageHandler.setUserRole(data.role);
 
         let session = data.sessionList ? data.sessionList.find( f => f.id == event.target.value) : null;
-        localStorage.setItem("session", JSON.stringify(session));
+        LocalStorageHandler.setSession(session);
 
-        localStorage.setItem("permission", JSON.stringify(data.permission));
+        LocalStorageHandler.setPermission(data.permission);
         navigate("/");    
     }
 

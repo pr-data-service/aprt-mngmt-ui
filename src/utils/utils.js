@@ -2,6 +2,7 @@
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import CONSTANSTS from '../utils/constants';
 import APIConstants from '../utils/apiConatants';
+import LocalStorageHandler from "./localStorageHandler";
 
 const { CHILD_OBJECTS, OBJECTS } = CONSTANSTS;
 
@@ -141,7 +142,7 @@ const getFormPOSTApiUrl = (object) => {
 }
 
 const isPermission = (object, permissionType) => {
-    let role = localStorage.getItem("user-role");
+    let role = LocalStorageHandler.getUserRole();
     if(role && role === CONSTANSTS.USER_ROLE.SADMIN) {
         return [
             CONSTANSTS.USER_PERMISSION.CREATE, 
@@ -150,13 +151,13 @@ const isPermission = (object, permissionType) => {
             CONSTANSTS.USER_PERMISSION.DELETE
         ]
     }
-    let permission = JSON.parse(localStorage.getItem("permission"));
+    let permission = LocalStorageHandler.getPermission();
     permission = object && permission &&  permission[object]? permission[object] : [];
     return permissionType ? permission.includes(permissionType) : false;
 }
 
 const getUserRole = () => {
-    return localStorage.getItem('user-role')
+    return LocalStorageHandler.getUserRole();
 }
 
 

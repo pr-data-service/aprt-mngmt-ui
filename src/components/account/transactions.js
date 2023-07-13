@@ -65,12 +65,11 @@ const Transaction = () => {
         try {
             handleBackDrop(true);
             let response = await AxiosApi.deleteData(APIConstants.ACCOUNT_TRANSACTION_DELETE+id);
-            console.log(response.data);
             handleBackDrop(false);
             getDataFromAPI();
             enqueueSnackbar("Successfully deleted.", { variant: "success" });
         } catch (error) {
-            console.log(error.message);
+            console.error(error.message);
             enqueueSnackbar(error.message, { variant: "error" });
             handleBackDrop(false);
         }

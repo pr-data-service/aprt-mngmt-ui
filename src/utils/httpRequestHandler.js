@@ -1,6 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import APIConstants from '../utils/apiConatants';
 import { HttpReqHandlerError } from '../utils/customError';
+import LocalStorageHandler from './localStorageHandler';
 
 class HttpRequestHandler {
 
@@ -11,14 +12,14 @@ class HttpRequestHandler {
         });
 
         this.axios.interceptors.request.use(function (config) {
-            const token = localStorage.getItem('token');
+            const token = LocalStorageHandler.getToken();
             config.headers.Authorization =  token ? `Bearer ${token}` : '';
             config.headers['is-session-list-required'] = token ? false : true;
             
-            const apartmentId = localStorage.getItem('apartment-id');
+            const apartmentId = LocalStorageHandler.getApartmentId();
             config.headers['apartment-id'] = apartmentId ? apartmentId : '';
 
-            const sessionId = localStorage.getItem('session-id');
+            const sessionId = LocalStorageHandler.getSessionId();
             config.headers['session-id'] = sessionId ? sessionId : '';
             return config;
         });
@@ -152,8 +153,8 @@ class HttpRequestHandler {
                     try {
                         response.data = JSON.parse(String.fromCharCode.apply(null, new Uint8Array(response.data)));
                     } catch (e) {
-                        console.log(e);
-                        console.log("throwing error because arraybuffer not able to parse to JSON so Signature found.")
+                        console.error(e);
+                        console.error("throwing error because arraybuffer not able to parse to JSON so Signature found.")
                         const blob = new Blob([response.data], { type: 'image/jpeg' });
                         response.data = {
                             statusCode: 100,
@@ -179,6 +180,7 @@ class HttpRequestHandler {
                 console.error(response, response.props);
                 callback({ httpStatusCode: 401, message: message });
             } else if(code === "ERR_BAD_RESPONSE" && response.response && response.response.status == 500) {
+                this.goToLoginPage();
                 console.error(response, response.response.data);
                 callback({ httpStatusCode: response.response.status, message: response.response.data.message });
             } else if (code === "ERR_BAD_REQUEST" && response.response && response.response.status == 401) {
@@ -206,9 +208,7 @@ class HttpRequestHandler {
     }
 
     goToLoginPage = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("session-id");
-        localStorage.removeItem("session");
+        LocalStorageHandler.removeIndex();
         window.location.assign(window.location.origin+"/login");        
     }
 
