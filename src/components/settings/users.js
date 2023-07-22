@@ -5,6 +5,7 @@ import APIConstants from '../../utils/apiConatants';
 import CONSTANSTS from '../../utils/constants';
 import AxiosApi from '../../utils/httpRequestHandler';
 import Utils from '../../utils/utils';
+import ConfirmDialog from '../common/confirmDialog';
 import { AppContext } from '../common/context/appContext';
 const { VALIDATOR_TYPE_REQUIRED, VALIDATOR_TYPE_OPTIONAL } = CONSTANSTS.FORM_CONSTANTS;
 
@@ -43,6 +44,7 @@ const Users = () => {
     const classes = useStyles();
     const { enqueueSnackbar } = useSnackbar();
     const { handleBackDrop, handleDialogOpen, handleDialogClose } = React.useContext(AppContext);
+    const confirmDialogRef = React.useRef(null);
 
     React.useEffect(() => {
         getDataFromAPI();
@@ -85,7 +87,7 @@ const Users = () => {
         }
     }
 
-    const removeRoleEvt = async (id) => {
+    const removeRole = async (id) => {
         try {
             let response = await AxiosApi.postData(APIConstants.USER_REMOVE_ROLE + id);
             getDataFromAPI();
@@ -93,6 +95,10 @@ const Users = () => {
         } catch (error) {
             enqueueSnackbar(error.message, { variant: "error" });
         }
+    }
+
+    const removeEvt = () => {
+        confirmDialogRef.current.handleOpen({ title: "Confirmation Dialog", contentText: "Are you confirm to remove user role?" })
     }
 
     const addEvt = () => {
@@ -166,10 +172,11 @@ const Users = () => {
                             </select>
                         </Grid>
                         <Grid item xs={1}>
-                            {Utils.isPermission(CONSTANSTS.OBJECTS.SESSION, CONSTANSTS.USER_PERMISSION.DELETE) && <span className={"show-events"} style={{ cursor: "pointer", display: "none", textAlign: "center" }} title="Click here to delete." onClick={() => removeRoleEvt(m.id)}>
+                            {Utils.isPermission(CONSTANSTS.OBJECTS.USER, CONSTANSTS.USER_PERMISSION.DELETE) && <span className={"show-events"} style={{ cursor: "pointer", display: "none", textAlign: "center" }} title="Click here to delete." onClick={() => removeEvt()}>
                                 <i className="fa fa-trash" aria-hidden="true"></i>
                             </span>}
                         </Grid>
+                        <ConfirmDialog ref={confirmDialogRef} clickEvent={()=>removeRole(m.id)} />
                     </Grid>
                 </>)}
 
