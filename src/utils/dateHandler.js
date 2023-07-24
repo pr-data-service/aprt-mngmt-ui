@@ -1,5 +1,7 @@
 //https://javascript.info/date
 
+import moment from "moment/moment";
+
 const ALL_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 const DEFAULT_DATE_TIME_FORMAT = "dd-mm-yyyy HH:mm:ss";
@@ -97,18 +99,18 @@ const getDateForDatePicker = (value) => {
 const formatStringDDMMYYYYDate = (date, format) => {
     if (date) {
         let arr = [];
-        if(date.search(",") >= 0) {
+        if (date.search(",") >= 0) {
             arr = date.split(',');
-        } else if(date.search("-") >= 0) {
+        } else if (date.search("-") >= 0) {
             arr = date.split("-");
-        } else if(date.search(" ") >= 0) {
+        } else if (date.search(" ") >= 0) {
             arr = date.split(" ");
         }
 
 
         if (format) {
             let rtnDate = format;
-            
+
             if (format.search("dd") >= 0) {
                 rtnDate = rtnDate.replace("dd", arr[0]);
             }
@@ -123,16 +125,16 @@ const formatStringDDMMYYYYDate = (date, format) => {
                 rtnDate = rtnDate.replace("yyyy", arr[2]);
             }
             return rtnDate;
-        }        
+        }
     }
     return "";
 }
 
 const convertAPIDateToDatePickerDate = (strDate) => {
     let cnvrtDt = null;
-    if(strDate && strDate !== "") {
+    if (strDate && strDate !== "") {
         let arr = strDate.split("-");
-        let date = new Date(arr[2]+"-"+arr[1]+"-"+arr[0]);
+        let date = new Date(arr[2] + "-" + arr[1] + "-" + arr[0]);
         cnvrtDt = getFormattedDate(DATE_PICKER_DATE_FORMAT, date);
     }
     return cnvrtDt;
@@ -140,22 +142,40 @@ const convertAPIDateToDatePickerDate = (strDate) => {
 
 const parseAPIDate = (strDate) => {
     let date = null;
-    if(strDate && strDate !== "") {
+    if (strDate && strDate !== "") {
         let arr = strDate.split("-");
-        date = new Date(arr[2]+"-"+arr[1]+"-"+arr[0]);
+        date = new Date(arr[2] + "-" + arr[1] + "-" + arr[0]);
     }
     return date;
 }
 
 const convertDatePickerDateToAPIDate = (strDate) => {
     let date = null;
-    if(strDate && strDate !== "") {
+    if (strDate && strDate !== "") {
         let arr = strDate.split("-");
         date = new Date(strDate);
         date = getFormattedDate("", date);
     }
     return date;
 }
+
+const parseDate = (stringDate, format=DEFAULT_DATE_FORMAT) => {
+    return moment(stringDate, format);
+}
+
+const addMonthToDate = (date, monthsToAdd) => {
+    const newDate = new Date(date); // Create a copy of the original date
+    newDate.setMonth(newDate.getMonth() + monthsToAdd); // Add the specified number of months
+    return newDate;
+}
+
+const addMonthToStringDate = (stringDate, format=DEFAULT_DATE_FORMAT, monthsToAdd) => {
+    const newDate = new Date(parseDate(stringDate, DEFAULT_DATE_FORMAT)); // Create a copy of the original date
+    newDate.setMonth(newDate.getMonth() + monthsToAdd); // Add the specified number of months
+    return newDate;
+}
+
+
 
 export {
     DATE_TIME_FORMAT,
@@ -166,5 +186,8 @@ export {
     formatStringDDMMYYYYDate,
     convertAPIDateToDatePickerDate,
     parseAPIDate,
-    convertDatePickerDateToAPIDate
+    convertDatePickerDateToAPIDate,
+    parseDate,
+    addMonthToDate,
+    addMonthToStringDate
 }
